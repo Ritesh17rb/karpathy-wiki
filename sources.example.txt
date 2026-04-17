@@ -1,0 +1,6 @@
+# One PDF URL per line.
+# Optional custom title after a pipe.
+
+https://arxiv.org/pdf/1706.03762.pdf | Attention Is All You Need
+https://arxiv.org/pdf/2005.14165.pdf | Language Models are Few-Shot Learners
+https://arxiv.org/pdf/1810.04805.pdf | BERT: Pre-training of Deep Bidirectional Transformers

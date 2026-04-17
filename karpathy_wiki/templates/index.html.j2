@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="brand">
+        <span class="brand-mark">KW</span>
+        <div>
+          <h1>Knowledge Index</h1>
+          <p class="subtitle">A compiled PDF corpus rendered as a topic-first wiki.</p>
+        </div>
+      </div>
+      <div class="stats">
+        <div><strong>{{ document_total }}</strong><span>sources</span></div>
+        <div><strong>{{ section_total }}</strong><span>sections</span></div>
+        <div><strong>{{ topic_total }}</strong><span>topics</span></div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <div class="card">
+          <h2>About</h2>
+          <p>This site was compiled from PDFs using chapter segmentation, cross-document clustering, and source-backed synthesis.</p>
+        </div>
+        <div class="card">
+          <h2>Search</h2>
+          <input id="searchBox" type="search" placeholder="Search topics and sources" />
+          <div id="searchResults" class="search-results"></div>
+        </div>
+      </aside>
+
+      <section class="content">
+        <section class="section-block">
+          <div class="section-head">
+            <h2>Topic Directory</h2>
+            <p>Clustered themes synthesized across the corpus.</p>
+          </div>
+          <div class="cards">
+            {% for topic in topic_cards %}
+            <article class="card topic-card">
+              <h3><a href="topics/{{ topic.topic_id }}.html">{{ topic.title }}</a></h3>
+              <p>{{ topic.summary }}</p>
+              <div class="meta-row">
+                <span>{{ topic.document_count }} sources</span>
+                <span>{{ topic.section_count }} sections</span>
+              </div>
+              <ul class="tag-row">
+                {% for keyword in topic.keywords %}
+                <li>{{ keyword }}</li>
+                {% endfor %}
+              </ul>
+            </article>
+            {% endfor %}
+          </div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-head">
+            <h2>Source Archive</h2>
+            <p>Original documents preserved alongside their extracted sections.</p>
+          </div>
+          <div class="cards">
+            {% for document in document_cards %}
+            <article class="card">
+              <h3><a href="sources/{{ document.doc_id }}.html">{{ document.title }}</a></h3>
+              <p>{{ document.summary }}</p>
+              <div class="meta-row">
+                <span>{{ document.page_count }} pages</span>
+                <span>{{ document.section_count }} sections</span>
+              </div>
+            </article>
+            {% endfor %}
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script id="searchIndex" type="application/json">{{ search_blob | safe }}</script>
+    <script src="search.js"></script>
+  </body>
+</html>

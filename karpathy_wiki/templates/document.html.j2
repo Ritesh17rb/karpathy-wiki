@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <header class="subpage-header">
+      <a class="home-link" href="../index.html">Knowledge Index</a>
+      <h1>{{ document.title }}</h1>
+      <p class="subtitle">{{ document.summary }}</p>
+      <p class="source-ref"><a href="{{ document.url }}">Original PDF</a></p>
+    </header>
+
+    <main class="subpage-layout">
+      <section class="primary">
+        <div class="card">
+          <h2>Extracted Sections</h2>
+          {% for section in sections %}
+          <article class="section-entry">
+            <h3>{{ section.title }}</h3>
+            <p class="source-ref">Pages {{ section.start_page }}-{{ section.end_page }}</p>
+            <p>{{ excerpt(section.text) }}</p>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+
+      <aside class="secondary">
+        <div class="card">
+          <h2>Topic Links</h2>
+          <ul class="link-list">
+            {% for topic in topics %}
+            <li><a href="../topics/{{ topic.topic_id }}.html">{{ topic.title }}</a></li>
+            {% else %}
+            <li>No cross-document topics yet.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+    </main>
+  </body>
+</html>
