@@ -166,9 +166,21 @@ def clean_generated_dirs(paths: dict[str, Path]) -> None:
 
 
 def publish_site(site_dir: Path, publish_dir: Path) -> None:
-    if publish_dir.exists():
-        shutil.rmtree(publish_dir)
-    shutil.copytree(site_dir, publish_dir)
+    publish_dir.mkdir(parents=True, exist_ok=True)
+    for name in ("index.html", "style.css", "search.js", ".nojekyll"):
+        target = publish_dir / name
+        if target.exists():
+            target.unlink()
+    for name in ("topics", "sources"):
+        target_dir = publish_dir / name
+        if target_dir.exists():
+            shutil.rmtree(target_dir)
+    for item in site_dir.iterdir():
+        target = publish_dir / item.name
+        if item.is_dir():
+            shutil.copytree(item, target)
+        else:
+            shutil.copy2(item, target)
     (publish_dir / ".nojekyll").write_text("", encoding="utf-8")
 
 
