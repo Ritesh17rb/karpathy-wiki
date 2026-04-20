@@ -5,3 +5,16 @@ __pycache__/
 build/
 dist/
 workspace/
+
+# Old root-level publish snapshot; use docs/ instead.
+/.nojekyll
+/areas.html
+/chronology.html
+/hubs.html
+/lint.html
+/log.html
+/model-families.html
+/search.js
+/style.css
+/sources/
+/topics/

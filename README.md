@@ -32,10 +32,10 @@ Run the build:
 python3 build_wiki.py --sources sources.txt --workspace workspace
 ```
 
-Build and publish a GitHub Pages site into the repo root:
+Build and publish a GitHub Pages site into `docs/`:
 
 ```bash
-python3 build_wiki.py --sources sources.txt --workspace workspace --publish-dir .
+python3 build_wiki.py --sources sources.txt --workspace workspace --publish-dir docs
 ```
 
 The final site lands in:
@@ -68,12 +68,7 @@ sources.advanced.txt
 - `workspace/wiki/lint.md`: maintenance report for orphan sections, weak topics, and duplicates.
 - `workspace/site/`: static HTML site.
 - `workspace/build.json`: run manifest.
-- repo root publish:
-  - `index.html`
-  - `style.css`
-  - `search.js`
-  - `sources/`
-  - `topics/`
+- `docs/`: published static site snapshot for GitHub Pages.
 
 ## Notes
 
@@ -87,12 +82,12 @@ sources.advanced.txt
 The easiest deploy path is:
 
 ```bash
-python3 build_wiki.py --sources sources.example.txt --workspace workspace --publish-dir .
+python3 build_wiki.py --sources sources.example.txt --workspace workspace --publish-dir docs
 ```
 
 Then push `main` and configure GitHub Pages to serve from:
 
 - Branch: `main`
-- Folder: `/ (root)`
+- Folder: `/docs`
 
-The build writes a root `.nojekyll` file so GitHub Pages serves the static site without Jekyll processing.
+The build writes a `.nojekyll` file into `docs/` so GitHub Pages serves the static site without Jekyll processing.
