@@ -2,6 +2,7 @@
   const dataEl = document.getElementById("searchIndex");
   const input = document.getElementById("searchBox");
   const results = document.getElementById("searchResults");
+  const basePrefix = document.body.dataset.basePrefix || "";
 
   if (!dataEl || !input || !results) {
     return;
@@ -41,7 +42,7 @@
       wrapper.className = "search-hit";
 
       const link = document.createElement("a");
-      link.href = item.url;
+      link.href = `${basePrefix}${item.url}`;
       const strong = document.createElement("strong");
       strong.textContent = item.title;
       link.appendChild(strong);
