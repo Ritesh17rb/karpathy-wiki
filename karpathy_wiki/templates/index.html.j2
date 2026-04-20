@@ -6,79 +6,77 @@
     <title>{{ page_title }}</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <header class="masthead">
-      <div class="brand">
-        <span class="brand-mark">KW</span>
-        <div>
-          <h1>Knowledge Index</h1>
-          <p class="subtitle">A compiled PDF corpus rendered as a topic-first wiki.</p>
+  <body class="wiki-app">
+    <header class="chrome">
+      <div class="chrome-inner">
+        <div class="brand-block">
+          <a class="app-home" href="index.html">Karpathy Wiki</a>
+          <p class="app-caption">source-backed markdown wiki compiled from immutable PDFs</p>
         </div>
-      </div>
-      <div class="stats">
-        <div><strong>{{ document_total }}</strong><span>sources</span></div>
-        <div><strong>{{ section_total }}</strong><span>sections</span></div>
-        <div><strong>{{ topic_total }}</strong><span>topics</span></div>
+        <nav class="top-nav" aria-label="Wiki navigation">
+          {% for item in nav_pages %}
+          <a href="{{ item.url }}"{% if current_slug == item.slug %} class="is-active"{% endif %}>{{ item.title }}</a>
+          {% endfor %}
+        </nav>
       </div>
     </header>
 
-    <main class="layout">
-      <aside class="sidebar">
-        <div class="card">
-          <h2>About</h2>
-          <p>This site was compiled from PDFs using chapter segmentation, cross-document clustering, and source-backed synthesis.</p>
-        </div>
-        <div class="card">
-          <h2>Search</h2>
-          <input id="searchBox" type="search" placeholder="Search topics and sources" />
-          <div id="searchResults" class="search-results"></div>
-        </div>
+    <main class="page-grid home-grid">
+      <aside class="sidebar stack">
+        <section class="panel">
+          <h2>Snapshot</h2>
+          <dl class="stats-list">
+            <div><dt>Documents</dt><dd>{{ document_total }}</dd></div>
+            <div><dt>Retained sections</dt><dd>{{ section_total }}</dd></div>
+            <div><dt>Topic pages</dt><dd>{{ topic_total }}</dd></div>
+            <div><dt>Evidence links</dt><dd>{{ crosslink_total }}</dd></div>
+            {% if build_meta.generated_at_display %}
+            <div><dt>Latest compile</dt><dd>{{ build_meta.generated_at_display }}</dd></div>
+            {% endif %}
+            {% if build_meta.source_file_name %}
+            <div><dt>Source list</dt><dd>{{ build_meta.source_file_name }}</dd></div>
+            {% endif %}
+          </dl>
+        </section>
+
+        <section class="panel">
+          <h2>Data Explore</h2>
+          <p class="muted">Browse the loaded corpus immediately, or type to filter wiki, topic, and source pages.</p>
+          <input id="searchBox" type="search" placeholder="Search the corpus" />
+          <div id="searchResults" class="search-results">
+            {% for item in explore_items %}
+            <article class="search-hit">
+              <a href="{{ item.url }}"><strong>{{ item.title }}</strong></a>
+              <span>{{ item.type }}</span>
+              <p>{{ item.summary }}</p>
+            </article>
+            {% endfor %}
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Read First</h2>
+          <ul class="plain-list">
+            {% for item in nav_pages if item.slug != "index" %}
+            <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h2>Operating Model</h2>
+          <ul class="plain-list">
+            <li>Raw sources remain immutable and act as ground truth.</li>
+            <li>The wiki is a maintained artifact rather than per-query rediscovery.</li>
+            <li>Topic pages link back to source sections that support them.</li>
+            <li>`log` is append-only and `lint` is part of the normal maintenance loop.</li>
+          </ul>
+        </section>
       </aside>
 
-      <section class="content">
-        <section class="section-block">
-          <div class="section-head">
-            <h2>Topic Directory</h2>
-            <p>Clustered themes synthesized across the corpus.</p>
-          </div>
-          <div class="cards">
-            {% for topic in topic_cards %}
-            <article class="card topic-card">
-              <h3><a href="topics/{{ topic.topic_id }}.html">{{ topic.title }}</a></h3>
-              <p>{{ topic.summary }}</p>
-              <div class="meta-row">
-                <span>{{ topic.document_count }} sources</span>
-                <span>{{ topic.section_count }} sections</span>
-              </div>
-              <ul class="tag-row">
-                {% for keyword in topic.keywords %}
-                <li>{{ keyword }}</li>
-                {% endfor %}
-              </ul>
-            </article>
-            {% endfor %}
-          </div>
-        </section>
-
-        <section class="section-block">
-          <div class="section-head">
-            <h2>Source Archive</h2>
-            <p>Original documents preserved alongside their extracted sections.</p>
-          </div>
-          <div class="cards">
-            {% for document in document_cards %}
-            <article class="card">
-              <h3><a href="sources/{{ document.doc_id }}.html">{{ document.title }}</a></h3>
-              <p>{{ document.summary }}</p>
-              <div class="meta-row">
-                <span>{{ document.page_count }} pages</span>
-                <span>{{ document.section_count }} sections</span>
-              </div>
-            </article>
-            {% endfor %}
-          </div>
-        </section>
-      </section>
+      <article class="paper markdown-page">
+        {{ page.content_html | safe }}
+      </article>
     </main>
 
     <script id="searchIndex" type="application/json">{{ search_blob | safe }}</script>

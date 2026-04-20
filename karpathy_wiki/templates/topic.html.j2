@@ -6,54 +6,109 @@
     <title>{{ page_title }}</title>
     <link rel="stylesheet" href="../style.css" />
   </head>
-  <body>
-    <header class="subpage-header">
-      <a class="home-link" href="../index.html">Knowledge Index</a>
-      <h1>{{ topic.title }}</h1>
-      <p class="subtitle">{{ topic.summary }}</p>
-      <ul class="tag-row">
-        {% for keyword in topic.keywords[:8] %}
-        <li>{{ keyword }}</li>
-        {% endfor %}
-      </ul>
+  <body class="wiki-app">
+    <header class="chrome">
+      <div class="chrome-inner">
+        <div class="brand-block">
+          <a class="app-home" href="../index.html">Karpathy Wiki</a>
+          <p class="app-caption">topic page / evidence-backed synthesis</p>
+        </div>
+        <nav class="top-nav" aria-label="Wiki navigation">
+          {% for item in nav_pages %}
+          <a href="../{{ item.url }}">{{ item.title }}</a>
+          {% endfor %}
+        </nav>
+      </div>
     </header>
 
-    <main class="subpage-layout">
-      <section class="primary">
-        <div class="card">
-          <h2>Source Sections</h2>
-          {% for section in sections %}
-          <article class="section-entry">
-            <h3>{{ section.title }}</h3>
-            <p class="source-ref">
-              <a href="../sources/{{ section.doc_id }}.html">{{ section.doc_title }}</a>
-              · pages {{ section.start_page }}-{{ section.end_page }}
-            </p>
-            <p>{{ excerpt(section.text) }}</p>
-          </article>
-          {% endfor %}
-        </div>
-      </section>
+    <main class="page-grid detail-grid">
+      <article class="paper">
+        <p class="page-kicker">topic page</p>
+        <h1>{{ topic.title }}</h1>
+        <p class="page-summary">{{ topic.summary }}</p>
+        <p class="page-meta">{{ topic.document_ids | length }} sources · {{ topic.section_ids | length }} sections · quality {{ "%.2f"|format(topic.quality_score) }}</p>
 
-      <aside class="secondary">
-        <div class="card">
-          <h2>Contributing Sources</h2>
-          <ul class="link-list">
-            {% for document in documents %}
-            <li><a href="../sources/{{ document.doc_id }}.html">{{ document.title }}</a></li>
+        <section class="content-section">
+          <h2>Short Synopsis</h2>
+          <p>{{ topic.summary }}</p>
+        </section>
+
+        <section class="content-section">
+          <h2>Key Terms</h2>
+          <p class="keyword-cloud">
+            {% for keyword in topic.keywords %}
+            <code>{{ keyword }}</code>
             {% endfor %}
-          </ul>
-        </div>
-        <div class="card">
+            {% for phrase in topic.key_phrases[:4] %}
+            {% if phrase not in topic.keywords %}
+            <code>{{ phrase }}</code>
+            {% endif %}
+            {% endfor %}
+          </p>
+        </section>
+
+        <section class="content-section">
+          <h2>Source Sections Used to Derive This Topic</h2>
+          <ol class="evidence-list">
+            {% for item in topic.evidence %}
+            <li>
+              <p><a href="../sources/{{ item.doc_id }}.html#{{ item.section_anchor }}">{{ item.doc_title }}</a> / {{ item.section_title }}</p>
+              <p class="inline-meta">pages {{ item.start_page }}-{{ item.end_page }} · {{ item.section_role }}</p>
+              <blockquote>{{ item.excerpt }}</blockquote>
+              {% if item.section_summary and item.section_summary != item.excerpt %}
+              <p class="muted">{{ item.section_summary }}</p>
+              {% endif %}
+            </li>
+            {% else %}
+            <li>No explicit evidence records were generated for this topic.</li>
+            {% endfor %}
+          </ol>
+        </section>
+
+        <section class="content-section">
           <h2>Related Topics</h2>
-          <ul class="link-list">
+          <ul class="plain-list">
             {% for item in related %}
             <li><a href="{{ item.topic_id }}.html">{{ item.title }}</a></li>
             {% else %}
             <li>No related topics detected.</li>
             {% endfor %}
           </ul>
-        </div>
+        </section>
+      </article>
+
+      <aside class="sidebar stack">
+        <section class="panel">
+          <h2>Coverage</h2>
+          <dl class="stats-list">
+            <div><dt>Areas</dt><dd>{{ coverage.areas | join(", ") if coverage.areas else "n/a" }}</dd></div>
+            <div><dt>Model families</dt><dd>{{ coverage.families | join(", ") if coverage.families else "n/a" }}</dd></div>
+            <div><dt>Years</dt><dd>{{ coverage.years | join(", ") if coverage.years else "n/a" }}</dd></div>
+          </dl>
+        </section>
+
+        <section class="panel">
+          <h2>Contributing Sources</h2>
+          <ul class="plain-list">
+            {% for document in documents %}
+            <li><a href="../sources/{{ document.doc_id }}.html">{{ document.title }}</a></li>
+            {% else %}
+            <li>No source documents linked.</li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h2>Maintenance Trail</h2>
+          <ul class="plain-list">
+            {% if build_meta.generated_at_display %}
+            <li>Compiled {{ build_meta.generated_at_display }}.</li>
+            {% endif %}
+            {% if build_meta.latest_log_entry %}
+            <li>Latest log entry: {{ build_meta.latest_log_entry }}.</li>
+            {% endif %}
+          </ul>
+        </section>
       </aside>
     </main>
   </body>

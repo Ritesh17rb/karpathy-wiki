@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{{ base_prefix }}style.css" />
+  </head>
+  <body class="wiki-app">
+    <header class="chrome">
+      <div class="chrome-inner">
+        <div class="brand-block">
+          <a class="app-home" href="{{ base_prefix }}index.html">Karpathy Wiki</a>
+          <p class="app-caption">{{ page_caption }}</p>
+        </div>
+        <nav class="top-nav" aria-label="Wiki navigation">
+          {% for item in nav_pages %}
+          <a href="{{ base_prefix }}{{ item.url }}"{% if current_slug == item.slug %} class="is-active"{% endif %}>{{ item.title }}</a>
+          {% endfor %}
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-grid home-grid">
+      <aside class="sidebar stack">
+        <section class="panel">
+          <h2>This Page</h2>
+          <ul class="plain-list compact-list">
+            {% for item in page.headings %}
+            <li><a href="#{{ item.anchor }}">{{ item.title }}</a></li>
+            {% else %}
+            <li>No section headings.</li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h2>Data Explore</h2>
+          <p class="muted">Browse the loaded corpus immediately, or type to filter wiki, topic, and source pages.</p>
+          <input id="searchBox" type="search" placeholder="Search the corpus" />
+          <div id="searchResults" class="search-results">
+            {% for item in explore_items %}
+            <article class="search-hit">
+              <a href="{{ base_prefix }}{{ item.url }}"><strong>{{ item.title }}</strong></a>
+              <span>{{ item.type }}</span>
+              <p>{{ item.summary }}</p>
+            </article>
+            {% endfor %}
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Maintenance State</h2>
+          <dl class="stats-list">
+            {% if build_meta.generated_at_display %}
+            <div><dt>Latest compile</dt><dd>{{ build_meta.generated_at_display }}</dd></div>
+            {% endif %}
+            {% if build_meta.source_file_name %}
+            <div><dt>Source list</dt><dd>{{ build_meta.source_file_name }}</dd></div>
+            {% endif %}
+            {% if build_meta.log_entries %}
+            <div><dt>Log entries</dt><dd>{{ build_meta.log_entries }}</dd></div>
+            {% endif %}
+            <div><dt>Documents</dt><dd>{{ document_total }}</dd></div>
+            <div><dt>Topic pages</dt><dd>{{ topic_total }}</dd></div>
+          </dl>
+        </section>
+      </aside>
+
+      <article class="paper markdown-page">
+        {{ page.content_html | safe }}
+      </article>
+    </main>
+
+    <script id="searchIndex" type="application/json">{{ search_blob | safe }}</script>
+    <script src="{{ base_prefix }}search.js"></script>
+  </body>
+</html>

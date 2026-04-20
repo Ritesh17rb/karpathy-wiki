@@ -1,6 +1,8 @@
 # One PDF URL per line.
 # Optional custom title after a pipe.
+# Optional metadata after a second pipe using:
+# year=YYYY; venue=...; area=...; families=a,b; tags=x,y
 
-https://arxiv.org/pdf/1706.03762.pdf | Attention Is All You Need
-https://arxiv.org/pdf/2005.14165.pdf | Language Models are Few-Shot Learners
-https://arxiv.org/pdf/1810.04805.pdf | BERT: Pre-training of Deep Bidirectional Transformers
+https://arxiv.org/pdf/1706.03762.pdf | Attention Is All You Need | year=2017; venue=NeurIPS; area=Foundation Models; families=Transformer,Encoder-Decoder; tags=attention,sequence-modeling
+https://arxiv.org/pdf/2005.14165.pdf | Language Models are Few-Shot Learners | year=2020; venue=NeurIPS; area=Scaling and Foundation Models; families=Decoder-Only,In-Context Learning; tags=few-shot,emergence,scaling
+https://arxiv.org/pdf/1810.04805.pdf | BERT: Pre-training of Deep Bidirectional Transformers | year=2018; venue=NAACL; area=Foundation Models; families=Encoder-Only,Transformer; tags=pretraining,masked-language-modeling,transfer-learning

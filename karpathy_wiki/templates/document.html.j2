@@ -6,39 +6,115 @@
     <title>{{ page_title }}</title>
     <link rel="stylesheet" href="../style.css" />
   </head>
-  <body>
-    <header class="subpage-header">
-      <a class="home-link" href="../index.html">Knowledge Index</a>
-      <h1>{{ document.title }}</h1>
-      <p class="subtitle">{{ document.summary }}</p>
-      <p class="source-ref"><a href="{{ document.url }}">Original PDF</a></p>
+  <body class="wiki-app">
+    <header class="chrome">
+      <div class="chrome-inner">
+        <div class="brand-block">
+          <a class="app-home" href="../index.html">Karpathy Wiki</a>
+          <p class="app-caption">source page / retained sections and backlinks</p>
+        </div>
+        <nav class="top-nav" aria-label="Wiki navigation">
+          {% for item in nav_pages %}
+          <a href="../{{ item.url }}">{{ item.title }}</a>
+          {% endfor %}
+        </nav>
+      </div>
     </header>
 
-    <main class="subpage-layout">
-      <section class="primary">
-        <div class="card">
-          <h2>Extracted Sections</h2>
-          {% for section in sections %}
-          <article class="section-entry">
-            <h3>{{ section.title }}</h3>
-            <p class="source-ref">Pages {{ section.start_page }}-{{ section.end_page }}</p>
-            <p>{{ excerpt(section.text) }}</p>
-          </article>
-          {% endfor %}
-        </div>
-      </section>
+    <main class="page-grid detail-grid">
+      <article class="paper">
+        <p class="page-kicker">source page</p>
+        <h1>{{ document.title }}</h1>
+        <p class="page-summary">{{ document.summary }}</p>
+        <p class="page-meta">{{ document.page_count }} pages · {{ document.section_count }} retained sections · {{ document.topic_ids | length }} linked topics</p>
 
-      <aside class="secondary">
-        <div class="card">
-          <h2>Topic Links</h2>
-          <ul class="link-list">
+        <section class="content-section">
+          <h2>Document Metadata</h2>
+          <dl class="stats-list">
+            <div><dt>Source URL</dt><dd><a href="{{ document.url }}">Original PDF</a></dd></div>
+            <div><dt>Year</dt><dd>{{ document.year if document.year is not none else "n/a" }}</dd></div>
+            <div><dt>Venue</dt><dd>{{ document.venue or "n/a" }}</dd></div>
+            <div><dt>Research area</dt><dd>{{ document.area or "n/a" }}</dd></div>
+            <div><dt>Model families</dt><dd>{{ document.families | join(", ") if document.families else "n/a" }}</dd></div>
+            <div><dt>Tags</dt><dd>{{ document.tags | join(", ") if document.tags else "n/a" }}</dd></div>
+            {% if build_meta.source_file_name %}
+            <div><dt>Source list</dt><dd>{{ build_meta.source_file_name }}</dd></div>
+            {% endif %}
+          </dl>
+        </section>
+
+        <section class="content-section">
+          <h2>Section List</h2>
+          {% for section in sections %}
+          <section id="{{ section.anchor }}" class="source-section">
+            <h3>{{ section.title }}</h3>
+            <p class="inline-meta">pages {{ section.start_page }}-{{ section.end_page }} · {{ section.role }} · quality {{ "%.2f"|format(section.quality_score) }}</p>
+            {% if section.keywords[:6] %}
+            <p class="keyword-cloud">
+              {% for keyword in section.keywords[:6] %}
+              <code>{{ keyword }}</code>
+              {% endfor %}
+            </p>
+            {% endif %}
+            <p>{{ section.summary }}</p>
+            {% set linked_topics = section_topic_map.get(section.section_id, []) %}
+            {% if linked_topics %}
+            <p class="muted">
+              Topic links:
+              {% for topic in linked_topics %}
+              <a href="../topics/{{ topic.topic_id }}.html">{{ topic.title }}</a>{% if not loop.last %}, {% endif %}
+              {% endfor %}
+            </p>
+            {% endif %}
+            <p class="excerpt">{{ excerpt(section.text) }}</p>
+          </section>
+          {% else %}
+          <p>No retained sections were generated for this source.</p>
+          {% endfor %}
+        </section>
+      </article>
+
+      <aside class="sidebar stack">
+        <section class="panel">
+          <h2>Key Terms</h2>
+          <p class="keyword-cloud">
+            {% for keyword in document.keywords[:8] %}
+            <code>{{ keyword }}</code>
+            {% endfor %}
+          </p>
+        </section>
+
+        <section class="panel">
+          <h2>Links into Topic Pages</h2>
+          <ul class="plain-list">
             {% for topic in topics %}
             <li><a href="../topics/{{ topic.topic_id }}.html">{{ topic.title }}</a></li>
             {% else %}
             <li>No cross-document topics yet.</li>
             {% endfor %}
           </ul>
-        </div>
+        </section>
+
+        <section class="panel">
+          <h2>Section Anchors</h2>
+          <ul class="plain-list compact-list">
+            {% for section in sections %}
+            <li><a href="#{{ section.anchor }}">{{ section.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h2>Maintenance Trail</h2>
+          <ul class="plain-list">
+            {% if build_meta.generated_at_display %}
+            <li>Compiled {{ build_meta.generated_at_display }}.</li>
+            {% endif %}
+            {% if build_meta.latest_log_entry %}
+            <li>Latest log entry: {{ build_meta.latest_log_entry }}.</li>
+            {% endif %}
+          </ul>
+        </section>
       </aside>
     </main>
   </body>

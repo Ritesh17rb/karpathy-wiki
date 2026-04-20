@@ -3,180 +3,693 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Knowledge Index</title>
+    <title>Karpathy Wiki | Corpus Index</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <header class="masthead">
-      <div class="brand">
-        <span class="brand-mark">KW</span>
-        <div>
-          <h1>Knowledge Index</h1>
-          <p class="subtitle">A compiled PDF corpus rendered as a topic-first wiki.</p>
+  <body class="wiki-app">
+    <header class="chrome">
+      <div class="chrome-inner">
+        <div class="brand-block">
+          <a class="app-home" href="index.html">Karpathy Wiki</a>
+          <p class="app-caption">source-backed markdown wiki compiled from immutable PDFs</p>
         </div>
-      </div>
-      <div class="stats">
-        <div><strong>3</strong><span>sources</span></div>
-        <div><strong>63</strong><span>sections</span></div>
-        <div><strong>6</strong><span>topics</span></div>
+        <nav class="top-nav" aria-label="Wiki navigation">
+          <a href="index.html" class="is-active">Corpus Index</a>
+          <a href="lint.html">Maintenance Lint</a>
+          <a href="log.html">Build Log</a>
+          <a href="areas.html">Research Areas</a>
+          <a href="model-families.html">Model Families</a>
+          <a href="chronology.html">Chronology</a>
+          <a href="hubs.html">Connectivity Hubs</a>
+        </nav>
       </div>
     </header>
 
-    <main class="layout">
-      <aside class="sidebar">
-        <div class="card">
-          <h2>About</h2>
-          <p>This site was compiled from PDFs using chapter segmentation, cross-document clustering, and source-backed synthesis.</p>
-        </div>
-        <div class="card">
-          <h2>Search</h2>
-          <input id="searchBox" type="search" placeholder="Search topics and sources" />
-          <div id="searchResults" class="search-results"></div>
-        </div>
+    <main class="page-grid home-grid">
+      <aside class="sidebar stack">
+        <section class="panel">
+          <h2>Snapshot</h2>
+          <dl class="stats-list">
+            <div><dt>Documents</dt><dd>31</dd></div>
+            <div><dt>Retained sections</dt><dd>354</dd></div>
+            <div><dt>Topic pages</dt><dd>25</dd></div>
+            <div><dt>Evidence links</dt><dd>131</dd></div>
+            <div><dt>Latest compile</dt><dd>2026-04-20 10:38 UTC</dd></div>
+            <div><dt>Source list</dt><dd>sources.advanced.txt</dd></div>
+          </dl>
+        </section>
+
+        <section class="panel">
+          <h2>Data Explore</h2>
+          <p class="muted">Browse the loaded corpus immediately, or type to filter wiki, topic, and source pages.</p>
+          <input id="searchBox" type="search" placeholder="Search the corpus" />
+          <div id="searchResults" class="search-results">
+            <article class="search-hit">
+              <a href="topics/topic-chatbot-arena.html"><strong>Chatbot Arena</strong></a>
+              <span>topic page</span>
+              <p>Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena Lianmin Zheng1∗ Wei-Lin Chiang1∗ Ying Sheng4∗ Siyuan Zhuang1 Zhanghao Wu1 Yonghao Zhuang3 Zi Lin2 Zhuohan Li1 Dacheng Li13 arXiv:2306.05685v4 [cs.CL] 24 Dec 2023 Er…</p>
+            </article>
+            <article class="search-hit">
+              <a href="topics/topic-chinchilla-gopher.html"><strong>Chinchilla Gopher</strong></a>
+              <span>topic page</span>
+              <p>trained using the same number of TPU chips, it would be very difficult to maintain TPU compute efficiency without a drastic increase in batch size. The batch size of PaLM 540B is already 4M tokens, and it is unclear if…</p>
+            </article>
+            <article class="search-hit">
+              <a href="topics/topic-cnn-daily-mail.html"><strong>CNN/Daily Mail</strong></a>
+              <span>topic page</span>
+              <p>Raffel, Shazeer, Roberts, Lee, Narang, Matena, Zhou, Li and Liu pertinent issue given that English is not the native language for the majority of the world’s population. The motivation for this paper was the flurry of r…</p>
+            </article>
+            <article class="search-hit">
+              <a href="topics/topic-common-crawl-2.html"><strong>Common Crawl</strong></a>
+              <span>topic page</span>
+              <p>Datasets We provide a full description of MassiveText and of our extract of recent Wikipedia articles. Full description of MassiveText The full break down of MassiveText by source and languages is given in Table 8. Sour…</p>
+            </article>
+            <article class="search-hit">
+              <a href="topics/topic-datasheet-for-vtp.html"><strong>Datasheet for VTP</strong></a>
+              <span>topic page</span>
+              <p>F.2.1 Datasheet for LTIP Motivation For what purpose was the dataset The dataset was created for pre-training vision-language created? Composition What do the instances that comprise All instances of the dataset are ima…</p>
+            </article>
+            <article class="search-hit">
+              <a href="topics/topic-elo-scores.html"><strong>Elo Scores</strong></a>
+              <span>topic page</span>
+              <p>The scores are evaluated on a 52B preference model trained on (left) harmlessness comparisons, (center) helpfulness comparisons, and (right) a mixture of all the combined helpful and harmless comparisons. Harmlessness E…</p>
+            </article>
+            <article class="search-hit">
+              <a href="topics/topic-encoder-decoder.html"><strong>Encoder Decoder</strong></a>
+              <span>topic page</span>
+              <p>Recurrent models typically factor computation along the symbol positions of the input and output sequences. Aligning the positions to steps in computation time, they generate a sequence of hidden states ht , as a functi…</p>
+            </article>
+            <article class="search-hit">
+              <a href="topics/topic-factuality-specificity.html"><strong>Factuality Specificity</strong></a>
+              <span>topic page</span>
+              <p>by θ that generates a current token based on a context of the previous i − 1 tokens y1:i−1 , the original input x and a retrieved passage z. To train the retriever and generator end-to-end, we treat the retrieved docume…</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Read First</h2>
+          <ul class="plain-list">
+            <li><a href="lint.html">Maintenance Lint</a></li>
+            <li><a href="log.html">Build Log</a></li>
+            <li><a href="areas.html">Research Areas</a></li>
+            <li><a href="model-families.html">Model Families</a></li>
+            <li><a href="chronology.html">Chronology</a></li>
+            <li><a href="hubs.html">Connectivity Hubs</a></li>
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h2>Operating Model</h2>
+          <ul class="plain-list">
+            <li>Raw sources remain immutable and act as ground truth.</li>
+            <li>The wiki is a maintained artifact rather than per-query rediscovery.</li>
+            <li>Topic pages link back to source sections that support them.</li>
+            <li>`log` is append-only and `lint` is part of the normal maintenance loop.</li>
+          </ul>
+        </section>
       </aside>
 
-      <section class="content">
-        <section class="section-block">
-          <div class="section-head">
-            <h2>Topic Directory</h2>
-            <p>Clustered themes synthesized across the corpus.</p>
-          </div>
-          <div class="cards">
-            <article class="card topic-card">
-              <h3><a href="topics/topic-4-applications-of-attention-in-our-model.html">Applications of Attention in our Model</a></h3>
-              <p>With a single attention head, averaging inhibits this. In this work we employ h = 8 parallel attention layers, or heads. 3.2.3 Applications of Attention in our Model The Transformer uses multi-head attention in three different ways: • In "encoder-decoder attention" layers, the queries come from the previous decoder layer, and the memory keys and values come from the output of the encoder. • The encoder contains self-attention layers. • Similarly, self-attention layers in the decoder allow each position in the decoder to attend to all positions in the decoder up to and including that position.</p>
-              <div class="meta-row">
-                <span>1 sources</span>
-                <span>3 sections</span>
-              </div>
-              <ul class="tag-row">
-                <li>attention</li>
-                <li>layers</li>
-                <li>layer</li>
-                <li>keys</li>
-                <li>head</li>
-                <li>decoder</li>
-              </ul>
-            </article>
-            <article class="card topic-card">
-              <h3><a href="topics/topic-3-attention-is-all-you-need.html">Attention Is All You Need</a></h3>
-              <p>Provided proper attribution is provided, Google hereby grants permission to reproduce the tables and figures in this paper solely for use in journalistic or scholarly works. Attention Is All You Need arXiv:1706.03762v7 [cs.CL] 2 Aug 2023 Ashish Vaswani∗ Noam Shazeer∗ Niki Parmar∗ Jakob Uszkoreit∗ Google Brain Google Brain Google Research Google Research avaswani@google.com noam@google.com nikip@google.com usz@google.com Llion Jones∗ Aidan N. The best performing models also connect the encoder and decoder through an attention mechanism. Our model achieves 28.4 BLEU on the WMT 2014 English- to-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.</p>
-              <div class="meta-row">
-                <span>1 sources</span>
-                <span>1 sections</span>
-              </div>
-              <ul class="tag-row">
-                <li>google</li>
-                <li>brain</li>
-                <li>tensor</li>
-                <li>com</li>
-                <li>noam</li>
-                <li>llion</li>
-              </ul>
-            </article>
-            <article class="card topic-card">
-              <h3><a href="topics/topic-2-bleu-training-cost-flops.html">BLEU Training Cost (FLOPs)</a></h3>
-              <p>Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the English-to-German and English-to-French newstest2014 tests at a fraction of the training cost. For the base model, we use a rate of Pdrop = 0.1. The configuration of this model is listed in the bottom line of Table 3. Even our base model surpasses all previously published models and ensembles, at a fraction of the training cost of any of the competitive models. On the WMT 2014 English-to-French translation task, our big model achieves a BLEU score of 41.0, outperforming all of the previously published single models, at less than 1/4 the training cost of the previous state-of-the-art model.</p>
-              <div class="meta-row">
-                <span>1 sources</span>
-                <span>1 sections</span>
-              </div>
-              <ul class="tag-row">
-                <li>base</li>
-                <li>dropout</li>
-                <li>big</li>
-                <li>positional</li>
-                <li>bleu</li>
-                <li>newstest</li>
-              </ul>
-            </article>
-            <article class="card topic-card">
-              <h3><a href="topics/topic-5-participants-articles-generated.html">Participants / Articles / Generated</a></h3>
-              <p>Figure E.1: Participants spend more time trying to identify whether each news article is machine generated as model size increases. Duration on the control model is indicated with the dashed line. In each experiment, half of the participants were randomly assigned to quiz A and half were randomly assigned to quiz B. Each quiz consisted of 25 articles: half (12-13) were human written and half (12-13) were model generated: the articles with human written completions in quiz A had model generated completions in quiz B and vice versa. Participants could leave comments and were asked to indicate if they had seen the articles before.</p>
-              <div class="meta-row">
-                <span>1 sources</span>
-                <span>2 sections</span>
-              </div>
-              <ul class="tag-row">
-                <li>participants</li>
-                <li>articles</li>
-                <li>generated</li>
-                <li>half</li>
-                <li>control</li>
-                <li>news</li>
-              </ul>
-            </article>
-            <article class="card topic-card">
-              <h3><a href="topics/topic-6-religion-most-favored-descriptive-words.html">Religion Most Favored Descriptive Words</a></h3>
-              <p>6.2.3 Religion We studied which words co-occurred with religious terms relating to Atheism, Buddhism, Christianity, Hinduism, Islam, and Judaism, by generating 800 model outputs of length ≈50 with a temperature of 1 and a top p of 0.9 for every prompt. Our prompts were of the nature "{Religion practitioners} are" (Eg. "Christians are") for each of the six religious categories listed above. We then allowed the model to naturally carry out completions and created a corpus of such completions for studying co-occurrence of words. The following is an example output from the model: "Buddhists are divided into two main branches - Theravada and Mahayana.</p>
-              <div class="meta-row">
-                <span>1 sources</span>
-                <span>1 sections</span>
-              </div>
-              <ul class="tag-row">
-                <li>islam</li>
-                <li>religion</li>
-                <li>favored</li>
-                <li>words</li>
-                <li>religious</li>
-                <li>occurred</li>
-              </ul>
-            </article>
-            <article class="card topic-card">
-              <h3><a href="topics/topic-1-shot-gpt-performance.html">Shot / Gpt / Performance</a></h3>
-              <p>Figure 3.16: Representative GPT-3 completions for the few-shot task of using a new word in a sentence. Boldface is GPT-3’s completions, plain text is human prompts. Nothing task-specific is provided to GPT-3 other than the conditioning shown here. nonexistent word being defined and used in a sentence, so the task is few-shot in terms of previous examples of the broad task and one-shot in terms of the specific word. We test this with GPT-3 in the few- shot setting by giving prompts of the form "Poor English Input: <sentence>\n Good English Output: <sentence>".</p>
-              <div class="meta-row">
-                <span>2 sources</span>
-                <span>12 sections</span>
-              </div>
-              <ul class="tag-row">
-                <li>shot</li>
-                <li>gpt</li>
-                <li>performance</li>
-                <li>fine</li>
-                <li>language</li>
-                <li>training</li>
-              </ul>
-            </article>
-          </div>
-        </section>
-
-        <section class="section-block">
-          <div class="section-head">
-            <h2>Source Archive</h2>
-            <p>Original documents preserved alongside their extracted sections.</p>
-          </div>
-          <div class="cards">
-            <article class="card">
-              <h3><a href="sources/1-attention-is-all-you-need.html">Attention Is All You Need</a></h3>
-              <p>The best performing models also connect the encoder and decoder through an attention mechanism. ‡ Work performed while at Google Research. Self-attention, sometimes called intra-attention is an attention mechanism relating different positions of a single sequence in order to compute a representation of the sequence. 3 Model Architecture Most competitive neural sequence transduction models have an encoder-decoder structure [5, 2, 35].</p>
-              <div class="meta-row">
-                <span>15 pages</span>
-                <span>11 sections</span>
-              </div>
-            </article>
-            <article class="card">
-              <h3><a href="sources/3-bert-pre-training-of-deep-bidirectional-transformers.html">BERT: Pre-training of Deep Bidirectional Transformers</a></h3>
-              <p>pre-training for language representations. (2018a), which right-to-left language model. the left-to-right and right-to-left representations. The same pre-trained model parameters are used to initialize models for different down-stream tasks.</p>
-              <div class="meta-row">
-                <span>16 pages</span>
-                <span>13 sections</span>
-              </div>
-            </article>
-            <article class="card">
-              <h3><a href="sources/2-language-models-are-few-shot-learners.html">Language Models are Few-Shot Learners</a></h3>
-              <p>Language Models are Few-Shot Learners Tom B. We further specialize the description to “zero-shot”, “one-shot”, or “few-shot” depending on how many demonstrations are provided at inference time. Few-shot learning also improves dramatically with model size. For example, GPT-3 achieves 81.5 F1 on CoQA in the zero-shot setting, 84.0 F1 on CoQA in the one-shot setting, 85.0 F1 in the few-shot setting.</p>
-              <div class="meta-row">
-                <span>75 pages</span>
-                <span>39 sections</span>
-              </div>
-            </article>
-          </div>
-        </section>
-      </section>
+      <article class="paper markdown-page">
+        <h1 id="corpus-index">Corpus Index</h1>
+<p>This directory is the human-readable map of the compiled PDF corpus.</p>
+<h2 id="corpus-snapshot">Corpus Snapshot</h2>
+<ul class="md-list">
+<li>Source list: <code>sources.advanced.txt</code></li>
+<li>Documents: 31</li>
+<li>Retained sections: 354</li>
+<li>Topics: 25</li>
+<li>Maintenance report: <a href="lint.html">Maintenance Lint</a></li>
+<li>Research areas: <a href="areas.html">Research Areas</a></li>
+<li>Model families: <a href="model-families.html">Model Families</a></li>
+<li>Chronology: <a href="chronology.html">Chronology</a></li>
+<li>Connectivity hubs: <a href="hubs.html">Connectivity Hubs</a></li>
+</ul>
+<h2 id="corpus-facets">Corpus Facets</h2>
+<h3 id="alignment-and-post-training">Alignment and Post-Training</h3>
+<ul class="md-list">
+<li>Documents: 6</li>
+<li>Topic pages: 7</li>
+<li>Model families: Instruction-Tuning, RLHF, Chat Models, AI Feedback, Constitutional Training, Parameter-Efficient Finetuning, Low-Rank Adaptation, Quantization</li>
+</ul>
+<h3 id="multimodal-models">Multimodal Models</h3>
+<ul class="md-list">
+<li>Documents: 4</li>
+<li>Topic pages: 5</li>
+<li>Model families: Vision-Language, Contrastive Learning, Few-Shot Learning, Modular Pretraining, Instruction Tuning</li>
+</ul>
+<h3 id="scaling-and-foundation-models">Scaling and Foundation Models</h3>
+<ul class="md-list">
+<li>Documents: 4</li>
+<li>Topic pages: 7</li>
+<li>Model families: Decoder-Only, Scaling Laws, In-Context Learning, Transformer</li>
+</ul>
+<h3 id="evaluation-and-benchmarks">Evaluation and Benchmarks</h3>
+<ul class="md-list">
+<li>Documents: 3</li>
+<li>Topic pages: 4</li>
+<li>Model families: Benchmarking, Evaluation, LLM-as-a-Judge</li>
+</ul>
+<h3 id="foundation-models">Foundation Models</h3>
+<ul class="md-list">
+<li>Documents: 3</li>
+<li>Topic pages: 3</li>
+<li>Model families: Transformer, Encoder-Decoder, Encoder-Only, Seq2Seq, Text-to-Text</li>
+</ul>
+<h3 id="reasoning-and-prompting">Reasoning and Prompting</h3>
+<ul class="md-list">
+<li>Documents: 3</li>
+<li>Topic pages: 1</li>
+<li>Model families: Prompting, Reasoning, Agentic Reasoning, Tool Use</li>
+</ul>
+<h3 id="retrieval-and-tool-use">Retrieval and Tool Use</h3>
+<ul class="md-list">
+<li>Documents: 3</li>
+<li>Topic pages: 6</li>
+<li>Model families: Retrieval-Augmented Generation, Seq2Seq, Retrieval-Augmented Language Models, Decoder-Only, Tool Use, Self-Supervision</li>
+</ul>
+<h3 id="systems-and-efficiency">Systems and Efficiency</h3>
+<ul class="md-list">
+<li>Documents: 3</li>
+<li>Topic pages: 2</li>
+<li>Model families: Attention Systems, Kernel Optimization, Inference Systems, Serving</li>
+</ul>
+<h3 id="open-foundation-models">Open Foundation Models</h3>
+<ul class="md-list">
+<li>Documents: 2</li>
+<li>Topic pages: 2</li>
+<li>Model families: Decoder-Only, Transformer, Chat Models</li>
+</ul>
+<h2 id="topic-directory">Topic Directory</h2>
+<h3 id="chatbot-arena"><a href="topics/topic-chatbot-arena.html">Chatbot Arena</a></h3>
+<p>Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena Lianmin Zheng1∗ Wei-Lin Chiang1∗ Ying Sheng4∗ Siyuan Zhuang1 Zhanghao Wu1 Yonghao Zhuang3 Zi Lin2 Zhuohan Li1 Dacheng Li13 arXiv:2306.05685v4 [cs.CL] 24 Dec 2023 Eric P. Gonzalez1 Ion Stoica1 UC Berkeley UC San Diego Carnegie Mellon University Stanford MBZUAI Abstract Evaluating large language model (LLM) based chat assistants is challenging due to their broad capabilities and the inadequacy of existing benchmarks in measuring human preferences. To address this, we explore using strong LLMs as judges to evaluate these models on more open-ended questions. This paper makes two contributions: (1) a systematic study of LLM-as-a-judge; and (2) human preference datasets with high-quality questions and diverse user interactions from MT-bench and Chatbot Arena.</p>
+<ul class="md-list">
+<li>Key terms: llm, turn, bench, human, benchmarks, questions, judge, models</li>
+<li>Coverage: 1 sources, 4 sections</li>
+<li>Areas: Evaluation and Benchmarks</li>
+<li>Model families: Evaluation, LLM-as-a-Judge</li>
+<li>Evidence trail: <a href="sources/judging-llm-as-a-judge-with-mt-bench-and-chatbot-ar-d86911cb.html#benchmarks-by-combining-the-existing-capability-based-benchmarks-and-the-new-pre">Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena: LLM benchmarks: by combining the existing capability-based benchmarks and the new preference-</a>, <a href="sources/judging-llm-as-a-judge-with-mt-bench-and-chatbot-ar-d86911cb.html#judging-llm-as-a-judge-1">Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena: Judging LLM-as-a-Judge</a>, <a href="sources/judging-llm-as-a-judge-with-mt-bench-and-chatbot-ar-d86911cb.html#chatbot-arena-4">Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena: 2.3 Chatbot Arena</a></li>
+</ul>
+<h3 id="chinchilla-gopher"><a href="topics/topic-chinchilla-gopher.html">Chinchilla Gopher</a></h3>
+<p>trained using the same number of TPU chips, it would be very difficult to maintain TPU compute efficiency without a drastic increase in batch size. The batch size of PaLM 540B is already 4M tokens, and it is unclear if even larger batch sizes would maintain sample efficiency. GSM8K MBPP BIGbench Performance 62b (0.79T tokens) 62b (trained longer) 0.4 540b (0.78T tokens) Total Training FLOP Count (Zettaflops) range of tasks but does not bridge the gap to PaLM 540B. Average NLU and NLG scores from English NLP tasks (as defined in Table 5) are also reported, while task-specific scores are available in Table 40 including all model sizes for comparison.</p>
+<ul class="md-list">
+<li>Key terms: palm, size, even, training, shot, tokens, data, model</li>
+<li>Coverage: 2 sources, 5 sections</li>
+<li>Areas: Scaling and Foundation Models</li>
+<li>Model families: Decoder-Only, Transformer, Scaling Laws</li>
+<li>Evidence trail: <a href="sources/training-compute-optimal-large-language-models-593710fa.html#details-on-the-scaling-analyses-24">Training Compute-Optimal Large Language Models: D. Details on the scaling analyses</a>, <a href="sources/palm-scaling-language-modeling-with-pathways-dc99ade4.html#open-questions-in-scaling-48">PaLM: Scaling Language Modeling with Pathways: 13 Open Questions in Scaling</a>, <a href="sources/palm-scaling-language-modeling-with-pathways-dc99ade4.html#evaluation-results-75">PaLM: Scaling Language Modeling with Pathways: Evaluation Results</a></li>
+</ul>
+<h3 id="cnn-daily-mail"><a href="topics/topic-cnn-daily-mail.html">CNN/Daily Mail</a></h3>
+<p>Raffel, Shazeer, Roberts, Lee, Narang, Matena, Zhou, Li and Liu pertinent issue given that English is not the native language for the majority of the world’s population. The motivation for this paper was the flurry of recent work on transfer learning for NLP. the leopard and porcupine tumbled out of the bushes and began to fight by roadside - watched by ms moolman . Raffel, Shazeer, Roberts, Lee, Narang, Matena, Zhou, Li and Liu Original target: 2 Processed target: contradiction D.4 MRPC Original input: Sentence 1: We acted because we saw the existing evidence in a new light , through the prism of our experience on 11 September , &quot; Rumsfeld said .</p>
+<ul class="md-list">
+<li>Key terms: target, original, processed, januzaj, fellaini, united, sentence, manchester</li>
+<li>Coverage: 1 sources, 5 sections</li>
+<li>Areas: Foundation Models</li>
+<li>Model families: Seq2Seq, Text-to-Text, Transformer</li>
+<li>Evidence trail: <a href="sources/exploring-the-limits-of-transfer-learning-with-a-un-a5039072.html#cnn-daily-mail-52">Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer: D.14 CNN/Daily Mail</a>, <a href="sources/exploring-the-limits-of-transfer-learning-with-a-un-a5039072.html#wmt-english-to-german-54">Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer: D.16 WMT English to German</a>, <a href="sources/exploring-the-limits-of-transfer-learning-with-a-un-a5039072.html#mrpc-48">Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer: D.4 MRPC</a></li>
+</ul>
+<h3 id="common-crawl"><a href="topics/topic-common-crawl-2.html">Common Crawl</a></h3>
+<p>Datasets We provide a full description of MassiveText and of our extract of recent Wikipedia articles. Full description of MassiveText The full break down of MassiveText by source and languages is given in Table 8. Source Language Token count (M) Documents Sampling weight Web Wikipedia during training. A Details of Common Crawl Filtering As mentioned in Section 2.2, we employed two techniques to improve the quality of the Common Crawl dataset: (1) filtering Common Crawl and (2) fuzzy deduplication: 1.</p>
+<ul class="md-list">
+<li>Key terms: filtering, overlap, training, test, dataset, examples, model</li>
+<li>Coverage: 2 sources, 2 sections</li>
+<li>Areas: Retrieval and Tool Use, Scaling and Foundation Models</li>
+<li>Model families: Retrieval-Augmented Language Models, Decoder-Only, In-Context Learning</li>
+<li>Evidence trail: <a href="sources/language-models-are-few-shot-learners-eb9f79f3.html#details-of-common-crawl-filtering-43">Language Models are Few-Shot Learners: A Details of Common Crawl Filtering</a>, <a href="sources/improving-language-models-by-retrieving-from-trilli-6ccdc0c4.html#datasets-24">Improving language models by retrieving from trillions of tokens: A. Datasets</a></li>
+</ul>
+<h3 id="datasheet-for-vtp"><a href="topics/topic-datasheet-for-vtp.html">Datasheet for VTP</a></h3>
+<p>F.2.1 Datasheet for LTIP Motivation For what purpose was the dataset The dataset was created for pre-training vision-language created? Composition What do the instances that comprise All instances of the dataset are image-text pairs. ble instances or is it a sample (not necessarily random) of instances from a larger set? F.2.2 Datasheet for VTP Motivation For what purpose was the dataset The dataset was created for pre-training vision-language created?</p>
+<ul class="md-list">
+<li>Key terms: instances, instance, created, contain, associated</li>
+<li>Coverage: 1 sources, 2 sections</li>
+<li>Areas: Multimodal Models</li>
+<li>Model families: Vision-Language, Few-Shot Learning</li>
+<li>Evidence trail: <a href="sources/flamingo-a-visual-language-model-for-few-shot-learn-ad99aa86.html#datasheet-for-vtp-52">Flamingo: a Visual Language Model for Few-Shot Learning: F.2.2 Datasheet for VTP</a>, <a href="sources/flamingo-a-visual-language-model-for-few-shot-learn-ad99aa86.html#datasheet-for-ltip-50">Flamingo: a Visual Language Model for Few-Shot Learning: F.2.1 Datasheet for LTIP</a></li>
+</ul>
+<h3 id="elo-scores"><a href="topics/topic-elo-scores.html">Elo Scores</a></h3>
+<p>The scores are evaluated on a 52B preference model trained on (left) harmlessness comparisons, (center) helpfulness comparisons, and (right) a mixture of all the combined helpful and harmless comparisons. Harmlessness Elo Helpfulness Elo Helpful RLHF 100 HH RLHF 50 RL-CAI 150 RL-CAI w/ CoT 100 0.0 0.5 1.0 1.5 2.0 2.5 3.0 0.0 0.5 1.0 1.5 2.0 2.5 3.0 RL Train Sequences 1e6 RL Train Sequences 1e6 total number of RL training sequences, as judged by crowdworkers via comparison tests. The initial snapshot for the RL-CAI models is SL-CAI, where we set the Elos to be zero; while the initial snapshot for the RLHF models is a pre-trained LM. Preference Model Human-Feedback Preference Pretrained Pretraining (PMP) Fine-Tuning Model Human-Feedback Comparison Data HHH prompt RLHF Initial Policy RLHF (PPO) Policies context distillation Human Feedback Interface B helpful can lead to responses that help humans cause harm or generate toxic content.</p>
+<ul class="md-list">
+<li>Key terms: rlhf, policy, helpfulness, trained</li>
+<li>Coverage: 3 sources, 10 sections</li>
+<li>Areas: Alignment and Post-Training</li>
+<li>Model families: AI Feedback, Constitutional Training, RLHF, Chat Models, Instruction-Tuning</li>
+<li>Evidence trail: <a href="sources/training-a-helpful-and-harmless-assistant-with-rein-71c25fc9.html#pm-data-distribution-test-set-rlhf-policy-performance-on-test-prompts-19">Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback: PM Data Distribution (Test Set) RLHF Policy Performance On Test Prompts</a>, <a href="sources/training-a-helpful-and-harmless-assistant-with-rein-71c25fc9.html#individually-normalized-distributions-of-helpfulness-data-online-rlhf-21">Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback: Individually Normalized Distributions of Helpfulness Data &quot;Online&quot; RLHF</a>, <a href="sources/training-a-helpful-and-harmless-assistant-with-rein-71c25fc9.html#trained-on-helpfulness-harmlessness-trained-on-pure-helpfulness-47">Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback: Trained on Helpfulness &amp; Harmlessness Trained on Pure Helpfulness</a></li>
+</ul>
+<h3 id="encoder-decoder"><a href="topics/topic-encoder-decoder.html">Encoder Decoder</a></h3>
+<p>Recurrent models typically factor computation along the symbol positions of the input and output sequences. Aligning the positions to steps in computation time, they generate a sequence of hidden states ht , as a function of the previous hidden state ht−1 and the input for position t. Attention mechanisms have become an integral part of compelling sequence modeling and transduc- tion models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences [2, 19]. The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.</p>
+<ul class="md-list">
+<li>Key terms: attention, layer, sequence, layers, decoder, encoder, positions</li>
+<li>Coverage: 1 sources, 5 sections</li>
+<li>Areas: Foundation Models</li>
+<li>Model families: Transformer, Encoder-Decoder</li>
+<li>Evidence trail: <a href="sources/attention-is-all-you-need-acad837e.html#layer-type-complexity-per-layer-sequential-maximum-path-length-6">Attention Is All You Need: Layer Type Complexity per Layer Sequential Maximum Path Length</a>, <a href="sources/attention-is-all-you-need-acad837e.html#bleu-training-cost-flops-8">Attention Is All You Need: BLEU Training Cost (FLOPs)</a>, <a href="sources/attention-is-all-you-need-acad837e.html#introduction-2">Attention Is All You Need: 1 Introduction</a></li>
+</ul>
+<h3 id="factuality-specificity"><a href="topics/topic-factuality-specificity.html">Factuality Specificity</a></h3>
+<p>by θ that generates a current token based on a context of the previous i − 1 tokens y1:i−1 , the original input x and a retrieved passage z. To train the retriever and generator end-to-end, we treat the retrieved document as a latent variable. In one approach, RAG-Sequence, the model uses the same document to predict each target token. General-Purpose Architectures for NLP Prior work on general-purpose architectures for NLP tasks has shown great success without the use of retrieval.</p>
+<ul class="md-list">
+<li>Key terms: retrieval, document, rag, work, retrieved, trained</li>
+<li>Coverage: 1 sources, 3 sections</li>
+<li>Areas: Retrieval and Tool Use</li>
+<li>Model families: Retrieval-Augmented Generation, Seq2Seq</li>
+<li>Evidence trail: <a href="sources/retrieval-augmented-generation-for-knowledge-intens-72d836e8.html#factuality-specificity-8">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks: Factuality Specificity</a>, <a href="sources/retrieval-augmented-generation-for-knowledge-intens-72d836e8.html#models-3">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks: 2.1 Models</a>, <a href="sources/retrieval-augmented-generation-for-knowledge-intens-72d836e8.html#task-train-development-test-19">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks: Task Train Development Test</a></li>
+</ul>
+<h3 id="fewer-steps"><a href="topics/topic-fewer-steps.html">Fewer Steps</a></h3>
+<p>Minimum serial steps s Data requirements increases negligibly Step grow relatively slowly er ial 0xS Siz e &lt;1 atc h xB 100 Optimal model size e e l Siz increases very quickly Mod models, using larger batches, and training for more steps. For optimally compute-efficient training, most of the increase should go towards increased model size. Loss vs Model and Dataset Size Loss vs Model Size and Training Steps Parameters (non-embed) 4.0 Params Loss Loss Tokens in Dataset Estimated Smin size N according to Equation (1.5). To utilize both training time and compute as effectively as possible, it is best to train with a batch size B ≈ Bcrit .</p>
+<ul class="md-list">
+<li>Key terms: size, compute, cmin, optimal</li>
+<li>Coverage: 3 sources, 16 sections</li>
+<li>Areas: Scaling and Foundation Models</li>
+<li>Model families: Decoder-Only, In-Context Learning, Scaling Laws</li>
+<li>Evidence trail: <a href="sources/scaling-laws-for-neural-language-models-751878a7.html#params-5">Scaling Laws for Neural Language Models: 4.0 Params</a>, <a href="sources/scaling-laws-for-neural-language-models-751878a7.html#fixed-batch-16">Scaling Laws for Neural Language Models: 107 S (fixed-batch)</a>, <a href="sources/scaling-laws-for-neural-language-models-751878a7.html#performance-vs-compute-budget-performance-vs-steps-14">Scaling Laws for Neural Language Models: Performance vs Compute Budget Performance vs Steps</a></li>
+</ul>
+<h3 id="flashattention-attention-memory"><a href="topics/topic-flashattention-attention-memory.html">Flashattention / Attention / Memory</a></h3>
+<p>Standard attention implementations materialize the matrices S and P to HBM, which takes 𝑂 (𝑁 2 ) memory. 2.3.2 Backward pass In the backward pass, by re-computing the values of the attention matrices S and P once blocks of inputs Q, K, V are already loaded to SRAM, FlashAttention avoids having to store large intermediate values. Algorithm 2 FlashAttention-2 Backward Pass Require: Matrices Q, K, l V,m O, dO ∈ R 𝑁 ×𝑑 in HBM, vector 𝐿 ∈ R 𝑁 in HBM, block sizes 𝐵 , 𝐵 . FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness Tri Dao† , Daniel Y.</p>
+<ul class="md-list">
+<li>Key terms: flashattention, attention, memory, pass, block, size, hbm, backward</li>
+<li>Coverage: 6 sources, 21 sections</li>
+<li>Areas: Foundation Models, Reasoning and Prompting, Systems and Efficiency, Retrieval and Tool Use, Scaling and Foundation Models</li>
+<li>Model families: Transformer, Encoder-Decoder, Prompting, Reasoning, Attention Systems, Kernel Optimization, Retrieval-Augmented Language Models, Decoder-Only, Scaling Laws</li>
+<li>Evidence trail: <a href="sources/flashattention-2-faster-attention-with-better-paral-ded1c96b.html#flashattention-2-1">FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning: FlashAttention-2:</a>, <a href="sources/flashattention-fast-and-memory-efficient-exact-atte-eeffeb20.html#outer-loop-2">FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness: Outer Loop</a>, <a href="sources/flashattention-2-faster-attention-with-better-paral-ded1c96b.html#backward-pass-5">FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning: 2.3.2 Backward pass</a></li>
+</ul>
+<h3 id="knowledge-intensive-nlp-tasks"><a href="topics/topic-knowledge-intensive-nlp-tasks.html">Knowledge-Intensive NLP Tasks</a></h3>
+<p>Appendices for Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks A Implementation Details For Open-domain QA we report test numbers using 15 retrieved documents for RAG-Token models. For RAG-Sequence models, we report test results using 50 retrieved documents, and we use the Thorough Decoding approach since answers are generally short. For Open-MSMarco and Jeopardy question generation, we report test numbers using ten retrieved documents for both RAG-Token and RAG-Sequence, and we also train a BART-large model as a baseline.</p>
+<ul class="md-list">
+<li>Key terms: rag, decoding, cpu, open, report, retrieved, documents, sequence</li>
+<li>Coverage: 1 sources, 2 sections</li>
+<li>Areas: Retrieval and Tool Use</li>
+<li>Model families: Retrieval-Augmented Generation, Seq2Seq</li>
+<li>Evidence trail: <a href="sources/retrieval-augmented-generation-for-knowledge-intens-72d836e8.html#knowledge-intensive-nlp-tasks-17">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks: Knowledge-Intensive NLP Tasks</a>, <a href="sources/retrieval-augmented-generation-for-knowledge-intens-72d836e8.html#knowledge-intensive-nlp-tasks-17">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks: Knowledge-Intensive NLP Tasks</a></li>
+</ul>
+<h3 id="memorization"><a href="topics/topic-memorization.html">Memorization</a></h3>
+<p>• Constructed from web – Datasets where the question+answers (or prefix+continuation) were automatically extracted from the open web, so many evaluation examples are likely to be in our training data. • Context on web – Question answering datasets where the context is taken from the web, but the questions were not. This is because our training corpus only contains about 200 billion words of sampled/filtered English web data, whereas the full web contains many trillions of tokens. The goal of this section is to showcase the capabilities of PaLM with regards to explanatory language generation with chain-of-thought prompting.</p>
+<ul class="md-list">
+<li>Key terms: clean, full, palm, set, examples, model, language, training</li>
+<li>Coverage: 1 sources, 3 sections</li>
+<li>Areas: Scaling and Foundation Models</li>
+<li>Model families: Decoder-Only, Transformer</li>
+<li>Evidence trail: <a href="sources/palm-scaling-language-modeling-with-pathways-dc99ade4.html#language-clean-full-set-clean-set-full-set-clean-set-full-set-clean-set-38">PaLM: Scaling Language Modeling with Pathways: Language Clean Full Set Clean Set Full Set Clean Set Full Set Clean Set</a>, <a href="sources/palm-scaling-language-modeling-with-pathways-dc99ade4.html#memorization-35">PaLM: Scaling Language Modeling with Pathways: 7 Memorization</a>, <a href="sources/palm-scaling-language-modeling-with-pathways-dc99ade4.html#memorization-82">PaLM: Scaling Language Modeling with Pathways: G.3 Memorization</a></li>
+</ul>
+<h3 id="memory-management"><a href="topics/topic-memory-management.html">Memory Management</a></h3>
+<p>Gonzalez1 Hao Zhang4 Ion Stoica1 1 UC Berkeley 2 Stanford University 3 Independent Researcher 4 UC San Diego Abstract Existing systems vLLM Memory usage (GB) High throughput serving of large language models (LLMs) requires batching sufficiently many requests at a time. How- arXiv:2309.06180v1 [cs.LG] 12 Sep 2023 ever, existing systems struggle because the key-value cache KV Parameters Cache Parameter size (KV cache) memory for each request is huge and grows (&gt;30%) 20 (26GB, 65%) Throughput (token/s) and shrinks dynamically. Therefore, we can manage the KV cache in a more flexible way as in OS’s virtual mem- ory: one can think of blocks as pages, tokens as bytes, and percentage of memory is used for other data, including ac- requests as processes. When managed inefficiently, the different sequences associated with the same request or even KV cache memory can significantly limit the batch size and across the different requests.</p>
+<ul class="md-list">
+<li>Key terms: memory, block, vllm, cache, request, blocks, requests, gpu</li>
+<li>Coverage: 1 sources, 8 sections</li>
+<li>Areas: Systems and Efficiency</li>
+<li>Model families: Inference Systems, Serving</li>
+<li>Evidence trail: <a href="sources/efficient-memory-management-for-large-language-mode-3e7d0682.html#scenarios-the-request-consists-of-multiple-sequences-that-can-2">Efficient Memory Management for Large Language Model Serving with PagedAttention: 8.9 scenarios, the request consists of multiple sequences that can</a>, <a href="sources/efficient-memory-management-for-large-language-mode-3e7d0682.html#density-9">Efficient Memory Management for Large Language Model Serving with PagedAttention: Density</a>, <a href="sources/efficient-memory-management-for-large-language-mode-3e7d0682.html#block-0-6">Efficient Memory Management for Large Language Model Serving with PagedAttention: Block 0</a></li>
+</ul>
+<h3 id="neighbours"><a href="topics/topic-neighbours.html">Neighbours</a></h3>
+<p>Token likelihoods are provided by a model, parameterized by 𝜃, that takes as input both previous tokens and their retrieved neighbours. (1)  𝐿 ( 𝑋 | 𝜃, D) , 𝑢=1 𝑖=1 We set Re t(𝐶1 ) = ∅, namely the likelihood of tokens from the first chunk does not depend on any retrieval data. We can therefore directly sample with log- probability , where sampling within the chunk 𝐶𝑢 is conditioned on the neighbours (Re t(𝐶𝑢0 ))𝑢0 &lt;𝑢 . Improving language models by retrieving from trillions of tokens measured in bytes-per-bits, for a 247M parameter model trained with a 157 billion token schedule.</p>
+<ul class="md-list">
+<li>Key terms: retrieval, chunk, embeddings, time</li>
+<li>Coverage: 1 sources, 2 sections</li>
+<li>Areas: Retrieval and Tool Use</li>
+<li>Model families: Retrieval-Augmented Language Models, Decoder-Only</li>
+<li>Evidence trail: <a href="sources/improving-language-models-by-retrieving-from-trilli-6ccdc0c4.html#neighbours-3">Improving language models by retrieving from trillions of tokens: Neighbours</a>, <a href="sources/improving-language-models-by-retrieving-from-trilli-6ccdc0c4.html#retrieval-values-neighbours-n-0-950-30">Improving language models by retrieving from trillions of tokens: Retrieval values Neighbours N 0.950</a></li>
+</ul>
+<h3 id="perceiver-resampler"><a href="topics/topic-few-shot-learning.html">Perceiver Resampler</a></h3>
+<p>We introduce Flamingo, a family of Visual Language Models (VLM) with this ability. We propose key architectural innovations to: (i) bridge powerful pretrained vision-only and language-only models, (ii) handle sequences of arbitrarily inter- leaved visual and textual data, and (iii) seamlessly ingest images or videos as inputs. Thanks to their flexibility, Flamingo models can be trained on large-scale multimodal web corpora containing arbitrarily interleaved text and images, which is key to endow them with in-context few-shot learning capabilities. Trained from scratch n-th LM block ❄ n-th GATED XATTN-DENSE Perceiver Perceiver … Resampler Resampler 1st LM block ❄ 1st GATED XATTN-DENSE Vision Vision Encoder Encoder Processed text ❄ ❄ &lt;image&gt; This is a very cute dog.&lt;image&gt; This is Interleaved visual/text data This is a very cute dog.</p>
+<ul class="md-list">
+<li>Key terms: flamingo, text, visual, models, language, image, model, learning</li>
+<li>Coverage: 1 sources, 8 sections</li>
+<li>Areas: Multimodal Models</li>
+<li>Model families: Vision-Language, Few-Shot Learning</li>
+<li>Evidence trail: <a href="sources/flamingo-a-visual-language-model-for-few-shot-learn-ad99aa86.html#perceiver-perceiver-4">Flamingo: a Visual Language Model for Few-Shot Learning: Perceiver Perceiver</a>, <a href="sources/flamingo-a-visual-language-model-for-few-shot-learn-ad99aa86.html#discussion-10">Flamingo: a Visual Language Model for Few-Shot Learning: 5 Discussion</a>, <a href="sources/flamingo-a-visual-language-model-for-few-shot-learn-ad99aa86.html#attention-23">Flamingo: a Visual Language Model for Few-Shot Learning: Attention ):</a></li>
+</ul>
+<h3 id="preprocessing-cleaning"><a href="topics/topic-dataset-contain.html">Preprocessing Cleaning</a></h3>
+<p>Is there anything about the com- The dataset is static and thus will become progressively more position of the dataset or the way “stale”. For example, it will not reflect new language and it was collected and preprocessed/- norms that evolve over time. However, due to the nature cleaned/labeled that might impact of the dataset it is relatively cheap to collect an up-to-date future uses? Over what timeframe was the data The dataset was collected over a period of several months in collected?</p>
+<ul class="md-list">
+<li>Key terms: collected, date, dataset, tasks, language, training, models, text</li>
+<li>Coverage: 1 sources, 3 sections</li>
+<li>Areas: Multimodal Models</li>
+<li>Model families: Vision-Language, Few-Shot Learning</li>
+<li>Evidence trail: <a href="sources/flamingo-a-visual-language-model-for-few-shot-learn-ad99aa86.html#preprocessing-cleaning-labeling-53">Flamingo: a Visual Language Model for Few-Shot Learning: Preprocessing/cleaning/labeling</a>, <a href="sources/flamingo-a-visual-language-model-for-few-shot-learn-ad99aa86.html#preprocessing-cleaning-labeling-53">Flamingo: a Visual Language Model for Few-Shot Learning: Preprocessing/cleaning/labeling</a>, <a href="sources/flamingo-a-visual-language-model-for-few-shot-learn-ad99aa86.html#distribution-49">Flamingo: a Visual Language Model for Few-Shot Learning: Distribution</a></li>
+</ul>
+<h3 id="pretraining-only-code-finetuning"><a href="topics/topic-pretraining-only-code-finetuning.html">Pretraining only Code Finetuning</a></h3>
+<p>The predicted code contains fixes for all of the compilation errors (undeclared variables), as well as other stylistic improvements (declaring variables together) and logic improvements (reading numbers into array a in a loop and not using index i outside the loop). DeepFix Code Repair The PaLM-Coder 540B model demonstrates impressive performance on the DeepFix code repair task, reaching a compile rate of 82.1%, compared to 71.7% achieved by prior work (Yasunaga &amp; Liang, 2021). Figures 13 and 14 show example DeepFix problems with PaLM-Coder’s successful predictions.</p>
+<ul class="md-list">
+<li>Key terms: latin, latn, palm, deepfix, coder, lines, broken, edits</li>
+<li>Coverage: 1 sources, 2 sections</li>
+<li>Areas: Scaling and Foundation Models</li>
+<li>Model families: Decoder-Only, Transformer</li>
+<li>Evidence trail: <a href="sources/palm-scaling-language-modeling-with-pathways-dc99ade4.html#iso-code-language-tokens-b-percentage-iso-code-language-tokens-b-percentage-73">PaLM: Scaling Language Modeling with Pathways: ISO Code Language Tokens(B) Percentage ISO Code Language Tokens (B) Percentage</a>, <a href="sources/palm-scaling-language-modeling-with-pathways-dc99ade4.html#pretraining-only-code-finetuning-25">PaLM: Scaling Language Modeling with Pathways: Pretraining only Code Finetuning</a></li>
+</ul>
+<h3 id="ql-o-ra-efficient-finetuning-of-quantized-llms"><a href="topics/topic-ql-o-ra-efficient-finetuning-of-quantized-llms.html">QL O RA: Efficient Finetuning of Quantized LLMs</a></h3>
+<p>Our best model family, which we name Guanaco, outperforms all previous openly released models on the Vicuna benchmark, reaching 99.3% of the performance level of ChatGPT while only requiring 24 hours of finetuning on a single GPU. We use QL O RA to finetune more than 1,000 models, providing a detailed analysis of instruction following and chatbot performance across 8 instruction datasets, multiple model types (LLaMA, T5), and model scales that would be infeasible to run with regular finetuning (e.g. We release all of our models and code, including CUDA kernels for 4-bit training.2 1 Introduction Finetuning large language models (LLMs) is a highly effective way to improve their performance, [40, 62, 43, 61, 59, 37] and to add desirable or remove undesirable behaviors [43, 2, 4]. quantizing the transformer model to 4-bit precision and using paged optimizers to handle memory spikes.</p>
+<ul class="md-list">
+<li>Key terms: lora, bit, memory, quantization, type</li>
+<li>Coverage: 1 sources, 4 sections</li>
+<li>Areas: Alignment and Post-Training</li>
+<li>Model families: Parameter-Efficient Finetuning, Quantization</li>
+<li>Evidence trail: <a href="sources/qlora-efficient-finetuning-of-quantized-llms-ea3ece56.html#ql-o-ra-efficient-finetuning-of-quantized-llms-1">QLoRA: Efficient Finetuning of Quantized LLMs: QL O RA: Efficient Finetuning of Quantized LLMs</a>, <a href="sources/qlora-efficient-finetuning-of-quantized-llms-ea3ece56.html#ql-o-ra-finetuning-4">QLoRA: Efficient Finetuning of Quantized LLMs: 3 QL O RA Finetuning</a>, <a href="sources/qlora-efficient-finetuning-of-quantized-llms-ea3ece56.html#background-3">QLoRA: Efficient Finetuning of Quantized LLMs: 2 Background</a></li>
+</ul>
+<h3 id="retro-model-architecture"><a href="topics/topic-retro-model-architecture.html">Retro model architecture</a></h3>
+<p>Retro model architecture Our model relies on an encoder-decoder transformer architecture, integrating the retrieved data through a cross-attention mechanism as introduced in Vaswani et al. First, the retrieved tokens Ret(𝐶 ) are fed into an encoder Transformer, which computes the encoded neighbours set 𝐸. We next describe the retrieval encoder and the chunked cross-attention layer in more detail, and explain how to sample from Re t ro. We then remove sections with the following titles: “references”, “external links”, “sources”, “further reading”, “see also”, “citations”, and “note”.</p>
+<ul class="md-list">
+<li>Key terms: attention, chunk, cross, neighbours, cca, retrieval, encoder, layer</li>
+<li>Coverage: 1 sources, 2 sections</li>
+<li>Areas: Retrieval and Tool Use</li>
+<li>Model families: Retrieval-Augmented Language Models, Decoder-Only</li>
+<li>Evidence trail: <a href="sources/improving-language-models-by-retrieving-from-trilli-6ccdc0c4.html#retro-model-architecture-5">Improving language models by retrieving from trillions of tokens: 2.4. Retro model architecture</a>, <a href="sources/improving-language-models-by-retrieving-from-trilli-6ccdc0c4.html#megan-rohrer-aakashavaani-25">Improving language models by retrieving from trillions of tokens: Megan Rohrer Aakashavaani</a></li>
+</ul>
+<h3 id="reward-model"><a href="topics/topic-reward-model.html">Reward Model</a></h3>
+<p>Each example consists of a prompt (including previous dialogue if available) and a response, which is the input of the reward model. To train the reward model, we convert our collected pairwise human preference data into a binary ranking label format (i.e., chosen &amp; rejected) and enforce the chosen response to have a higher score than its counterpart. (2020a), we then fine-tune our model on the new set of ranked samples, reinforcing the reward. Significantly Better Slightly Better Better Negligibly Better / Unsure Percentage (%) Meta Preference Data Batch Stage with an unsure or negligibly better rating become larger with better performing Llama 2-Chat trained and available for preference data annotation.</p>
+<ul class="md-list">
+<li>Key terms: better, avg, disagree, data, models, training, loss, learning</li>
+<li>Coverage: 3 sources, 8 sections</li>
+<li>Areas: Open Foundation Models, Scaling and Foundation Models, Alignment and Post-Training</li>
+<li>Model families: Decoder-Only, Chat Models, Scaling Laws, Instruction-Tuning, RLHF</li>
+<li>Evidence trail: <a href="sources/llama-2-open-foundation-and-fine-tuned-chat-models-25e38443.html#num-of-avg-turns-avg-tokens-avg-tokens-avg-tokens-11">Llama 2: Open Foundation and Fine-Tuned Chat Models: Num. of Avg. # Turns Avg. # Tokens Avg. # Tokens Avg. # Tokens</a>, <a href="sources/llama-2-open-foundation-and-fine-tuned-chat-models-25e38443.html#num-of-avg-turns-avg-tokens-avg-tokens-avg-tokens-52">Llama 2: Open Foundation and Fine-Tuned Chat Models: Num. of Avg. # Turns Avg. # Tokens Avg. # Tokens Avg. # Tokens</a>, <a href="sources/llama-2-open-foundation-and-fine-tuned-chat-models-25e38443.html#significantly-better-slightly-better-53">Llama 2: Open Foundation and Fine-Tuned Chat Models: Significantly Better Slightly Better</a></li>
+</ul>
+<h3 id="sentiment-pretrained-tuned"><a href="topics/topic-sentiment-pretrained-tuned.html">Sentiment / Pretrained / Tuned</a></h3>
+<p>The fine-tuned Llama 2-Chat shows more positivity in sentiment scores than the pretrained versions do. For the gender domain, LLMs tend to have a more positive sentiment towards American female actresses than male actors. For the race domain, demographic groups of Asian Americans and Hispanic and Latino Americans tend to have relatively positive sentiment scores compared to other subgroups. American actors American actresses Pretrained MPT Falcon Llama 1 Llama 2 Fine-tuned ChatGPT 0.55 0.65 MPT-instruct 7B 0.31 0.38 Falcon-instruct 7B 0.32 0.36 Llama 2-Chat prompts.</p>
+<ul class="md-list">
+<li>Key terms: llama, tuned, domain, fine, benchmarks, safety, models</li>
+<li>Coverage: 2 sources, 3 sections</li>
+<li>Areas: Open Foundation Models, Alignment and Post-Training</li>
+<li>Model families: Decoder-Only, Chat Models, RLHF</li>
+<li>Evidence trail: <a href="sources/llama-2-open-foundation-and-fine-tuned-chat-models-25e38443.html#pretrained-70">Llama 2: Open Foundation and Fine-Tuned Chat Models: Pretrained</a>, <a href="sources/llama-2-open-foundation-and-fine-tuned-chat-models-25e38443.html#pretrained-72">Llama 2: Open Foundation and Fine-Tuned Chat Models: Pretrained</a>, <a href="sources/training-a-helpful-and-harmless-assistant-with-rein-71c25fc9.html#gender-68">Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback: Gender</a></li>
+</ul>
+<h3 id="size-memory-gradient"><a href="topics/topic-size-memory-gradient.html">Size / Memory / Gradient</a></h3>
+<p>E Training Details of Vicuna Models Vicuna is created by fine-tuning a LLaMA base model using user-shared conversations gathered from conversations. To ensure data quality, we convert the HTML back to markdown and filter out some inappropriate or low-quality samples, which results in 125K conversations after data cleaning.4 We then divide lengthy conversations into smaller segments that fit the model’s maximum context length. We construct three training datasets with different scales from this cleaned ShareGPT dataset. Input gradient Optimizer Weight gradient Adapters Model 7B (6.9 GB) 13B (11.3 GB) 33B (24.7 GB) 65B (45.0 GB) LLaMA model size size 1 and sequence length 512 and is estimated only for adapters and the base model weights (no attention).</p>
+<ul class="md-list">
+<li>Key terms: vicuna, length, training, model, models, conversations, dataset</li>
+<li>Coverage: 2 sources, 2 sections</li>
+<li>Areas: Evaluation and Benchmarks, Alignment and Post-Training</li>
+<li>Model families: Evaluation, LLM-as-a-Judge, Parameter-Efficient Finetuning, Quantization</li>
+<li>Evidence trail: <a href="sources/judging-llm-as-a-judge-with-mt-bench-and-chatbot-ar-d86911cb.html#training-details-of-vicuna-models-28">Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena: E Training Details of Vicuna Models</a>, <a href="sources/qlora-efficient-finetuning-of-quantized-llms-ea3ece56.html#input-gradient-optimizer-weight-gradient-adapters-model-26">QLoRA: Efficient Finetuning of Quantized LLMs: Input gradient Optimizer Weight gradient Adapters Model</a></li>
+</ul>
+<h3 id="tldr-summarization"><a href="topics/topic-tldr-summarization.html">TLDR Summarization</a></h3>
+<p>We omit GPT (prompted) from the evals on prompts submitted to GPT-3 models (left) as these prompts are already designed to perform well for GPT-3, as opposed to prompts submitted to InstructGPT models (right). 4.1 Results on the API distribution Labelers significantly prefer InstructGPT outputs over outputs from GPT-3. On our test set of prompts, our labelers significantly prefer InstructGPT outputs across model sizes. TLDR Summarization Prompt format [Reddit post] TL;DR: [completion] Dataset features • 2,500 Reddit posts to summarize.</p>
+<ul class="md-list">
+<li>Key terms: gpt, ppo, labelers, instructgpt</li>
+<li>Coverage: 1 sources, 3 sections</li>
+<li>Areas: Alignment and Post-Training</li>
+<li>Model families: Instruction-Tuning, RLHF</li>
+<li>Evidence trail: <a href="sources/training-language-models-to-follow-instructions-wit-80867b0f.html#tldr-summarization-50">Training language models to follow instructions with human feedback: TLDR Summarization</a>, <a href="sources/training-language-models-to-follow-instructions-wit-80867b0f.html#metadata-scale-9">Training language models to follow instructions with human feedback: Metadata Scale</a>, <a href="sources/training-language-models-to-follow-instructions-wit-80867b0f.html#toxicity-60">Training language models to follow instructions with human feedback: Toxicity</a></li>
+</ul>
+<h3 id="trainable-parameters"><a href="topics/topic-trainable-parameters.html">Trainable Parameters</a></h3>
+<p>For the 9 tasks with published few-shot results, Flamingo sets the new few-shot state of the art. Right: Flamingo performance improves with model size and number of shots. Recently, multimodal vision-language models trained with a contrastive objective [50, 85] have enabled zero-shot adaptation to novel tasks, without the need for fine-tuning. B.2 Additional performance results B.2.1 Few-shot learning on classification tasks We consider applying the Flamingo models to well-studied classification benchmarks like ImageNet or Kinetics700.</p>
+<ul class="md-list">
+<li>Key terms: gpt, lora, mnli, fine, tasks, tuning, performance, training</li>
+<li>Coverage: 3 sources, 6 sections</li>
+<li>Areas: Multimodal Models, Evaluation and Benchmarks, Alignment and Post-Training</li>
+<li>Model families: Vision-Language, Few-Shot Learning, Evaluation, LLM-as-a-Judge, Parameter-Efficient Finetuning, Low-Rank Adaptation</li>
+<li>Evidence trail: <a href="sources/lora-low-rank-adaptation-of-large-language-models-6e77126e.html#method-webnlg-22">LoRA: Low-Rank Adaptation of Large Language Models: Method WebNLG</a>, <a href="sources/lora-low-rank-adaptation-of-large-language-models-6e77126e.html#ur-m-ethod-4">LoRA: Low-Rank Adaptation of Large Language Models: 4 O UR M ETHOD</a>, <a href="sources/flamingo-a-visual-language-model-for-few-shot-learn-ad99aa86.html#shots-zero-few-shot-sota-3">Flamingo: a Visual Language Model for Few-Shot Learning: 32 shots zero/few-shot SotA</a></li>
+</ul>
+<h3 id="vicuna-gpt-first"><a href="topics/topic-vicuna-gpt-first.html">Vicuna / Gpt / First</a></h3>
+<p>F Exploring Vicuna as a judge In this paper, we mostly evaluate the ability of close-sourced models such as GPT-4 as a proxy for human evaluations. However, model services such as GPT-4 can also become expensive with a growing number of evaluations. Vicuna-13B shows strong language understanding capability, and are much cheaper than close-sourced LLMs. Our novel model ensembling with the text-only GPT-4 consistently improves the model’s performance under all categories, setting the new SoTA performance.</p>
+<ul class="md-list">
+<li>Key terms: model, training, visual, instruction, human, answer, pre</li>
+<li>Coverage: 2 sources, 2 sections</li>
+<li>Areas: Evaluation and Benchmarks, Multimodal Models</li>
+<li>Model families: Evaluation, LLM-as-a-Judge, Vision-Language, Instruction Tuning</li>
+<li>Evidence trail: <a href="sources/visual-instruction-tuning-c90fe045.html#subject-context-modality-grade-9">Visual Instruction Tuning: Subject Context Modality Grade</a>, <a href="sources/judging-llm-as-a-judge-with-mt-bench-and-chatbot-ar-d86911cb.html#zero-shot-vicuna-29">Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena: F.1 Zero-Shot Vicuna</a></li>
+</ul>
+<h2 id="source-archive">Source Archive</h2>
+<h3 id="attention-is-all-you-need"><a href="sources/attention-is-all-you-need-acad837e.html">Attention Is All You Need</a></h3>
+<p>The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively. 3.1 Encoder and Decoder Stacks Encoder: The encoder is composed of a stack of N = 6 identical layers. We employ a residual connection [11] around each of the two sub-layers, followed by layer normalization [1]. Scaled Dot-Product Attention Multi-Head Attention attention layers running in parallel.</p>
+<ul class="md-list">
+<li>Metadata: 2017 · NeurIPS · Foundation Models</li>
+<li>Model families: Transformer, Encoder-Decoder</li>
+<li>Key terms: attention, encoder, layers, head, transformer, decoder, dot, model</li>
+<li>Coverage: 15 pages, 8 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-encoder-decoder.html">Encoder Decoder</a>, <a href="topics/topic-flashattention-attention-memory.html">Flashattention / Attention / Memory</a></li>
+</ul>
+<h3 id="bert-pre-training-of-deep-bidirectional-transformers-for-language-understanding"><a href="sources/bert-pre-training-of-deep-bidirectional-transformer-41bc3abd.html">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</a></h3>
+<p>ELMo uses the concatenation of independently trained left-to-right and right-to- left LSTMs to generate features for downstream tasks. Among the three, only BERT representations are jointly conditioned on both left and right context in all layers. In addition to the architecture differences, BERT and OpenAI GPT are fine-tuning approaches, while ELMo is a feature-based approach.</p>
+<ul class="md-list">
+<li>Metadata: 2018 · NAACL · Foundation Models</li>
+<li>Model families: Encoder-Only, Transformer</li>
+<li>Key terms: left, right, elmo, bert, uses, concatenation, independently, trained</li>
+<li>Coverage: 16 pages, 1 retained sections</li>
+<li>Contributed topics: No cross-document topics yet.</li>
+</ul>
+<h3 id="blip-2-bootstrapping-language-image-pre-training-with-frozen-image-encoders-and-large-language-models"><a href="sources/blip-2-bootstrapping-language-image-pre-training-wi-c3c8f676.html">BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models</a></h3>
+<p>BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models Explain the advantages of Write down the facts that you Tell me something about this product. The audi e-tron quattro concept is a It is a genus of flowering plants in the plug-in hybrid electric sports car The great wall of china was built in orchid family, orchidaceae. Pepperoni, mozzarella cheese, pizza Yes, it&#x27;s a house that looks like it&#x27;s sauce, olive oil, salt, pepper, basil.</p>
+<ul class="md-list">
+<li>Metadata: 2023 · ICML · Multimodal Models</li>
+<li>Model families: Vision-Language, Modular Pretraining</li>
+<li>Key terms: language, image, blip, bootstrapping, pre, training, frozen, encoders</li>
+<li>Coverage: 13 pages, 1 retained sections</li>
+<li>Contributed topics: No cross-document topics yet.</li>
+</ul>
+<h3 id="chain-of-thought-prompting-elicits-reasoning-in-large-language-models"><a href="sources/chain-of-thought-prompting-elicits-reasoning-in-lar-888dd8e4.html">Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</a></h3>
+<p>likely that models could arrive at the correct answer via an incorrect reasoning path (e.g., all the commmonsense reasoning datasets we evaluate). Q UESTION : If Ann is 9 years old and her brother is twice her age, how old will her brother be in 3 years? M ODEL A NSWER ( CORRECT BUT UNRELATED STATEMENT ): Ann is 9 years old. Standard prompting Chain of thought prompting MultiArith Sports Last Letter GSM8K (MAWPS) Understanding Coin Flip Concatenation Solve rate (%) 12 4 6 8 12 4 6 8 12 4 6 8 12 4 6 8 1 2 3 4 Number of few-shot exemplars to varying the number of few-shot exemplars in the prompt.</p>
+<ul class="md-list">
+<li>Metadata: 2022 · NeurIPS · Reasoning and Prompting</li>
+<li>Model families: Prompting, Reasoning</li>
+<li>Key terms: prompting, reasoning, letter, symbolic, models, incorrect, years, old</li>
+<li>Coverage: 43 pages, 11 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-flashattention-attention-memory.html">Flashattention / Attention / Memory</a></li>
+</ul>
+<h3 id="constitutional-ai-harmlessness-from-ai-feedback"><a href="sources/constitutional-ai-harmlessness-from-ai-feedback-5eacf5e7.html">Constitutional AI: Harmlessness from AI Feedback</a></h3>
+<p>Harmlessness Elo Helpfulness Elo Helpful RLHF 100 HH RLHF 50 RL-CAI 150 RL-CAI w/ CoT 100 0.0 0.5 1.0 1.5 2.0 2.5 3.0 0.0 0.5 1.0 1.5 2.0 2.5 3.0 RL Train Sequences 1e6 RL Train Sequences 1e6 total number of RL training sequences, as judged by crowdworkers via comparison tests. We see that the RL- CAI models perform very well on harmlessness without a great cost to their helpfulness. The initial snapshot for the RL-CAI models is SL-CAI, where we set the Elos to be zero; while the initial snapshot for the RLHF models is a pre-trained LM. Harmlessness Score Helpfulness Score HH Score Parameters PM Score Number of Revisions Number of Revisions Number of Revisions set of red team prompts.</p>
+<ul class="md-list">
+<li>Metadata: 2022 · arXiv · Alignment and Post-Training</li>
+<li>Model families: AI Feedback, Constitutional Training</li>
+<li>Key terms: revisions, harmlessness, helpfulness, cai, number, score, rlhf, sequences</li>
+<li>Coverage: 34 pages, 6 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-elo-scores.html">Elo Scores</a></li>
+</ul>
+<h3 id="direct-preference-optimization-your-language-model-is-secretly-a-reward-model"><a href="sources/direct-preference-optimization-your-language-model--a97b62a9.html">Direct Preference Optimization: Your Language Model is Secretly a Reward Model</a></h3>
+<p>6.4 Validating GPT-4 judgments with human judgments We conduct a human study to verify the reliability of GPT-4’s judgments, using the results of the TL;DR summarization experiment and two different GPT-4 prompts. Over- H-H agree 65 - 87 all, the GPT-4 (C) prompt generally provides win Table 2: Comparing human and GPT-4 win rates rates more representative of humans; we therefore and per-judgment agreement on TL;DR summariza- use this prompt for the main results in Section 6.2. Humans agree with GPT-4 about as For additional details about the human study, in- much as they agree with each other. Direct Preference Optimization: Your Language Model is Secretly a Reward Model Rafael Rafailov∗† Archit Sharma∗† Eric Mitchell∗† Stefano Ermon†‡ Christopher D.</p>
+<ul class="md-list">
+<li>Metadata: 2023 · NeurIPS · Alignment and Post-Training</li>
+<li>Model families: Preference Optimization, Post-Training</li>
+<li>Key terms: human, gpt, model, win, reward, study, dpo, ppo</li>
+<li>Coverage: 27 pages, 8 retained sections</li>
+<li>Contributed topics: No cross-document topics yet.</li>
+</ul>
+<h3 id="efficient-memory-management-for-large-language-model-serving-with-pagedattention"><a href="sources/efficient-memory-management-for-large-language-mode-3e7d0682.html">Efficient Memory Management for Large Language Model Serving with PagedAttention</a></h3>
+<p>Efficient Memory Management for Large Language Model Serving with PagedAttention Woosuk Kwon1,∗ Zhuohan Li1,∗ Siyuan Zhuang1 Ying Sheng1,2 Lianmin Zheng1 Cody Hao Yu3 Joseph E. Gonzalez1 Hao Zhang4 Ion Stoica1 1 UC Berkeley 2 Stanford University 3 Independent Researcher 4 UC San Diego Abstract Existing systems vLLM Memory usage (GB) High throughput serving of large language models (LLMs) requires batching sufficiently many requests at a time. How- arXiv:2309.06180v1 [cs.LG] 12 Sep 2023 ever, existing systems struggle because the key-value cache KV Parameters Cache Parameter size (KV cache) memory for each request is huge and grows (&gt;30%) 20 (26GB, 65%) Throughput (token/s) and shrinks dynamically. The and value vectors are spread across three blocks, and the KV cache manager effectively manages the KV cache in a three blocks are not contiguous on the physical memory.</p>
+<ul class="md-list">
+<li>Metadata: 2023 · SOSP · Systems and Efficiency</li>
+<li>Model families: Inference Systems, Serving</li>
+<li>Key terms: cache, memory, blocks, orca, pagedattention, vllm, physical, request</li>
+<li>Coverage: 16 pages, 9 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-memory-management.html">Memory Management</a></li>
+</ul>
+<h3 id="exploring-the-limits-of-transfer-learning-with-a-unified-text-to-text-transformer"><a href="sources/exploring-the-limits-of-transfer-learning-with-a-un-a5039072.html">Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer</a></h3>
+<p>Raffel, Shazeer, Roberts, Lee, Narang, Matena, Zhou, Li and Liu pertinent issue given that English is not the native language for the majority of the world’s population. The motivation for this paper was the flurry of recent work on transfer learning for NLP. Before we began this work, these advances had already enabled breakthroughs in settings where learning-based methods had not yet been shown to be effective. Raffel, Shazeer, Roberts, Lee, Narang, Matena, Zhou, Li and Liu Original target: carbon monoxide Processed target: carbon monoxide D.16 WMT English to German Original input: &quot;Luigi often said to me that he never wanted the brothers to end up in court,&quot; she wrote.</p>
+<ul class="md-list">
+<li>Metadata: 2019 · JMLR · Foundation Models</li>
+<li>Model families: Seq2Seq, Text-to-Text, Transformer</li>
+<li>Key terms: original, target, processed, input, said, raffel, shazeer, roberts</li>
+<li>Coverage: 67 pages, 14 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-cnn-daily-mail.html">CNN/Daily Mail</a></li>
+</ul>
+<h3 id="flamingo-a-visual-language-model-for-few-shot-learning"><a href="sources/flamingo-a-visual-language-model-for-few-shot-learn-ad99aa86.html">Flamingo: a Visual Language Model for Few-Shot Learning</a></h3>
+<p>We introduce Flamingo, a family of Visual Language Models (VLM) with this ability. We propose key architectural innovations to: (i) bridge powerful pretrained vision-only and language-only models, (ii) handle sequences of arbitrarily inter- leaved visual and textual data, and (iii) seamlessly ingest images or videos as inputs. Thanks to their flexibility, Flamingo models can be trained on large-scale multimodal web corpora containing arbitrarily interleaved text and images, which is key to endow them with in-context few-shot learning capabilities. Over what timeframe was the data The dataset was collected over a period of several months in collected?</p>
+<ul class="md-list">
+<li>Metadata: 2022 · NeurIPS · Multimodal Models</li>
+<li>Model families: Vision-Language, Few-Shot Learning</li>
+<li>Key terms: dataset, language, data, training, text, collected, preprocessing, labeling</li>
+<li>Coverage: 54 pages, 24 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-datasheet-for-vtp.html">Datasheet for VTP</a>, <a href="topics/topic-few-shot-learning.html">Perceiver Resampler</a>, <a href="topics/topic-dataset-contain.html">Preprocessing Cleaning</a>, <a href="topics/topic-trainable-parameters.html">Trainable Parameters</a></li>
+</ul>
+<h3 id="flashattention-2-faster-attention-with-better-parallelism-and-work-partitioning"><a href="sources/flashattention-2-faster-attention-with-better-paral-ded1c96b.html">FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning</a></h3>
+<p>3.3 Work Partitioning Between Warps As Section 3.2 describe how we schedule thread blocks, even within each thread block, we also have to decide how to partition the work between different warps. We typically use 4 or 8 warps per thread block, and the partitioning is described in Fig. For each block, FlashAttention splits K and V across 4 warps while keeping Q accessible by all warps. One can work out that if 𝑝 = softmax(𝑠) for some vector 𝑠 and 𝑝, then with output gradient 𝑑𝑝, the input gradient 𝑑𝑠 = (diag( 𝑝) − 𝑝 𝑝 ⊤ )𝑑𝑝.</p>
+<ul class="md-list">
+<li>Metadata: 2023 · ICLR · Systems and Efficiency</li>
+<li>Model families: Attention Systems, Kernel Optimization</li>
+<li>Key terms: warps, flashattention, thread, attention, work, block, different, hbm</li>
+<li>Coverage: 14 pages, 6 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-flashattention-attention-memory.html">Flashattention / Attention / Memory</a></li>
+</ul>
+<h3 id="flashattention-fast-and-memory-efficient-exact-attention-with-io-awareness"><a href="sources/flashattention-fast-and-memory-efficient-exact-atte-eeffeb20.html">FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness</a></h3>
+<p>FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness Tri Dao† , Daniel Y. We argue that a missing principle is making attention algorithms IO- aware—accounting for reads and writes between levels of GPU memory. We propose FlashAttention, an IO-aware exact attention algorithm that uses tiling to reduce the number of memory reads/writes between GPU high bandwidth memory (HBM) and GPU on-chip SRAM. In the outer loop (red arrows), FlashAttention loops through blocks of the K and V matrices and loads them to fast on-chip SRAM.</p>
+<ul class="md-list">
+<li>Metadata: 2022 · NeurIPS · Systems and Efficiency</li>
+<li>Model families: Attention Systems, Kernel Optimization</li>
+<li>Key terms: flashattention, attention, hbm, pass, memory, requires, accesses, gpu</li>
+<li>Coverage: 34 pages, 14 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-flashattention-attention-memory.html">Flashattention / Attention / Memory</a></li>
+</ul>
+<h3 id="holistic-evaluation-of-language-models"><a href="sources/holistic-evaluation-of-language-models-3d3d51b0.html">Holistic Evaluation of Language Models</a></h3>
+<p>Tasks, domains, and languages are not atomic or unambiguous constructs: they can be made coarser and finer, but we use them as intuitive structure for the space of scenarios. Given this structure, we deliberately select scenarios based on three overarching principles: (i) coverage of the space, (ii) minimality of the set of selected scenarios, and (iii) prioritizing scenarios that correspond to user-facing tasks. Given the ubiquity of natural language, the field of natural language processing (NLP) considers myriad tasks that correspond to language’s many functions (Jurafsky &amp; Martin, 2000). We present Holistic Evaluation of Language Models (HELM) to improve the transparency of language models.</p>
+<ul class="md-list">
+<li>Metadata: 2022 · Transactions on Machine Learning Research · Evaluation and Benchmarks</li>
+<li>Model families: Benchmarking, Evaluation</li>
+<li>Key terms: scenarios, models, language, tasks, structure, space, given, set</li>
+<li>Coverage: 162 pages, 3 retained sections</li>
+<li>Contributed topics: No cross-document topics yet.</li>
+</ul>
+<h3 id="improving-language-models-by-retrieving-from-trillions-of-tokens"><a href="sources/improving-language-models-by-retrieving-from-trilli-6ccdc0c4.html">Improving language models by retrieving from trillions of tokens</a></h3>
+<p>We then remove sections with the following titles: “references”, “external links”, “sources”, “further reading”, “see also”, “citations”, and “note”. In the remaining sections, we remove Wikilinks and remove the following templates: “reflist”, “notelist”, “notelist-ua”, “notelist-lr”, “notelist-ur”, and “notelist-lg”. We also exclude objects with the “ref ” or “table” tag and clean the remaining text with the strip_code function. Token likelihoods are provided by a model, parameterized by 𝜃, that takes as input both previous tokens and their retrieved neighbours.</p>
+<ul class="md-list">
+<li>Metadata: 2021 · ICML · Retrieval and Tool Use</li>
+<li>Model families: Retrieval-Augmented Language Models, Decoder-Only</li>
+<li>Key terms: notelist, token, model, remove, tokens, full, massivetext, sections</li>
+<li>Coverage: 43 pages, 8 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-common-crawl-2.html">Common Crawl</a>, <a href="topics/topic-flashattention-attention-memory.html">Flashattention / Attention / Memory</a>, <a href="topics/topic-neighbours.html">Neighbours</a>, <a href="topics/topic-retro-model-architecture.html">Retro model architecture</a></li>
+</ul>
+<h3 id="judging-llm-as-a-judge-with-mt-bench-and-chatbot-arena"><a href="sources/judging-llm-as-a-judge-with-mt-bench-and-chatbot-ar-d86911cb.html">Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena</a></h3>
+<p>Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena Lianmin Zheng1∗ Wei-Lin Chiang1∗ Ying Sheng4∗ Siyuan Zhuang1 Zhanghao Wu1 Yonghao Zhuang3 Zi Lin2 Zhuohan Li1 Dacheng Li13 arXiv:2306.05685v4 [cs.CL] 24 Dec 2023 Eric P. Gonzalez1 Ion Stoica1 UC Berkeley UC San Diego Carnegie Mellon University Stanford MBZUAI Abstract Evaluating large language model (LLM) based chat assistants is challenging due to their broad capabilities and the inadequacy of existing benchmarks in measuring human preferences. To address this, we explore using strong LLMs as judges to evaluate these models on more open-ended questions. F Exploring Vicuna as a judge In this paper, we mostly evaluate the ability of close-sourced models such as GPT-4 as a proxy for human evaluations.</p>
+<ul class="md-list">
+<li>Metadata: 2023 · NeurIPS Datasets and Benchmarks · Evaluation and Benchmarks</li>
+<li>Model families: Evaluation, LLM-as-a-Judge</li>
+<li>Key terms: model, vicuna, gpt, conversations, models, prompt, llm, judge</li>
+<li>Coverage: 29 pages, 17 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-chatbot-arena.html">Chatbot Arena</a>, <a href="topics/topic-size-memory-gradient.html">Size / Memory / Gradient</a>, <a href="topics/topic-trainable-parameters.html">Trainable Parameters</a>, <a href="topics/topic-vicuna-gpt-first.html">Vicuna / Gpt / First</a></li>
+</ul>
+<h3 id="language-models-are-few-shot-learners"><a href="sources/language-models-are-few-shot-learners-eb9f79f3.html">Language Models are Few-Shot Learners</a></h3>
+<p>We then allowed the model to naturally carry out completions and created a corpus of such completions for studying co-occurrence of words. The following is an example output from the model: &quot;Buddhists are divided into two main branches - Theravada and Mahayana. For example, with the religion Islam, we found that words such as ramadan, prophet and mosque co-occurred at a higher rate than for other religions. D Total Compute Used to Train Language Models This appendix contains the calculations that were used to derive the approximate compute used to train the language models in Figure 2.2.</p>
+<ul class="md-list">
+<li>Metadata: 2020 · NeurIPS · Scaling and Foundation Models</li>
+<li>Model families: Decoder-Only, In-Context Learning</li>
+<li>Key terms: models, language, quality, common, crawl, model, compute, uses</li>
+<li>Coverage: 75 pages, 32 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-common-crawl-2.html">Common Crawl</a>, <a href="topics/topic-fewer-steps.html">Fewer Steps</a></li>
+</ul>
+<h3 id="learning-transferable-visual-models-from-natural-language-supervision"><a href="sources/learning-transferable-visual-models-from-natural-la-41c52fc7.html">Learning Transferable Visual Models From Natural Language Supervision</a></h3>
+<p>We found that the model had a top-1 accuracy of 91.8% on the CCTV images for the initial evaluation. We measure the model’s performance on classification of The accuracy dropped significantly to 51.1% for the second images from CCTV cameras and zero-shot celebrity identifi- evaluation, with the model incorrectly choosing the ‘close’ cation. We first tested model performance on low-resolution answer 40.7% of the time. Learning Transferable Visual Models From Natural Language Supervision 19 Difference in Accuracy on Overlapping vs.</p>
+<ul class="md-list">
+<li>Metadata: 2021 · ICML · Multimodal Models</li>
+<li>Model families: Vision-Language, Contrastive Learning</li>
+<li>Key terms: shot, zero, accuracy, clip, performance, model, visual, natural</li>
+<li>Coverage: 48 pages, 9 retained sections</li>
+<li>Contributed topics: No cross-document topics yet.</li>
+</ul>
+<h3 id="llama-2-open-foundation-and-fine-tuned-chat-models"><a href="sources/llama-2-open-foundation-and-fine-tuned-chat-models-25e38443.html">Llama 2: Open Foundation and Fine-Tuned Chat Models</a></h3>
+<p>Safety Helpfulness RM Score after Safety RLHF 0.8 Improvement 0.8 Safety RM Score after Safety RLHF 0.0 0.2 0.4 0.6 0.8 1.0 0.0 0.2 0.4 0.6 0.8 1.0 Safety RM Score before Safety RLHF Helpfulness RM Score before Safety RLHF model scores of generations on the Meta Safety test set. The clustering of samples in the top left corner suggests the improvements of model safety. Right: helpfulness reward model scores of generations on the Meta Helpfulness test set. American actors American actresses Pretrained MPT Falcon Llama 1 Llama 2 Fine-tuned ChatGPT 0.55 0.65 MPT-instruct 7B 0.31 0.38 Falcon-instruct 7B 0.32 0.36 Llama 2-Chat prompts.</p>
+<ul class="md-list">
+<li>Metadata: 2023 · arXiv · Open Foundation Models</li>
+<li>Model families: Decoder-Only, Chat Models</li>
+<li>Key terms: safety, model, llama, tuned, helpfulness, score, rlhf, scores</li>
+<li>Coverage: 77 pages, 27 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-reward-model.html">Reward Model</a>, <a href="topics/topic-sentiment-pretrained-tuned.html">Sentiment / Pretrained / Tuned</a></li>
+</ul>
+<h3 id="llama-open-and-efficient-foundation-language-models"><a href="sources/llama-open-and-efficient-foundation-language-models-b45c40b0.html">LLaMA: Open and Efficient Foundation Language Models</a></h3>
+<p>The sun goes down, and finally Gauss and Curie find time to relax and discuss after an exhausting day of work. Gauss: Hey, Curie, did you know that a lot of people consider me to be the first geek? Gauss: Well, Wikipedia says that a geek is “a person who is fascinated, perhaps obsessively, by obscure or very specific areas of knowledge and imagination, usually electronic or virtual in nature”. sqrt (d)) /(2* a) 7 elif d == 0: 8 return (-b) /(2* a) 9 else : 10 return False Did you know that Yann LeCun dropped a rap album last year?</p>
+<ul class="md-list">
+<li>Metadata: 2023 · arXiv · Open Foundation Models</li>
+<li>Model families: Decoder-Only, Transformer</li>
+<li>Key terms: stem, gauss, request, openings, defense, curie, know, geek</li>
+<li>Coverage: 27 pages, 4 retained sections</li>
+<li>Contributed topics: No cross-document topics yet.</li>
+</ul>
+<h3 id="lora-low-rank-adaptation-of-large-language-models"><a href="sources/lora-low-rank-adaptation-of-large-language-models-6e77126e.html">LoRA: Low-Rank Adaptation of Large Language Models</a></h3>
+<p>F.2 A DDITIONAL E XPERIMENTS ON GPT-3 We present additional runs on GPT-3 with different adaptation methods in Table 15. F.3 L OW-DATA R EGIME To evaluate the performance of different adaptation approaches in the low-data regime. we randomly sample 100, 1k and 10k training examples from the full training set of MNLI to form the low-data MNLI-n tasks. Method MNLI(m)-100 MNLI(m)-1k MNLI(m)-10k MNLI(m)-392K GPT-3 (Fine-Tune) 60.2 85.8 88.9 89.5 GPT-3 (PrefixEmbed) 37.6 75.2 79.5 88.6 GPT-3 (PrefixLayer) 48.3 82.5 85.9 89.6 GPT-3 (LoRA) 63.8 85.6 89.2 91.7 n describes a subset with n training examples.</p>
+<ul class="md-list">
+<li>Metadata: 2021 · ICLR · Alignment and Post-Training</li>
+<li>Model families: Parameter-Efficient Finetuning, Low-Rank Adaptation</li>
+<li>Key terms: gpt, mnli, low, adaptation, data, training, models, rank</li>
+<li>Coverage: 26 pages, 10 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-trainable-parameters.html">Trainable Parameters</a></li>
+</ul>
+<h3 id="measuring-massive-multitask-language-understanding"><a href="sources/measuring-massive-multitask-language-understanding-1bd1157d.html">Measuring Massive Multitask Language Understanding</a></h3>
+<p>Since models are pretrained on the Internet, this enables us to test how well they can extract useful knowledge from massive corpora. Future models that use this test could be single models or a mixture of experts model. To succeed at our test, future models should be well-rounded, possess extensive world knowledge, and develop expert-level problem solving ability. Published as a conference paper at ICLR 2021 A A DDITIONAL A NALYSIS This appendix includes figures with sorted results (Figure 9), few-shot examples vs.</p>
+<ul class="md-list">
+<li>Metadata: 2020 · ICLR · Evaluation and Benchmarks</li>
+<li>Model families: Benchmarking, Evaluation</li>
+<li>Key terms: high, school, models, accuracy, shot, gpt, test, paper</li>
+<li>Coverage: 27 pages, 6 retained sections</li>
+<li>Contributed topics: No cross-document topics yet.</li>
+</ul>
+<h3 id="palm-scaling-language-modeling-with-pathways"><a href="sources/palm-scaling-language-modeling-with-pathways-dc99ade4.html">PaLM: Scaling Language Modeling with Pathways</a></h3>
+<p>G.3 Memorization Corpus Prompt PaLM 540B continuation Wikipedia the mother-tongue of 89.9% of the pop- West Bengal Official Language Act 1961 ulation, followed by Santali (8.1%), Kur- and the West Bengal Official Language mali Thar (1.1%), Hindi (0.5%) and Telugu (Amendment Act) 2012, the Bengali lan- (0.1%). Her husband, a vocal critic of the naya landed at Frankfurt airport after fly- Kremlin, was flown to Germany last sum- ing from Moscow on Wednesday evening, mer after being poisoned in Siberia with according to Der Spiegel, the German mag- what many Western countries said was a azine. Navalnaya Web gonna get in your head somehow.” The of mutants who possess the ability. The next four authors (Maarten, Gaurav, Adam, and Paul) contributed significantly to multiple phases of the project.</p>
+<ul class="md-list">
+<li>Metadata: 2022 · JMLR · Scaling and Foundation Models</li>
+<li>Model families: Decoder-Only, Transformer</li>
+<li>Key terms: palm, code, deepfix, batch, west, bengal, official, language</li>
+<li>Coverage: 87 pages, 19 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-chinchilla-gopher.html">Chinchilla Gopher</a>, <a href="topics/topic-memorization.html">Memorization</a>, <a href="topics/topic-pretraining-only-code-finetuning.html">Pretraining only Code Finetuning</a></li>
+</ul>
+<h3 id="qlora-efficient-finetuning-of-quantized-llms"><a href="sources/qlora-efficient-finetuning-of-quantized-llms-ea3ece56.html">QLoRA: Efficient Finetuning of Quantized LLMs</a></h3>
+<p>6.2 Considerations Evaluation We report moderate agreement among human annotators (Fleiss κ = 0.42) with additional deterioration when comparing two strong systems. This points to limitations in the current benchmarks and human evaluation protocols for chatbot task performance. Future work should investigate approaches to mitigate these problems drawing from disciplines that developed mechanisms to deal with subjective preferences, such as Human-Computer Interaction and Psychology. We keep LoRA α fixed and search the learning rate, since LoRA α is always proportional to the learning rate.</p>
+<ul class="md-list">
+<li>Metadata: 2023 · NeurIPS · Alignment and Post-Training</li>
+<li>Model families: Parameter-Efficient Finetuning, Quantization</li>
+<li>Key terms: models, lora, model, performance, human, finetuning, evaluation, chatbot</li>
+<li>Coverage: 26 pages, 12 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-ql-o-ra-efficient-finetuning-of-quantized-llms.html">QL O RA: Efficient Finetuning of Quantized LLMs</a>, <a href="topics/topic-size-memory-gradient.html">Size / Memory / Gradient</a></li>
+</ul>
+<h3 id="react-synergizing-reasoning-and-acting-in-language-models"><a href="sources/react-synergizing-reasoning-and-acting-in-language--beaadd33.html">ReAct: Synergizing Reasoning and Acting in Language Models</a></h3>
+<p>Published as a conference paper at ICLR 2023 ReAct ALFWorld trajectory You are in the middle of a room. &gt; think: To solve the task, I need to find and take a knife, then clean it with sinkbasin, then put it in countertop. A knife is more likely to appear in cabinet (1-6), drawer (1-3), countertop (1-3), fridge (1), garbagecan (1), shelf (1-3), sinkbasin (1), stoveburner (1-4), toaster (1). We apply our approach, named ReAct, to a diverse set of language and decision making tasks and demonstrate its effectiveness over state-of-the-art baselines in addition to improved human interpretability and trustworthiness.</p>
+<ul class="md-list">
+<li>Metadata: 2022 · ICLR · Reasoning and Prompting</li>
+<li>Model families: Agentic Reasoning, Tool Use</li>
+<li>Key terms: react, knife, diningtable, reasoning, mug, tomato, sinkbasin, cot</li>
+<li>Coverage: 33 pages, 9 retained sections</li>
+<li>Contributed topics: No cross-document topics yet.</li>
+</ul>
+<h3 id="retrieval-augmented-generation-for-knowledge-intensive-nlp-tasks"><a href="sources/retrieval-augmented-generation-for-knowledge-intens-72d836e8.html">Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks</a></h3>
+<p>Task Train Development Test Natural Questions 79169 8758 3611 WebQuestions 3418 362 2033 CuratedTrec 635 134 635 Jeopardy Question Generation 97392 13714 26849 parameters. The best performing &quot;closed-book&quot; (parametric only) open-domain QA model is T5-11B with 11 Billion trainable parameters. The non-parametric memory index does not consist of trainable parameters, but does consists of 21M 728 dimensional vectors, consisting of 15.3B values. Appendices for Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks A Implementation Details For Open-domain QA we report test numbers using 15 retrieved documents for RAG-Token models.</p>
+<ul class="md-list">
+<li>Metadata: 2020 · NeurIPS · Retrieval and Tool Use</li>
+<li>Model families: Retrieval-Augmented Generation, Seq2Seq</li>
+<li>Key terms: tasks, nlp, test, generation, parameters, model, knowledge, rag</li>
+<li>Coverage: 19 pages, 9 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-factuality-specificity.html">Factuality Specificity</a>, <a href="topics/topic-knowledge-intensive-nlp-tasks.html">Knowledge-Intensive NLP Tasks</a></li>
+</ul>
+<h3 id="scaling-laws-for-neural-language-models"><a href="sources/scaling-laws-for-neural-language-models-751878a7.html">Scaling Laws for Neural Language Models</a></h3>
+<p>Learning Rate 0.0006 3.80 Loss 0 50000 100000 150000 200000 250000 50 100 150 200 250 Step LR Summed Over Steps faster/slower decays schedules on a 3 million parameter model, shown on the left. We find that, as long as the learning rate is not too small and does not decay too quickly, performance does not depend strongly on learning rate. Run-to-run variation is at the level of 0.05 in the loss, so averaging multiple runs is necessary to validate performance changes smaller than this level. For contexts and models with dmodel &gt; nctx /12, the context-dependent computational cost per token is a relatively small fraction of the total compute.</p>
+<ul class="md-list">
+<li>Metadata: 2020 · arXiv · Scaling and Foundation Models</li>
+<li>Model families: Decoder-Only, Scaling Laws</li>
+<li>Key terms: loss, compute, training, model, learning, size, rate, steps</li>
+<li>Coverage: 30 pages, 23 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-fewer-steps.html">Fewer Steps</a>, <a href="topics/topic-flashattention-attention-memory.html">Flashattention / Attention / Memory</a>, <a href="topics/topic-reward-model.html">Reward Model</a></li>
+</ul>
+<h3 id="self-consistency-improves-chain-of-thought-reasoning-in-language-models"><a href="sources/self-consistency-improves-chain-of-thought-reasonin-ff8dcb0e.html">Self-Consistency Improves Chain of Thought Reasoning in Language Models</a></h3>
+<p>We show that self-consistency is robust to various sampling strategies and parameters. Accuracy (%) 28 26 T=0.7, k=40 T=0.5, k=40 T=0.3, k=40 22 T=0.5, k=20 20 T=0.5, no top k 18 Greedy Decode #Sampled Reasoning Paths strategies and sampling parameters. In Figure 7 and Figure 8, we show the results of self-consistency compared with greedy decoding a single path over LaMDA-137B and PaLM-540B, respectively. Sampling a higher number of diverse reasoning paths consistently helps reasoning accuracy.</p>
+<ul class="md-list">
+<li>Metadata: 2022 · ICLR · Reasoning and Prompting</li>
+<li>Model families: Prompting, Reasoning</li>
+<li>Key terms: self, consistency, sampling, accuracy, greedy, sampled, reasoning, path</li>
+<li>Coverage: 24 pages, 3 retained sections</li>
+<li>Contributed topics: No cross-document topics yet.</li>
+</ul>
+<h3 id="toolformer-language-models-can-teach-themselves-to-use-tools"><a href="sources/toolformer-language-models-can-teach-themselves-to--50c1c3ef.html">Toolformer: Language Models Can Teach Themselves to Use Tools</a></h3>
+<p>How many days {ago was, are there until} 400 Output: The president of the United {past_date, future_date}? What {day of the week, day of the month, month, 800 Input: The current day of the week is year} was it (current_date – past_date) {days, Wednesday. Output: The current day of the week is What {day of the week, day of the month, month, 800 [Calendar()] Wednesday. You can call the API by writing Output: But what are the risks &quot;[Calculator(expression)]&quot; where during production of nanomaterials?</p>
+<ul class="md-list">
+<li>Metadata: 2023 · NeurIPS · Retrieval and Tool Use</li>
+<li>Model families: Tool Use, Self-Supervision</li>
+<li>Key terms: day, api, output, date, week, month, question, input</li>
+<li>Coverage: 17 pages, 3 retained sections</li>
+<li>Contributed topics: No cross-document topics yet.</li>
+</ul>
+<h3 id="training-a-helpful-and-harmless-assistant-with-reinforcement-learning-from-human-feedback"><a href="sources/training-a-helpful-and-harmless-assistant-with-rein-71c25fc9.html">Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback</a></h3>
+<p>We find this align- ment training improves performance on almost all NLP evaluations, and is fully compatible with training for specialized skills such as python coding and summarization. We explore an iterated online mode of training, where preference models and RL policies are updated on a weekly cadence with fresh human feedback data, efficiently improving our datasets and models. Finally, we investigate the robustness of RLHF training, and identify a roughly linear relation between the RL reward and the square root of the KL divergence between the policy and its initialization. Preference Model Human-Feedback Preference Pretrained Pretraining (PMP) Fine-Tuning Model Human-Feedback Comparison Data HHH prompt RLHF Initial Policy RLHF (PPO) Policies context distillation Human Feedback Interface B helpful can lead to responses that help humans cause harm or generate toxic content.</p>
+<ul class="md-list">
+<li>Metadata: 2022 · arXiv · Alignment and Post-Training</li>
+<li>Model families: RLHF, Chat Models</li>
+<li>Key terms: models, preference, rlhf, training, online, data, human, feedback</li>
+<li>Coverage: 74 pages, 22 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-elo-scores.html">Elo Scores</a>, <a href="topics/topic-sentiment-pretrained-tuned.html">Sentiment / Pretrained / Tuned</a></li>
+</ul>
+<h3 id="training-compute-optimal-large-language-models"><a href="sources/training-compute-optimal-large-language-models-593710fa.html">Training Compute-Optimal Large Language Models</a></h3>
+<p>Training Loss Parameters Tokens 100M 300M 1B 3B 6B 30B 1017 1019 1021 1023 1025 10 1019 1021 1023 1025 Parameters FLOPs FLOPs that the final FLOPs is a constant. We find a clear valley in loss, meaning that for a given FLOP budget there is an optimal model to train (left). Using the location of these valleys, we project optimal model size and number of tokens for larger models (center and right). FLOPs Model size Loss Efficient frontier Gopher 100M Empirical data IsoFLOPs slice 1018 1019 1020 1021 1022 1023 Gopher 100M 1B 10B 40B budget Training FLOPs Model size and isoFLOP slices (right).</p>
+<ul class="md-list">
+<li>Metadata: 2022 · arXiv · Scaling and Foundation Models</li>
+<li>Model families: Decoder-Only, Scaling Laws</li>
+<li>Key terms: flops, model, size, training, loss, parameters, gopher, tokens</li>
+<li>Coverage: 36 pages, 6 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-chinchilla-gopher.html">Chinchilla Gopher</a>, <a href="topics/topic-fewer-steps.html">Fewer Steps</a></li>
+</ul>
+<h3 id="training-language-models-to-follow-instructions-with-human-feedback"><a href="sources/training-language-models-to-follow-instructions-wit-80867b0f.html">Training language models to follow instructions with human feedback</a></h3>
+<p>When aligning language models with human intentions, their end behavior is a function of the underlying model (and its training data), the fine-tuning data, and the alignment method used. Some crucial caveats apply: First, we are aligning to demonstrations and preferences provided by our training labelers, who directly produce the data that we use to fine-tune our models. Third, our training data is determined by prompts sent by OpenAI customers to models on the OpenAI API Playground, and thus we are implicitly aligning to what customers think is valuable and, in some cases, what their end-users think is valuable to currently use the API for. TLDR Summarization Prompt format [Reddit post] TL;DR: [completion] Dataset features • 2,500 Reddit posts to summarize.</p>
+<ul class="md-list">
+<li>Metadata: 2022 · NeurIPS · Alignment and Post-Training</li>
+<li>Model families: Instruction-Tuning, RLHF</li>
+<li>Key terms: models, data, pretraining, acc, ppo, aligning, training, fine</li>
+<li>Coverage: 68 pages, 22 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-elo-scores.html">Elo Scores</a>, <a href="topics/topic-reward-model.html">Reward Model</a>, <a href="topics/topic-tldr-summarization.html">TLDR Summarization</a></li>
+</ul>
+<h3 id="visual-instruction-tuning"><a href="sources/visual-instruction-tuning-c90fe045.html">Visual Instruction Tuning</a></h3>
+<p>Our novel model ensembling with the text-only GPT-4 consistently improves the model’s performance under all categories, setting the new SoTA performance. We ablate several design choices Visual features Before Last on ScienceQA in Table 8. We tried using the last layer feature from CLIP Best variant 90.92 89.96 (-0.96) Predict answer first - 89.77 (-1.15) vision encoder, which yields 89.96% and is Training from scratch 85.81 (-5.11) - 0.96% lower than the feature before the last 7B model size 89.84 (-1.08) - layer. Abstract Instruction tuning large language models (LLMs) using machine-generated instruction-following data has been shown to improve zero-shot capabilities on new tasks, but the idea is less explored in the multimodal field.</p>
+<ul class="md-list">
+<li>Metadata: 2023 · NeurIPS · Multimodal Models</li>
+<li>Model families: Vision-Language, Instruction Tuning</li>
+<li>Key terms: language, model, instruction, last, vision, large, data, multimodal</li>
+<li>Coverage: 25 pages, 8 retained sections</li>
+<li>Contributed topics: <a href="topics/topic-vicuna-gpt-first.html">Vicuna / Gpt / First</a></li>
+</ul>
+      </article>
     </main>
 
-    <script id="searchIndex" type="application/json">[{"title": "Shot / Gpt / Performance", "type": "topic", "url": "topics/topic-1-shot-gpt-performance.html", "summary": "Figure 3.16: Representative GPT-3 completions for the few-shot task of using a new word in a sentence. Boldface is GPT-3’s completions, plain text is human prompts. Nothing task-specific is provided to GPT-3 other than the conditioning shown here. nonexistent word being defined and used in a sentence, so the task is few-shot in terms of previous examples of the broad task and one-shot in terms of the specific word. We test this with GPT-3 in the few- shot setting by giving prompts of the form \"Poor English Input: <sentence>\\n Good English Output: <sentence>\".", "keywords": ["shot", "gpt", "performance", "fine", "language", "training", "dataset", "results"]}, {"title": "BLEU Training Cost (FLOPs)", "type": "topic", "url": "topics/topic-2-bleu-training-cost-flops.html", "summary": "Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the English-to-German and English-to-French newstest2014 tests at a fraction of the training cost. For the base model, we use a rate of Pdrop = 0.1. The configuration of this model is listed in the bottom line of Table 3. Even our base model surpasses all previously published models and ensembles, at a fraction of the training cost of any of the competitive models. On the WMT 2014 English-to-French translation task, our big model achieves a BLEU score of 41.0, outperforming all of the previously published single models, at less than 1/4 the training cost of the previous state-of-the-art model.", "keywords": ["base", "dropout", "big", "positional", "bleu", "newstest", "ensemble", "pdrop"]}, {"title": "Attention Is All You Need", "type": "topic", "url": "topics/topic-3-attention-is-all-you-need.html", "summary": "Provided proper attribution is provided, Google hereby grants permission to reproduce the tables and figures in this paper solely for use in journalistic or scholarly works. Attention Is All You Need arXiv:1706.03762v7 [cs.CL] 2 Aug 2023 Ashish Vaswani∗ Noam Shazeer∗ Niki Parmar∗ Jakob Uszkoreit∗ Google Brain Google Brain Google Research Google Research avaswani@google.com noam@google.com nikip@google.com usz@google.com Llion Jones∗ Aidan N. The best performing models also connect the encoder and decoder through an attention mechanism. Our model achieves 28.4 BLEU on the WMT 2014 English- to-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.", "keywords": ["google", "brain", "tensor", "com", "noam", "llion", "aidan", "illia"]}, {"title": "Applications of Attention in our Model", "type": "topic", "url": "topics/topic-4-applications-of-attention-in-our-model.html", "summary": "With a single attention head, averaging inhibits this. In this work we employ h = 8 parallel attention layers, or heads. 3.2.3 Applications of Attention in our Model The Transformer uses multi-head attention in three different ways: • In \"encoder-decoder attention\" layers, the queries come from the previous decoder layer, and the memory keys and values come from the output of the encoder. • The encoder contains self-attention layers. • Similarly, self-attention layers in the decoder allow each position in the decoder to attend to all positions in the decoder up to and including that position.", "keywords": ["attention", "layers", "layer", "keys", "head", "decoder", "positions", "values"]}, {"title": "Participants / Articles / Generated", "type": "topic", "url": "topics/topic-5-participants-articles-generated.html", "summary": "Figure E.1: Participants spend more time trying to identify whether each news article is machine generated as model size increases. Duration on the control model is indicated with the dashed line. In each experiment, half of the participants were randomly assigned to quiz A and half were randomly assigned to quiz B. Each quiz consisted of 25 articles: half (12-13) were human written and half (12-13) were model generated: the articles with human written completions in quiz A had model generated completions in quiz B and vice versa. Participants could leave comments and were asked to indicate if they had seen the articles before.", "keywords": ["participants", "articles", "generated", "half", "control", "news", "quiz", "excluded"]}, {"title": "Religion Most Favored Descriptive Words", "type": "topic", "url": "topics/topic-6-religion-most-favored-descriptive-words.html", "summary": "6.2.3 Religion We studied which words co-occurred with religious terms relating to Atheism, Buddhism, Christianity, Hinduism, Islam, and Judaism, by generating 800 model outputs of length ≈50 with a temperature of 1 and a top p of 0.9 for every prompt. Our prompts were of the nature \"{Religion practitioners} are\" (Eg. \"Christians are\") for each of the six religious categories listed above. We then allowed the model to naturally carry out completions and created a corpus of such completions for studying co-occurrence of words. The following is an example output from the model: \"Buddhists are divided into two main branches - Theravada and Mahayana.", "keywords": ["islam", "religion", "favored", "words", "religious", "occurred", "descriptive", "atheism"]}, {"title": "Attention Is All You Need", "type": "source", "url": "sources/1-attention-is-all-you-need.html", "summary": "The best performing models also connect the encoder and decoder through an attention mechanism. ‡ Work performed while at Google Research. Self-attention, sometimes called intra-attention is an attention mechanism relating different positions of a single sequence in order to compute a representation of the sequence. 3 Model Architecture Most competitive neural sequence transduction models have an encoder-decoder structure [5, 2, 35].", "keywords": []}, {"title": "Language Models are Few-Shot Learners", "type": "source", "url": "sources/2-language-models-are-few-shot-learners.html", "summary": "Language Models are Few-Shot Learners Tom B. We further specialize the description to “zero-shot”, “one-shot”, or “few-shot” depending on how many demonstrations are provided at inference time. Few-shot learning also improves dramatically with model size. For example, GPT-3 achieves 81.5 F1 on CoQA in the zero-shot setting, 84.0 F1 on CoQA in the one-shot setting, 85.0 F1 in the few-shot setting.", "keywords": []}, {"title": "BERT: Pre-training of Deep Bidirectional Transformers", "type": "source", "url": "sources/3-bert-pre-training-of-deep-bidirectional-transformers.html", "summary": "pre-training for language representations. (2018a), which right-to-left language model. the left-to-right and right-to-left representations. The same pre-trained model parameters are used to initialize models for different down-stream tasks.", "keywords": []}]</script>
+    <script id="searchIndex" type="application/json">[{"title": "Chatbot Arena", "type": "topic page", "url": "topics/topic-chatbot-arena.html", "summary": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena Lianmin Zheng1∗ Wei-Lin Chiang1∗ Ying Sheng4∗ Siyuan Zhuang1 Zhanghao Wu1 Yonghao Zhuang3 Zi Lin2 Zhuohan Li1 Dacheng Li13 arXiv:2306.05685v4 [cs.CL] 24 Dec 2023 Er…", "keywords": ["llm", "turn", "bench", "human", "benchmarks", "questions", "judge", "models", "chatbot arena", "human preferences", "mt-bench chatbot", "llm judges", "mt-bench chatbot arena", "chat assistants", "Evaluation and Benchmarks", "Evaluation", "LLM-as-a-Judge", "2023"]}, {"title": "Chinchilla Gopher", "type": "topic page", "url": "topics/topic-chinchilla-gopher.html", "summary": "trained using the same number of TPU chips, it would be very difficult to maintain TPU compute efficiency without a drastic increase in batch size. The batch size of PaLM 540B is already 4M tokens, and it is unclear if…", "keywords": ["palm", "size", "even", "training", "shot", "tokens", "data", "model", "chinchilla gopher", "model size", "training flop", "flop count", "training flop count", "shot natural", "Scaling and Foundation Models", "Decoder-Only", "Scaling Laws", "Transformer", "2022"]}, {"title": "CNN/Daily Mail", "type": "topic page", "url": "topics/topic-cnn-daily-mail.html", "summary": "Raffel, Shazeer, Roberts, Lee, Narang, Matena, Zhou, Li and Liu pertinent issue given that English is not the native language for the majority of the world’s population. The motivation for this paper was the flurry of r…", "keywords": ["target", "original", "processed", "januzaj", "fellaini", "united", "sentence", "manchester", "original target", "processed target", "manchester united", "original input", "processed input", "target processed", "Foundation Models", "Seq2Seq", "Text-to-Text", "Transformer", "2019"]}, {"title": "Common Crawl", "type": "topic page", "url": "topics/topic-common-crawl-2.html", "summary": "Datasets We provide a full description of MassiveText and of our extract of recent Wikipedia articles. Full description of MassiveText The full break down of MassiveText by source and languages is given in Table 8. Sour…", "keywords": ["filtering", "overlap", "training", "test", "dataset", "examples", "model", "common crawl", "test set", "full description", "training dataset", "billion tokens", "overlaps test", "Retrieval and Tool Use", "Scaling and Foundation Models", "Decoder-Only", "In-Context Learning", "Retrieval-Augmented Language Models", "2020", "2021"]}, {"title": "Datasheet for VTP", "type": "topic page", "url": "topics/topic-datasheet-for-vtp.html", "summary": "F.2.1 Datasheet for LTIP Motivation For what purpose was the dataset The dataset was created for pre-training vision-language created? Composition What do the instances that comprise All instances of the dataset are ima…", "keywords": ["instances", "instance", "created", "contain", "associated", "dataset contain", "instances dataset", "larger set", "dataset self-contained", "contain data", "data considered", "Multimodal Models", "Few-Shot Learning", "Vision-Language", "2022"]}, {"title": "Elo Scores", "type": "topic page", "url": "topics/topic-elo-scores.html", "summary": "The scores are evaluated on a 52B preference model trained on (left) harmlessness comparisons, (center) helpfulness comparisons, and (right) a mixture of all the combined helpful and harmless comparisons. Harmlessness E…", "keywords": ["rlhf", "policy", "helpfulness", "trained", "elo scores", "preference model", "rejection sampling", "online rlhf", "rlhf training", "harmlessness score", "Alignment and Post-Training", "AI Feedback", "Chat Models", "Constitutional Training", "Instruction-Tuning", "RLHF", "2022"]}, {"title": "Encoder Decoder", "type": "topic page", "url": "topics/topic-encoder-decoder.html", "summary": "Recurrent models typically factor computation along the symbol positions of the input and output sequences. Aligning the positions to steps in computation time, they generate a sequence of hidden states ht , as a functi…", "keywords": ["attention", "layer", "sequence", "layers", "decoder", "encoder", "positions", "input output", "encoder decoder", "path length", "training cost", "base model", "output positions", "Foundation Models", "Encoder-Decoder", "Transformer", "2017"]}, {"title": "Factuality Specificity", "type": "topic page", "url": "topics/topic-factuality-specificity.html", "summary": "by θ that generates a current token based on a context of the previous i − 1 tokens y1:i−1 , the original input x and a retrieved passage z. To train the retriever and generator end-to-end, we treat the retrieved docume…", "keywords": ["retrieval", "document", "rag", "work", "retrieved", "trained", "retriever generator", "retrieval component", "document index", "strong performance", "retrieved document", "latent variable", "Retrieval and Tool Use", "Retrieval-Augmented Generation", "Seq2Seq", "2020"]}, {"title": "Fewer Steps", "type": "topic page", "url": "topics/topic-fewer-steps.html", "summary": "Minimum serial steps s Data requirements increases negligibly Step grow relatively slowly er ial 0xS Siz e <1 atc h xB 100 Optimal model size e e l Siz increases very quickly Mod models, using larger batches, and traini…", "keywords": ["size", "compute", "cmin", "optimal", "model size", "batch size", "critical batch", "critical batch size", "dataset size", "compute budget", "Scaling and Foundation Models", "Decoder-Only", "In-Context Learning", "Scaling Laws", "2020", "2022"]}, {"title": "Flashattention / Attention / Memory", "type": "topic page", "url": "topics/topic-flashattention-attention-memory.html", "summary": "Standard attention implementations materialize the matrices S and P to HBM, which takes 𝑂 (𝑁 2 ) memory. 2.3.2 Backward pass In the backward pass, by re-computing the values of the attention matrices S and P once blocks…", "keywords": ["flashattention", "attention", "memory", "pass", "block", "size", "hbm", "backward", "sequence length", "backward pass", "head dimension", "forward pass", "causal mask", "hbm accesses", "Foundation Models", "Reasoning and Prompting", "Retrieval and Tool Use", "Scaling and Foundation Models", "Systems and Efficiency", "Attention Systems", "Decoder-Only", "Encoder-Decoder", "Kernel Optimization", "Prompting", "Reasoning", "Retrieval-Augmented Language Models", "Scaling Laws", "Transformer", "2017", "2020", "2021", "2022", "2023"]}, {"title": "Knowledge-Intensive NLP Tasks", "type": "topic page", "url": "topics/topic-knowledge-intensive-nlp-tasks.html", "summary": "Appendices for Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks A Implementation Details For Open-domain QA we report test numbers using 15 retrieved documents for RAG-Token models. For RAG-Sequence mode…", "keywords": ["rag", "decoding", "cpu", "open", "report", "retrieved", "documents", "sequence", "report test", "retrieved documents", "knowledge-intensive nlp", "nlp tasks", "test numbers", "documents rag-token", "Retrieval and Tool Use", "Retrieval-Augmented Generation", "Seq2Seq", "2020"]}, {"title": "Memorization", "type": "topic page", "url": "topics/topic-memorization.html", "summary": "• Constructed from web – Datasets where the question+answers (or prefix+continuation) were automatically extracted from the open web, so many evaluation examples are likely to be in our training data. • Context on web –…", "keywords": ["clean", "full", "palm", "set", "examples", "model", "language", "training", "full set", "set clean", "full set clean", "clean set", "palm shot", "clean subset", "Scaling and Foundation Models", "Decoder-Only", "Transformer", "2022"]}, {"title": "Memory Management", "type": "topic page", "url": "topics/topic-memory-management.html", "summary": "Gonzalez1 Hao Zhang4 Ion Stoica1 1 UC Berkeley 2 Stanford University 3 Independent Researcher 4 UC San Diego Abstract Existing systems vLLM Memory usage (GB) High throughput serving of large language models (LLMs) requi…", "keywords": ["memory", "block", "vllm", "cache", "request", "blocks", "requests", "gpu", "physical blocks", "request rate", "llm serving", "rate req", "request rate req", "memory management", "Systems and Efficiency", "Inference Systems", "Serving", "2023"]}, {"title": "Neighbours", "type": "topic page", "url": "topics/topic-neighbours.html", "summary": "Token likelihoods are provided by a model, parameterized by 𝜃, that takes as input both previous tokens and their retrieved neighbours. (1) \u0001 𝐿 ( 𝑋 | 𝜃, D) , 𝑢=1 𝑖=1 We set Re t(𝐶1 ) = ∅, namely the likelihood of tokens…", "keywords": ["retrieval", "chunk", "embeddings", "time", "language models", "approximate nearest", "nearest neighbours", "training neighbours", "approximate nearest neighbours", "neighbours improving", "Retrieval and Tool Use", "Decoder-Only", "Retrieval-Augmented Language Models", "2021"]}, {"title": "Perceiver Resampler", "type": "topic page", "url": "topics/topic-few-shot-learning.html", "summary": "We introduce Flamingo, a family of Visual Language Models (VLM) with this ability. We propose key architectural innovations to: (i) bridge powerful pretrained vision-only and language-only models, (ii) handle sequences…", "keywords": ["flamingo", "text", "visual", "models", "language", "image", "model", "learning", "few-shot learning", "language models", "perceiver resampler", "language model", "image video", "vision encoder", "Multimodal Models", "Few-Shot Learning", "Vision-Language", "2022"]}, {"title": "Preprocessing Cleaning", "type": "topic page", "url": "topics/topic-dataset-contain.html", "summary": "Is there anything about the com- The dataset is static and thus will become progressively more position of the dataset or the way “stale”. For example, it will not reflect new language and it was collected and preproces…", "keywords": ["collected", "date", "dataset", "tasks", "language", "training", "models", "text", "tasks dataset", "preprocessing cleaning", "cleaning labeling", "row images", "preprocessing cleaning labeling", "dataset foresee", "Multimodal Models", "Few-Shot Learning", "Vision-Language", "2022"]}, {"title": "Pretraining only Code Finetuning", "type": "topic page", "url": "topics/topic-pretraining-only-code-finetuning.html", "summary": "The predicted code contains fixes for all of the compilation errors (undeclared variables), as well as other stylistic improvements (declaring variables together) and logic improvements (reading numbers into array a in…", "keywords": ["latin", "latn", "palm", "deepfix", "coder", "lines", "broken", "edits", "iso code", "code language", "language tokens", "tokens percentage", "iso code language", "code language tokens", "Scaling and Foundation Models", "Decoder-Only", "Transformer", "2022"]}, {"title": "QL O RA: Efficient Finetuning of Quantized LLMs", "type": "topic page", "url": "topics/topic-ql-o-ra-efficient-finetuning-of-quantized-llms.html", "summary": "Our best model family, which we name Guanaco, outperforms all previous openly released models on the Vicuna benchmark, reaching 99.3% of the performance level of ChatGPT while only requiring 24 hours of finetuning on a…", "keywords": ["lora", "bit", "memory", "quantization", "type", "data type", "memory footprint", "chatbot performance", "input tensor", "efficient finetuning", "vicuna benchmark", "Alignment and Post-Training", "Parameter-Efficient Finetuning", "Quantization", "2023"]}, {"title": "Retro model architecture", "type": "topic page", "url": "topics/topic-retro-model-architecture.html", "summary": "Retro model architecture Our model relies on an encoder-decoder transformer architecture, integrating the retrieved data through a cross-attention mechanism as introduced in Vaswani et al. First, the retrieved tokens Re…", "keywords": ["attention", "chunk", "cross", "neighbours", "cca", "retrieval", "encoder", "layer", "chunked cross-attention", "model architecture", "language models", "retrieval encoder", "token chunk", "improving language", "Retrieval and Tool Use", "Decoder-Only", "Retrieval-Augmented Language Models", "2021"]}, {"title": "Reward Model", "type": "topic page", "url": "topics/topic-reward-model.html", "summary": "Each example consists of a prompt (including previous dialogue if available) and a response, which is the input of the reward model. To train the reward model, we convert our collected pairwise human preference data int…", "keywords": ["better", "avg", "disagree", "data", "models", "training", "loss", "learning", "learning rate", "avg tokens", "reward model", "pretraining data", "reward max", "tokens avg", "Alignment and Post-Training", "Open Foundation Models", "Scaling and Foundation Models", "Chat Models", "Decoder-Only", "Instruction-Tuning", "RLHF", "Scaling Laws", "2020", "2022", "2023"]}, {"title": "Sentiment / Pretrained / Tuned", "type": "topic page", "url": "topics/topic-sentiment-pretrained-tuned.html", "summary": "The fine-tuned Llama 2-Chat shows more positivity in sentiment scores than the pretrained versions do. For the gender domain, LLMs tend to have a more positive sentiment towards American female actresses than male actor…", "keywords": ["llama", "tuned", "domain", "fine", "benchmarks", "safety", "models", "sentiment scores", "llama chat", "positive sentiment", "sentiment towards", "demographic groups", "prefer say", "Alignment and Post-Training", "Open Foundation Models", "Chat Models", "Decoder-Only", "RLHF", "2022", "2023"]}, {"title": "Size / Memory / Gradient", "type": "topic page", "url": "topics/topic-size-memory-gradient.html", "summary": "E Training Details of Vicuna Models Vicuna is created by fine-tuning a LLaMA base model using user-shared conversations gathered from conversations. To ensure data quality, we convert the HTML back to markdown and filte…", "keywords": ["vicuna", "length", "training", "model", "models", "conversations", "dataset", "batch size", "training details", "details vicuna", "vicuna models", "llama base", "base model", "Alignment and Post-Training", "Evaluation and Benchmarks", "Evaluation", "LLM-as-a-Judge", "Parameter-Efficient Finetuning", "Quantization", "2023"]}, {"title": "TLDR Summarization", "type": "topic page", "url": "topics/topic-tldr-summarization.html", "summary": "We omit GPT (prompted) from the evals on prompts submitted to GPT-3 models (left) as these prompts are already designed to perform well for GPT-3, as opposed to prompts submitted to InstructGPT models (right). 4.1 Resul…", "keywords": ["gpt", "ppo", "labelers", "instructgpt", "prompts submitted", "instructgpt outputs", "figure show", "model size", "models api", "instructgpt models", "Alignment and Post-Training", "Instruction-Tuning", "RLHF", "2022"]}, {"title": "Trainable Parameters", "type": "topic page", "url": "topics/topic-trainable-parameters.html", "summary": "For the 9 tasks with published few-shot results, Flamingo sets the new few-shot state of the art. Right: Flamingo performance improves with model size and number of shots. Recently, multimodal vision-language models tra…", "keywords": ["gpt", "lora", "mnli", "fine", "tasks", "tuning", "performance", "training", "flamingo models", "biased toward", "trainable parameters", "classification tasks", "position bias", "training examples", "Alignment and Post-Training", "Evaluation and Benchmarks", "Multimodal Models", "Evaluation", "Few-Shot Learning", "LLM-as-a-Judge", "Low-Rank Adaptation", "Parameter-Efficient Finetuning", "Vision-Language", "2021", "2022", "2023"]}, {"title": "Vicuna / Gpt / First", "type": "topic page", "url": "topics/topic-vicuna-gpt-first.html", "summary": "F Exploring Vicuna as a judge In this paper, we mostly evaluate the ability of close-sourced models such as GPT-4 as a proxy for human evaluations. However, model services such as GPT-4 can also become expensive with a…", "keywords": ["model", "training", "visual", "instruction", "human", "answer", "pre", "model ensembling", "visual instruction", "instruction tuning", "visual instruction tuning", "zero-shot vicuna", "zero-shot vicuna-", "Evaluation and Benchmarks", "Multimodal Models", "Evaluation", "Instruction Tuning", "LLM-as-a-Judge", "Vision-Language", "2023"]}, {"title": "Attention Is All You Need", "type": "source page", "url": "sources/attention-is-all-you-need-acad837e.html", "summary": "The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively. 3.1 E…", "keywords": ["attention", "encoder", "layers", "head", "transformer", "decoder", "dot", "model", "scaled", "product", "Encoder Decoder", "Flashattention / Attention / Memory", "Foundation Models", "Transformer", "Encoder-Decoder", "attention", "sequence-modeling", "architecture", "2017"]}, {"title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding", "type": "source page", "url": "sources/bert-pre-training-of-deep-bidirectional-transformer-41bc3abd.html", "summary": "ELMo uses the concatenation of independently trained left-to-right and right-to- left LSTMs to generate features for downstream tasks. Among the three, only BERT representations are jointly conditioned on both left and…", "keywords": ["left", "right", "elmo", "bert", "uses", "concatenation", "independently", "trained", "lstms", "generate", "Foundation Models", "Encoder-Only", "Transformer", "pretraining", "masked-language-modeling", "transfer-learning", "2018"]}, {"title": "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer", "type": "source page", "url": "sources/exploring-the-limits-of-transfer-learning-with-a-un-a5039072.html", "summary": "Raffel, Shazeer, Roberts, Lee, Narang, Matena, Zhou, Li and Liu pertinent issue given that English is not the native language for the majority of the world’s population. The motivation for this paper was the flurry of r…", "keywords": ["original", "target", "processed", "input", "said", "raffel", "shazeer", "roberts", "lee", "narang", "CNN/Daily Mail", "Foundation Models", "Seq2Seq", "Text-to-Text", "Transformer", "t5", "transfer-learning", "unification", "2019"]}, {"title": "Scaling Laws for Neural Language Models", "type": "source page", "url": "sources/scaling-laws-for-neural-language-models-751878a7.html", "summary": "Learning Rate 0.0006 3.80 Loss 0 50000 100000 150000 200000 250000 50 100 150 200 250 Step LR Summed Over Steps faster/slower decays schedules on a 3 million parameter model, shown on the left. We find that, as long as…", "keywords": ["loss", "compute", "training", "model", "learning", "size", "rate", "steps", "models", "parameter", "Fewer Steps", "Flashattention / Attention / Memory", "Reward Model", "Scaling and Foundation Models", "Decoder-Only", "Scaling Laws", "scaling-laws", "compute", "loss-prediction", "2020"]}, {"title": "Language Models are Few-Shot Learners", "type": "source page", "url": "sources/language-models-are-few-shot-learners-eb9f79f3.html", "summary": "We then allowed the model to naturally carry out completions and created a corpus of such completions for studying co-occurrence of words. The following is an example output from the model: \"Buddhists are divided into t…", "keywords": ["models", "language", "quality", "common", "crawl", "model", "compute", "uses", "misuse", "filtering", "Common Crawl", "Fewer Steps", "Scaling and Foundation Models", "Decoder-Only", "In-Context Learning", "gpt-3", "few-shot", "emergence", "2020"]}, {"title": "PaLM: Scaling Language Modeling with Pathways", "type": "source page", "url": "sources/palm-scaling-language-modeling-with-pathways-dc99ade4.html", "summary": "G.3 Memorization Corpus Prompt PaLM 540B continuation Wikipedia the mother-tongue of 89.9% of the pop- West Bengal Official Language Act 1961 ulation, followed by Santali (8.1%), Kur- and the West Bengal Official Langua…", "keywords": ["palm", "code", "deepfix", "batch", "west", "bengal", "official", "language", "act", "last", "Chinchilla Gopher", "Memorization", "Pretraining only Code Finetuning", "Scaling and Foundation Models", "Decoder-Only", "Transformer", "palm", "pathways", "reasoning", "2022"]}, {"title": "Training Compute-Optimal Large Language Models", "type": "source page", "url": "sources/training-compute-optimal-large-language-models-593710fa.html", "summary": "Training Loss Parameters Tokens 100M 300M 1B 3B 6B 30B 1017 1019 1021 1023 1025 10 1019 1021 1023 1025 Parameters FLOPs FLOPs that the final FLOPs is a constant. We find a clear valley in loss, meaning that for a given…", "keywords": ["flops", "model", "size", "training", "loss", "parameters", "gopher", "tokens", "budget", "optimal", "Chinchilla Gopher", "Fewer Steps", "Scaling and Foundation Models", "Decoder-Only", "Scaling Laws", "chinchilla", "compute-optimal", "data-scaling", "2022"]}, {"title": "LLaMA: Open and Efficient Foundation Language Models", "type": "source page", "url": "sources/llama-open-and-efficient-foundation-language-models-b45c40b0.html", "summary": "The sun goes down, and finally Gauss and Curie find time to relax and discuss after an exhausting day of work. Gauss: Hey, Curie, did you know that a lot of people consider me to be the first geek? Gauss: Well, Wikipedi…", "keywords": ["stem", "gauss", "request", "openings", "defense", "curie", "know", "geek", "knowledge", "llama", "Open Foundation Models", "Decoder-Only", "Transformer", "llama", "open-weights", "efficiency", "2023"]}, {"title": "Llama 2: Open Foundation and Fine-Tuned Chat Models", "type": "source page", "url": "sources/llama-2-open-foundation-and-fine-tuned-chat-models-25e38443.html", "summary": "Safety Helpfulness RM Score after Safety RLHF 0.8 Improvement 0.8 Safety RM Score after Safety RLHF 0.0 0.2 0.4 0.6 0.8 1.0 0.0 0.2 0.4 0.6 0.8 1.0 Safety RM Score before Safety RLHF Helpfulness RM Score before Safety R…", "keywords": ["safety", "model", "llama", "tuned", "helpfulness", "score", "rlhf", "scores", "fine", "chat", "Reward Model", "Sentiment / Pretrained / Tuned", "Open Foundation Models", "Decoder-Only", "Chat Models", "llama-2", "open-weights", "chat", "2023"]}, {"title": "Training language models to follow instructions with human feedback", "type": "source page", "url": "sources/training-language-models-to-follow-instructions-wit-80867b0f.html", "summary": "When aligning language models with human intentions, their end behavior is a function of the underlying model (and its training data), the fine-tuning data, and the alignment method used. Some crucial caveats apply: Fir…", "keywords": ["models", "data", "pretraining", "acc", "ppo", "aligning", "training", "fine", "performance", "public", "Elo Scores", "Reward Model", "TLDR Summarization", "Alignment and Post-Training", "Instruction-Tuning", "RLHF", "instructgpt", "alignment", "preference-data", "2022"]}, {"title": "Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback", "type": "source page", "url": "sources/training-a-helpful-and-harmless-assistant-with-rein-71c25fc9.html", "summary": "We find this align- ment training improves performance on almost all NLP evaluations, and is fully compatible with training for specialized skills such as python coding and summarization. We explore an iterated online m…", "keywords": ["models", "preference", "rlhf", "training", "online", "data", "human", "feedback", "dataset", "comparisons", "Elo Scores", "Sentiment / Pretrained / Tuned", "Alignment and Post-Training", "RLHF", "Chat Models", "helpful-harmless", "anthropic", "assistant", "2022"]}, {"title": "Constitutional AI: Harmlessness from AI Feedback", "type": "source page", "url": "sources/constitutional-ai-harmlessness-from-ai-feedback-5eacf5e7.html", "summary": "Harmlessness Elo Helpfulness Elo Helpful RLHF 100 HH RLHF 50 RL-CAI 150 RL-CAI w/ CoT 100 0.0 0.5 1.0 1.5 2.0 2.5 3.0 0.0 0.5 1.0 1.5 2.0 2.5 3.0 RL Train Sequences 1e6 RL Train Sequences 1e6 total number of RL training…", "keywords": ["revisions", "harmlessness", "helpfulness", "cai", "number", "score", "rlhf", "sequences", "models", "initial", "Elo Scores", "Alignment and Post-Training", "AI Feedback", "Constitutional Training", "constitutional-ai", "harmlessness", "self-critique", "2022"]}, {"title": "LoRA: Low-Rank Adaptation of Large Language Models", "type": "source page", "url": "sources/lora-low-rank-adaptation-of-large-language-models-6e77126e.html", "summary": "F.2 A DDITIONAL E XPERIMENTS ON GPT-3 We present additional runs on GPT-3 with different adaptation methods in Table 15. F.3 L OW-DATA R EGIME To evaluate the performance of different adaptation approaches in the low-da…", "keywords": ["gpt", "mnli", "low", "adaptation", "data", "training", "models", "rank", "different", "methods", "Trainable Parameters", "Alignment and Post-Training", "Parameter-Efficient Finetuning", "Low-Rank Adaptation", "lora", "peft", "adaptation", "2021"]}, {"title": "QLoRA: Efficient Finetuning of Quantized LLMs", "type": "source page", "url": "sources/qlora-efficient-finetuning-of-quantized-llms-ea3ece56.html", "summary": "6.2 Considerations Evaluation We report moderate agreement among human annotators (Fleiss κ = 0.42) with additional deterioration when comparing two strong systems. This points to limitations in the current benchmarks a…", "keywords": ["models", "lora", "model", "performance", "human", "finetuning", "evaluation", "chatbot", "learning", "rate", "QL O RA: Efficient Finetuning of Quantized LLMs", "Size / Memory / Gradient", "Alignment and Post-Training", "Parameter-Efficient Finetuning", "Quantization", "qlora", "quantization", "peft", "2023"]}, {"title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model", "type": "source page", "url": "sources/direct-preference-optimization-your-language-model--a97b62a9.html", "summary": "6.4 Validating GPT-4 judgments with human judgments We conduct a human study to verify the reliability of GPT-4’s judgments, using the results of the TL;DR summarization experiment and two different GPT-4 prompts. Over-…", "keywords": ["human", "gpt", "model", "win", "reward", "study", "dpo", "ppo", "judgments", "agree", "Alignment and Post-Training", "Preference Optimization", "Post-Training", "dpo", "preference-learning", "alignment", "2023"]}, {"title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks", "type": "source page", "url": "sources/retrieval-augmented-generation-for-knowledge-intens-72d836e8.html", "summary": "Task Train Development Test Natural Questions 79169 8758 3611 WebQuestions 3418 362 2033 CuratedTrec 635 134 635 Jeopardy Question Generation 97392 13714 26849 parameters. The best performing \"closed-book\" (parametric o…", "keywords": ["tasks", "nlp", "test", "generation", "parameters", "model", "knowledge", "rag", "open", "retrieval", "Factuality Specificity", "Knowledge-Intensive NLP Tasks", "Retrieval and Tool Use", "Retrieval-Augmented Generation", "Seq2Seq", "rag", "retrieval", "provenance", "2020"]}, {"title": "Improving language models by retrieving from trillions of tokens", "type": "source page", "url": "sources/improving-language-models-by-retrieving-from-trilli-6ccdc0c4.html", "summary": "We then remove sections with the following titles: “references”, “external links”, “sources”, “further reading”, “see also”, “citations”, and “note”. In the remaining sections, we remove Wikilinks and remove the followi…", "keywords": ["notelist", "token", "model", "remove", "tokens", "full", "massivetext", "sections", "following", "remaining", "Common Crawl", "Flashattention / Attention / Memory", "Neighbours", "Retro model architecture", "Retrieval and Tool Use", "Retrieval-Augmented Language Models", "Decoder-Only", "retro", "retrieval", "external-memory", "2021"]}, {"title": "Toolformer: Language Models Can Teach Themselves to Use Tools", "type": "source page", "url": "sources/toolformer-language-models-can-teach-themselves-to--50c1c3ef.html", "summary": "How many days {ago was, are there until} 400 Output: The president of the United {past_date, future_date}? What {day of the week, day of the month, month, 800 Input: The current day of the week is year} was it (current_…", "keywords": ["day", "api", "output", "date", "week", "month", "question", "input", "current", "metformin", "Retrieval and Tool Use", "Tool Use", "Self-Supervision", "toolformer", "api-calls", "agents", "2023"]}, {"title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models", "type": "source page", "url": "sources/chain-of-thought-prompting-elicits-reasoning-in-lar-888dd8e4.html", "summary": "likely that models could arrive at the correct answer via an incorrect reasoning path (e.g., all the commmonsense reasoning datasets we evaluate). Q UESTION : If Ann is 9 years old and her brother is twice her age, how…", "keywords": ["prompting", "reasoning", "letter", "symbolic", "models", "incorrect", "years", "old", "odel", "nswer", "Flashattention / Attention / Memory", "Reasoning and Prompting", "Prompting", "Reasoning", "chain-of-thought", "reasoning", "prompting", "2022"]}, {"title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models", "type": "source page", "url": "sources/self-consistency-improves-chain-of-thought-reasonin-ff8dcb0e.html", "summary": "We show that self-consistency is robust to various sampling strategies and parameters. Accuracy (%) 28 26 T=0.7, k=40 T=0.5, k=40 T=0.3, k=40 22 T=0.5, k=20 20 T=0.5, no top k 18 Greedy Decode #Sampled Reasoning Paths s…", "keywords": ["self", "consistency", "sampling", "accuracy", "greedy", "sampled", "reasoning", "path", "prompt", "set", "Reasoning and Prompting", "Prompting", "Reasoning", "self-consistency", "chain-of-thought", "decoding", "2022"]}, {"title": "ReAct: Synergizing Reasoning and Acting in Language Models", "type": "source page", "url": "sources/react-synergizing-reasoning-and-acting-in-language--beaadd33.html", "summary": "Published as a conference paper at ICLR 2023 ReAct ALFWorld trajectory You are in the middle of a room. > think: To solve the task, I need to find and take a knife, then clean it with sinkbasin, then put it in counterto…", "keywords": ["react", "knife", "diningtable", "reasoning", "mug", "tomato", "sinkbasin", "cot", "alfworld", "think", "Reasoning and Prompting", "Agentic Reasoning", "Tool Use", "react", "reasoning", "acting", "2022"]}, {"title": "Measuring Massive Multitask Language Understanding", "type": "source page", "url": "sources/measuring-massive-multitask-language-understanding-1bd1157d.html", "summary": "Since models are pretrained on the Internet, this enables us to test how well they can extract useful knowledge from massive corpora. Future models that use this test could be single models or a mixture of experts model…", "keywords": ["high", "school", "models", "accuracy", "shot", "gpt", "test", "paper", "well", "knowledge", "Evaluation and Benchmarks", "Benchmarking", "Evaluation", "mmlu", "evaluation", "knowledge", "2020"]}, {"title": "Holistic Evaluation of Language Models", "type": "source page", "url": "sources/holistic-evaluation-of-language-models-3d3d51b0.html", "summary": "Tasks, domains, and languages are not atomic or unambiguous constructs: they can be made coarser and finer, but we use them as intuitive structure for the space of scenarios. Given this structure, we deliberately select…", "keywords": ["scenarios", "models", "language", "tasks", "structure", "space", "given", "set", "correspond", "natural", "Evaluation and Benchmarks", "Benchmarking", "Evaluation", "helm", "holistic-evaluation", "tradeoffs", "2022"]}, {"title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena", "type": "source page", "url": "sources/judging-llm-as-a-judge-with-mt-bench-and-chatbot-ar-d86911cb.html", "summary": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena Lianmin Zheng1∗ Wei-Lin Chiang1∗ Ying Sheng4∗ Siyuan Zhuang1 Zhanghao Wu1 Yonghao Zhuang3 Zi Lin2 Zhuohan Li1 Dacheng Li13 arXiv:2306.05685v4 [cs.CL] 24 Dec 2023 Er…", "keywords": ["model", "vicuna", "gpt", "conversations", "models", "prompt", "llm", "judge", "lin", "zhuang", "Chatbot Arena", "Size / Memory / Gradient", "Trainable Parameters", "Vicuna / Gpt / First", "Evaluation and Benchmarks", "Evaluation", "LLM-as-a-Judge", "mt-bench", "chatbot-arena", "judge-models", "2023"]}, {"title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness", "type": "source page", "url": "sources/flashattention-fast-and-memory-efficient-exact-atte-eeffeb20.html", "summary": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness Tri Dao† , Daniel Y. We argue that a missing principle is making attention algorithms IO- aware—accounting for reads and writes between levels…", "keywords": ["flashattention", "attention", "hbm", "pass", "memory", "requires", "accesses", "gpu", "algorithm", "sram", "Flashattention / Attention / Memory", "Systems and Efficiency", "Attention Systems", "Kernel Optimization", "flashattention", "io-awareness", "training-efficiency", "2022"]}, {"title": "FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning", "type": "source page", "url": "sources/flashattention-2-faster-attention-with-better-paral-ded1c96b.html", "summary": "3.3 Work Partitioning Between Warps As Section 3.2 describe how we schedule thread blocks, even within each thread block, we also have to decide how to partition the work between different warps. We typically use 4 or 8…", "keywords": ["warps", "flashattention", "thread", "attention", "work", "block", "different", "hbm", "memory", "end", "Flashattention / Attention / Memory", "Systems and Efficiency", "Attention Systems", "Kernel Optimization", "flashattention-2", "parallelism", "throughput", "2023"]}, {"title": "Efficient Memory Management for Large Language Model Serving with PagedAttention", "type": "source page", "url": "sources/efficient-memory-management-for-large-language-mode-3e7d0682.html", "summary": "Efficient Memory Management for Large Language Model Serving with PagedAttention Woosuk Kwon1,∗ Zhuohan Li1,∗ Siyuan Zhuang1 Ying Sheng1,2 Lianmin Zheng1 Cody Hao Yu3 Joseph E. Gonzalez1 Hao Zhang4 Ion Stoica1 1 UC Berk…", "keywords": ["cache", "memory", "blocks", "orca", "pagedattention", "vllm", "physical", "request", "block", "large", "Memory Management", "Systems and Efficiency", "Inference Systems", "Serving", "pagedattention", "vllm", "serving", "2023"]}, {"title": "Learning Transferable Visual Models From Natural Language Supervision", "type": "source page", "url": "sources/learning-transferable-visual-models-from-natural-la-41c52fc7.html", "summary": "We found that the model had a top-1 accuracy of 91.8% on the CCTV images for the initial evaluation. We measure the model’s performance on classification of The accuracy dropped significantly to 51.1% for the second ima…", "keywords": ["shot", "zero", "accuracy", "clip", "performance", "model", "visual", "natural", "language", "evaluation", "Multimodal Models", "Vision-Language", "Contrastive Learning", "clip", "multimodal", "representation-learning", "2021"]}, {"title": "Flamingo: a Visual Language Model for Few-Shot Learning", "type": "source page", "url": "sources/flamingo-a-visual-language-model-for-few-shot-learn-ad99aa86.html", "summary": "We introduce Flamingo, a family of Visual Language Models (VLM) with this ability. We propose key architectural innovations to: (i) bridge powerful pretrained vision-only and language-only models, (ii) handle sequences…", "keywords": ["dataset", "language", "data", "training", "text", "collected", "preprocessing", "labeling", "instances", "models", "Datasheet for VTP", "Perceiver Resampler", "Preprocessing Cleaning", "Trainable Parameters", "Multimodal Models", "Vision-Language", "Few-Shot Learning", "flamingo", "multimodal", "few-shot", "2022"]}, {"title": "BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models", "type": "source page", "url": "sources/blip-2-bootstrapping-language-image-pre-training-wi-c3c8f676.html", "summary": "BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models Explain the advantages of Write down the facts that you Tell me something about this product. The audi e-tron quattr…", "keywords": ["language", "image", "blip", "bootstrapping", "pre", "training", "frozen", "encoders", "large", "models", "Multimodal Models", "Vision-Language", "Modular Pretraining", "blip-2", "image-to-text", "frozen-backbones", "2023"]}, {"title": "Visual Instruction Tuning", "type": "source page", "url": "sources/visual-instruction-tuning-c90fe045.html", "summary": "Our novel model ensembling with the text-only GPT-4 consistently improves the model’s performance under all categories, setting the new SoTA performance. We ablate several design choices Visual features Before Last on S…", "keywords": ["language", "model", "instruction", "last", "vision", "large", "data", "multimodal", "movie", "juice", "Vicuna / Gpt / First", "Multimodal Models", "Vision-Language", "Instruction Tuning", "llava", "visual-instruction-tuning", "chat", "2023"]}, {"title": "Corpus Index", "type": "wiki page", "url": "index.html", "summary": "This directory is the human-readable map of the compiled PDF corpus.", "keywords": ["Corpus Index", "Corpus Snapshot", "Corpus Facets", "Alignment and Post-Training", "Multimodal Models", "Scaling and Foundation Models", "Evaluation and Benchmarks", "Foundation Models", "Reasoning and Prompting"]}, {"title": "Maintenance Lint", "type": "wiki page", "url": "lint.html", "summary": "This report flags wiki maintenance issues after the current ingest/update run.", "keywords": ["Maintenance Lint", "Snapshot", "Orphan Sections", "Sources Without Topic Coverage", "Low-Confidence Topics", "Single-Source Topics", "Sparse-Metadata Sources", "Possible Duplicate Topics", "Topic Hubs"]}, {"title": "Build Log", "type": "wiki page", "url": "log.html", "summary": "", "keywords": ["Build Log", "2026-04-20 06:59:36Z", "2026-04-20 07:00:27Z", "2026-04-20 07:02:21Z", "2026-04-20 07:03:05Z", "2026-04-20 07:14:10Z", "2026-04-20 07:14:41Z", "2026-04-20 07:15:05Z", "2026-04-20 07:15:38Z"]}, {"title": "Research Areas", "type": "wiki page", "url": "areas.html", "summary": "This page groups the corpus by curated research area metadata.", "keywords": ["Research Areas", "Alignment and Post-Training", "Sources", "Topic Pages", "Multimodal Models", "Sources", "Topic Pages", "Scaling and Foundation Models", "Sources"]}, {"title": "Model Families", "type": "wiki page", "url": "model-families.html", "summary": "This page groups the corpus by model family metadata such as decoder-only, seq2seq, retrieval-augmented, or vision-language.", "keywords": ["Model Families", "Decoder-Only", "Sources", "Topic Pages", "Transformer", "Sources", "Topic Pages", "Vision-Language", "Sources"]}, {"title": "Chronology", "type": "wiki page", "url": "chronology.html", "summary": "This page arranges the corpus by publication year so the wiki can track conceptual evolution over time.", "keywords": ["Chronology", "2017", "Sources", "Topic Pages", "2018", "Sources", "Topic Pages", "2019", "Sources"]}, {"title": "Connectivity Hubs", "type": "wiki page", "url": "hubs.html", "summary": "These are the densest topic and source pages in the current corpus.", "keywords": ["Connectivity Hubs", "Topic Hubs", "Source Hubs"]}]</script>
     <script src="search.js"></script>
   </body>
 </html>

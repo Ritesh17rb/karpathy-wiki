@@ -1,0 +1,46 @@
+# Advanced Karpathy-style corpus for a larger, denser wiki.
+# Format:
+# URL | Title | year=YYYY; venue=...; area=...; families=a,b; tags=x,y
+
+# Foundations and scaling
+https://arxiv.org/pdf/1706.03762.pdf | Attention Is All You Need | year=2017; venue=NeurIPS; area=Foundation Models; families=Transformer,Encoder-Decoder; tags=attention,sequence-modeling,architecture
+https://arxiv.org/pdf/1810.04805.pdf | BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding | year=2018; venue=NAACL; area=Foundation Models; families=Encoder-Only,Transformer; tags=pretraining,masked-language-modeling,transfer-learning
+https://arxiv.org/pdf/1910.10683.pdf | Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer | year=2019; venue=JMLR; area=Foundation Models; families=Seq2Seq,Text-to-Text,Transformer; tags=t5,transfer-learning,unification
+https://arxiv.org/pdf/2001.08361.pdf | Scaling Laws for Neural Language Models | year=2020; venue=arXiv; area=Scaling and Foundation Models; families=Decoder-Only,Scaling Laws; tags=scaling-laws,compute,loss-prediction
+https://arxiv.org/pdf/2005.14165.pdf | Language Models are Few-Shot Learners | year=2020; venue=NeurIPS; area=Scaling and Foundation Models; families=Decoder-Only,In-Context Learning; tags=gpt-3,few-shot,emergence
+https://arxiv.org/pdf/2204.02311.pdf | PaLM: Scaling Language Modeling with Pathways | year=2022; venue=JMLR; area=Scaling and Foundation Models; families=Decoder-Only,Transformer; tags=palm,pathways,reasoning
+https://arxiv.org/pdf/2203.15556.pdf | Training Compute-Optimal Large Language Models | year=2022; venue=arXiv; area=Scaling and Foundation Models; families=Decoder-Only,Scaling Laws; tags=chinchilla,compute-optimal,data-scaling
+https://arxiv.org/pdf/2302.13971.pdf | LLaMA: Open and Efficient Foundation Language Models | year=2023; venue=arXiv; area=Open Foundation Models; families=Decoder-Only,Transformer; tags=llama,open-weights,efficiency
+https://arxiv.org/pdf/2307.09288.pdf | Llama 2: Open Foundation and Fine-Tuned Chat Models | year=2023; venue=arXiv; area=Open Foundation Models; families=Decoder-Only,Chat Models; tags=llama-2,open-weights,chat
+
+# Alignment and post-training
+https://arxiv.org/pdf/2203.02155.pdf | Training language models to follow instructions with human feedback | year=2022; venue=NeurIPS; area=Alignment and Post-Training; families=Instruction-Tuning,RLHF; tags=instructgpt,alignment,preference-data
+https://arxiv.org/pdf/2204.05862.pdf | Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback | year=2022; venue=arXiv; area=Alignment and Post-Training; families=RLHF,Chat Models; tags=helpful-harmless,anthropic,assistant
+https://arxiv.org/pdf/2212.08073.pdf | Constitutional AI: Harmlessness from AI Feedback | year=2022; venue=arXiv; area=Alignment and Post-Training; families=AI Feedback,Constitutional Training; tags=constitutional-ai,harmlessness,self-critique
+https://arxiv.org/pdf/2106.09685.pdf | LoRA: Low-Rank Adaptation of Large Language Models | year=2021; venue=ICLR; area=Alignment and Post-Training; families=Parameter-Efficient Finetuning,Low-Rank Adaptation; tags=lora,peft,adaptation
+https://arxiv.org/pdf/2305.14314.pdf | QLoRA: Efficient Finetuning of Quantized LLMs | year=2023; venue=NeurIPS; area=Alignment and Post-Training; families=Parameter-Efficient Finetuning,Quantization; tags=qlora,quantization,peft
+https://arxiv.org/pdf/2305.18290.pdf | Direct Preference Optimization: Your Language Model is Secretly a Reward Model | year=2023; venue=NeurIPS; area=Alignment and Post-Training; families=Preference Optimization,Post-Training; tags=dpo,preference-learning,alignment
+
+# Retrieval, tools, and reasoning
+https://arxiv.org/pdf/2005.11401.pdf | Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks | year=2020; venue=NeurIPS; area=Retrieval and Tool Use; families=Retrieval-Augmented Generation,Seq2Seq; tags=rag,retrieval,provenance
+https://arxiv.org/pdf/2112.04426.pdf | Improving language models by retrieving from trillions of tokens | year=2021; venue=ICML; area=Retrieval and Tool Use; families=Retrieval-Augmented Language Models,Decoder-Only; tags=retro,retrieval,external-memory
+https://arxiv.org/pdf/2302.04761.pdf | Toolformer: Language Models Can Teach Themselves to Use Tools | year=2023; venue=NeurIPS; area=Retrieval and Tool Use; families=Tool Use,Self-Supervision; tags=toolformer,api-calls,agents
+https://arxiv.org/pdf/2201.11903.pdf | Chain-of-Thought Prompting Elicits Reasoning in Large Language Models | year=2022; venue=NeurIPS; area=Reasoning and Prompting; families=Prompting,Reasoning; tags=chain-of-thought,reasoning,prompting
+https://arxiv.org/pdf/2203.11171.pdf | Self-Consistency Improves Chain of Thought Reasoning in Language Models | year=2022; venue=ICLR; area=Reasoning and Prompting; families=Prompting,Reasoning; tags=self-consistency,chain-of-thought,decoding
+https://arxiv.org/pdf/2210.03629.pdf | ReAct: Synergizing Reasoning and Acting in Language Models | year=2022; venue=ICLR; area=Reasoning and Prompting; families=Agentic Reasoning,Tool Use; tags=react,reasoning,acting
+
+# Evaluation
+https://arxiv.org/pdf/2009.03300.pdf | Measuring Massive Multitask Language Understanding | year=2020; venue=ICLR; area=Evaluation and Benchmarks; families=Benchmarking,Evaluation; tags=mmlu,evaluation,knowledge
+https://arxiv.org/pdf/2211.09110.pdf | Holistic Evaluation of Language Models | year=2022; venue=Transactions on Machine Learning Research; area=Evaluation and Benchmarks; families=Benchmarking,Evaluation; tags=helm,holistic-evaluation,tradeoffs
+https://arxiv.org/pdf/2306.05685.pdf | Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena | year=2023; venue=NeurIPS Datasets and Benchmarks; area=Evaluation and Benchmarks; families=Evaluation,LLM-as-a-Judge; tags=mt-bench,chatbot-arena,judge-models
+
+# Systems and efficiency
+https://arxiv.org/pdf/2205.14135.pdf | FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness | year=2022; venue=NeurIPS; area=Systems and Efficiency; families=Attention Systems,Kernel Optimization; tags=flashattention,io-awareness,training-efficiency
+https://arxiv.org/pdf/2307.08691.pdf | FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning | year=2023; venue=ICLR; area=Systems and Efficiency; families=Attention Systems,Kernel Optimization; tags=flashattention-2,parallelism,throughput
+https://arxiv.org/pdf/2309.06180.pdf | Efficient Memory Management for Large Language Model Serving with PagedAttention | year=2023; venue=SOSP; area=Systems and Efficiency; families=Inference Systems,Serving; tags=pagedattention,vllm,serving
+
+# Multimodal
+https://arxiv.org/pdf/2103.00020.pdf | Learning Transferable Visual Models From Natural Language Supervision | year=2021; venue=ICML; area=Multimodal Models; families=Vision-Language,Contrastive Learning; tags=clip,multimodal,representation-learning
+https://arxiv.org/pdf/2204.14198.pdf | Flamingo: a Visual Language Model for Few-Shot Learning | year=2022; venue=NeurIPS; area=Multimodal Models; families=Vision-Language,Few-Shot Learning; tags=flamingo,multimodal,few-shot
+https://arxiv.org/pdf/2301.12597.pdf | BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models | year=2023; venue=ICML; area=Multimodal Models; families=Vision-Language,Modular Pretraining; tags=blip-2,image-to-text,frozen-backbones
+https://arxiv.org/pdf/2304.08485.pdf | Visual Instruction Tuning | year=2023; venue=NeurIPS; area=Multimodal Models; families=Vision-Language,Instruction Tuning; tags=llava,visual-instruction-tuning,chat
