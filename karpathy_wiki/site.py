@@ -33,6 +33,97 @@ AUTOLINK_ALIAS_STOP_PHRASES = {
     "critical thinking",
 }
 
+AUTOLINK_SINGLE_TERM_STOP_WORDS = {
+    "acid",
+    "acids",
+    "animal",
+    "animals",
+    "atom",
+    "atoms",
+    "bacteria",
+    "blood",
+    "body",
+    "bone",
+    "bones",
+    "carbon",
+    "cell",
+    "cells",
+    "chemical",
+    "chemicals",
+    "chromosome",
+    "chromosomes",
+    "compound",
+    "compounds",
+    "disease",
+    "diseases",
+    "electron",
+    "electrons",
+    "energy",
+    "enzyme",
+    "enzymes",
+    "figure",
+    "food",
+    "gene",
+    "genes",
+    "growth",
+    "heart",
+    "hormone",
+    "hormones",
+    "infection",
+    "infections",
+    "light",
+    "membrane",
+    "molecule",
+    "molecules",
+    "muscle",
+    "muscles",
+    "nerve",
+    "nerves",
+    "nervous",
+    "organ",
+    "organs",
+    "organism",
+    "organisms",
+    "oxygen",
+    "plant",
+    "plants",
+    "population",
+    "populations",
+    "pressure",
+    "protein",
+    "proteins",
+    "reaction",
+    "reactions",
+    "response",
+    "responses",
+    "section",
+    "species",
+    "system",
+    "systems",
+    "tissue",
+    "tissues",
+    "trait",
+    "traits",
+    "virus",
+    "viruses",
+    "water",
+}
+
+AUTOLINK_SINGLE_TERM_EXACT = {
+    "adp",
+    "atp",
+    "cns",
+    "dna",
+    "mri",
+    "mrna",
+    "nadh",
+    "nadph",
+    "pcr",
+    "pns",
+    "rna",
+    "trna",
+}
+
 
 def _site_identity(build_meta: dict[str, str | int | None]) -> dict[str, str]:
     source_file_name = str(build_meta.get("source_file_name") or "")
@@ -154,7 +245,7 @@ def _topic_autolink_terms(topic) -> list[str]:
 
     register(topic.title)
 
-    for phrase in topic.key_phrases[:6]:
+    for phrase in topic.key_phrases[:12]:
         cleaned = " ".join(phrase.split()).strip(" ,.;:()[]{}")
         words = re.findall(r"[a-z0-9]+", cleaned.casefold())
         if len(cleaned) < 8 or len(words) < 2:
@@ -164,6 +255,24 @@ def _topic_autolink_terms(topic) -> list[str]:
         if all(len(word) <= 2 for word in words):
             continue
         register(cleaned)
+
+    for keyword in topic.keywords[:10]:
+        cleaned = " ".join(keyword.split()).strip(" ,.;:()[]{}")
+        normalized = cleaned.casefold()
+        words = re.findall(r"[a-z0-9]+", normalized)
+        if len(words) != 1:
+            continue
+        token = words[0]
+        if token in AUTOLINK_SINGLE_TERM_STOP_WORDS:
+            continue
+        if token in AUTOLINK_SINGLE_TERM_EXACT:
+            register(cleaned)
+            continue
+        if len(token) >= 11 and token.isalpha():
+            register(cleaned)
+            continue
+        if len(token) >= 8 and token.endswith(("sis", "tion", "ment", "tide", "zyme")):
+            register(cleaned)
 
     return terms
 
@@ -224,6 +333,8 @@ def _build_autolink_index(
         " ".join(topic.title.split()).casefold(): f"topics/{topic.topic_id}.html"
         for topic in topics
     }
+    topic_terms_by_target: dict[str, list[str]] = {}
+    alias_targets: defaultdict[str, set[str]] = defaultdict(set)
 
     def register(title: str, target_url: str, kind: str) -> None:
         normalized = " ".join(title.split()).casefold()
@@ -251,9 +362,21 @@ def _build_autolink_index(
         for topic in topics:
             target_url = f"topics/{topic.topic_id}.html"
             if target_url != current_url:
-                for index, term in enumerate(_topic_autolink_terms(topic)):
+                terms = _topic_autolink_terms(topic)
+                topic_terms_by_target[target_url] = terms
+                for index, term in enumerate(terms):
+                    normalized = " ".join(term.split()).casefold()
+                    if index > 0:
+                        alias_targets[normalized].add(target_url)
+
+        for topic in topics:
+            target_url = f"topics/{topic.topic_id}.html"
+            if target_url != current_url:
+                for index, term in enumerate(topic_terms_by_target.get(target_url, [])):
                     normalized = " ".join(term.split()).casefold()
                     if index > 0 and canonical_topic_titles.get(normalized) not in {None, target_url}:
+                        continue
+                    if index > 0 and len(alias_targets.get(normalized, set())) > 1:
                         continue
                     register(term, target_url, "topic page")
 
@@ -458,7 +581,7 @@ def _markdown_to_html(markdown_text: str, autolink_index: dict[str, object] | No
             return
         rendered.append(f'<{list_tag} class="md-list">')
         for item in list_items:
-            rendered.append(f"<li>{_render_inline_markdown(item)}</li>")
+            rendered.append(f"<li>{_render_inline_markdown(item, autolink_index)}</li>")
         rendered.append(f"</{list_tag}>")
         list_items = []
         list_tag = None
@@ -598,8 +721,22 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
 
     search_index = []
 
+    nav_autolink_indexes = {
+        str(page["slug"]): _build_autolink_index(
+            str(page["url"]),
+            nav_pages,
+            topics,
+            documents,
+            include_kinds=("topic page", "wiki page"),
+        )
+        for page in nav_pages
+    }
+
     for page in nav_pages:
-        page["content_html"] = _markdown_to_html(str(page["markdown_text"]))
+        page["content_html"] = _markdown_to_html(
+            str(page["markdown_text"]),
+            nav_autolink_indexes.get(str(page["slug"])),
+        )
 
     topic_pages: dict[str, dict[str, object]] = {}
     for topic in topics:
