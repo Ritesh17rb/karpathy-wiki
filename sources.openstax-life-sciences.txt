@@ -1,0 +1,8 @@
+# OpenStax life-sciences cluster for a Wikipedia-like book wiki.
+# Format:
+# URL | Title | year=YYYY; venue=...; area=...; families=a,b; tags=x,y
+
+https://assets.openstax.org/oscms-prodcms/media/documents/ConceptsofBiology-WEB.pdf | Concepts of Biology | venue=OpenStax; area=Life Sciences; families=Intro Biology,General Biology; tags=cell-biology,genetics,evolution,ecology
+https://assets.openstax.org/oscms-prodcms/media/documents/Biology2e-WEB.pdf | Biology 2e | venue=OpenStax; area=Life Sciences; families=General Biology,Majors Biology; tags=cell-biology,genetics,evolution,ecology
+https://assets.openstax.org/oscms-prodcms/media/documents/Microbiology-WEB.pdf | Microbiology | venue=OpenStax; area=Life Sciences; families=Microbiology,General Biology; tags=microbes,immunology,disease,metabolism
+https://assets.openstax.org/oscms-prodcms/media/documents/Anatomy_and_Physiology_2e_-_WEB_c9nD9QL.pdf | Anatomy and Physiology 2e | venue=OpenStax; area=Life Sciences; families=Human Biology,Physiology; tags=homeostasis,organ-systems,metabolism,immunity

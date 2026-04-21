@@ -10,8 +10,8 @@
     <header class="chrome">
       <div class="chrome-inner">
         <div class="brand-block">
-          <a class="app-home" href="{{ base_prefix }}index.html">Karpathy Wiki</a>
-          <p class="app-caption">{{ page_caption }}</p>
+          <a class="app-home" href="{{ base_prefix }}index.html">{{ site_title }}</a>
+          <p class="app-caption">{{ site_caption }}</p>
         </div>
         <nav class="top-nav" aria-label="Wiki navigation">
           {% for item in nav_pages %}
@@ -35,7 +35,7 @@
         </section>
 
         <section class="panel">
-          <h2>Data Explore</h2>
+          <h2>Article Index</h2>
           <p class="muted">Browse the loaded corpus immediately, or type to filter wiki, topic, and source pages.</p>
           <input id="searchBox" type="search" placeholder="Search the corpus" />
           <div id="searchResults" class="search-results">
@@ -49,8 +49,41 @@
           </div>
         </section>
 
+        {% if related_links %}
         <section class="panel">
-          <h2>Maintenance State</h2>
+          <h2>{{ related_heading }}</h2>
+          <ul class="plain-list compact-list">
+            {% for item in related_links %}
+            <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        {% if portal_links %}
+        <section class="panel">
+          <h2>Browse Portals</h2>
+          <ul class="plain-list compact-list portal-list">
+            {% for item in portal_links %}
+            <li><span>{{ item.kind }}:</span> <a href="{{ item.url }}">{{ item.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        {% if evidence_links %}
+        <section class="panel">
+          <h2>Evidence Trail</h2>
+          <ul class="plain-list compact-list">
+            {% for item in evidence_links %}
+            <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        <section class="panel">
+          <h2>Publication State</h2>
           <dl class="stats-list">
             {% if build_meta.generated_at_display %}
             <div><dt>Latest compile</dt><dd>{{ build_meta.generated_at_display }}</dd></div>
@@ -68,6 +101,17 @@
       </aside>
 
       <article class="paper markdown-page">
+        {% if page_kicker %}
+        <p class="page-kicker">{{ page_kicker }}</p>
+        {% endif %}
+        {% if hatnote_links %}
+        <nav class="hatnote" aria-label="{{ hatnote_heading }}">
+          <span class="hatnote-label">{{ hatnote_heading }}:</span>
+          {% for item in hatnote_links %}
+          <a href="{{ item.url }}">{{ item.title }}</a>{% if not loop.last %} · {% endif %}
+          {% endfor %}
+        </nav>
+        {% endif %}
         {{ page.content_html | safe }}
       </article>
     </main>

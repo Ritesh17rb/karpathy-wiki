@@ -46,7 +46,7 @@ GENERIC_TOPIC_TERMS = {
     "text", "texts", "image", "images", "visual", "caption", "captions", "checklist", "case",
     "safety", "judge", "judges", "table", "figure", "appendix", "appendices", "conversation",
     "conversations", "instruction", "instructions", "dialogue", "dialogues", "train", "test",
-    "loss", "algorithm", "algorithms", "benchmarking",
+    "loss", "algorithm", "algorithms", "benchmarking", "openstax", "org",
 }
 
 
@@ -751,9 +751,17 @@ def should_drop_line(line: str) -> bool:
     lowered = line.lower()
     if not line.strip():
         return True
+    if lowered == "access for free at openstax.org":
+        return True
+    if "modification of work by" in lowered:
+        return True
     if re.fullmatch(r"[\divxlcdm]+", lowered):
         return True
     if re.fullmatch(r"page\s+\d+", lowered):
+        return True
+    if re.match(r"^\d+\s+\d+(?:\.\d+)?\s+[•·]", line):
+        return True
+    if re.match(r"^\d+(?:\.\d+)?\s+[•·]\s+", line):
         return True
     if re.search(r"https?://|www\.", lowered):
         return True
@@ -798,12 +806,37 @@ def trim_section_boundaries(title: str, text: str, doc_title: str) -> str:
                 normalized = normalized[idx:]
                 lowered = normalized.lower()
                 break
+    elif normalized_title.startswith("chapter "):
+        for marker in ("introduction",):
+            idx = lowered.find(marker)
+            if idx != -1 and idx < max(1200, len(lowered) // 4):
+                normalized = normalized[idx:]
+                lowered = normalized.lower()
+                break
     for marker in TRIM_END_MARKERS:
         idx = lowered.find(marker)
         if idx != -1 and idx > len(lowered) * 0.45:
             normalized = normalized[:idx]
             lowered = normalized.lower()
             break
+    if normalized_title.startswith("chapter "):
+        for marker in (
+            "key terms",
+            "chapter summary",
+            "summary",
+            "review questions",
+            "critical thinking questions",
+            "interactive link questions",
+            "visual connection questions",
+            "chapter review",
+            "answer key",
+            "appendix",
+        ):
+            idx = lowered.find(marker)
+            if idx != -1 and idx > len(lowered) * 0.35:
+                normalized = normalized[:idx]
+                lowered = normalized.lower()
+                break
     return normalize_whitespace(normalized)
 
 
@@ -1061,6 +1094,68 @@ def fallback_section_slices(pages: list[str]) -> list[tuple[str, int, int]]:
     return slices
 
 
+def chapter_heading_from_page(page: str) -> tuple[str, str] | None:
+    lines = [" ".join(line.split()) for line in page.splitlines() if line.strip()]
+    if not lines:
+        return None
+
+    chapter_index = -1
+    chapter_number = ""
+    for index, line in enumerate(lines[:20]):
+        match = re.match(r"^CHAPTER\s+([0-9A-Za-z-]+)\b", line)
+        if not match:
+            continue
+        chapter_index = index
+        chapter_number = match.group(1)
+        break
+
+    if chapter_index == -1:
+        return None
+
+    nearby = lines[chapter_index : chapter_index + 16]
+    if not any(
+        line in {"CHAPTER OUTLINE", "CHAPTER OBJECTIVES"} or line.startswith("INTRODUCTION")
+        for line in nearby
+    ):
+        return None
+
+    for line in lines[chapter_index + 1 : chapter_index + 6]:
+        if (
+            not line
+            or line in {"CHAPTER OUTLINE", "CHAPTER OBJECTIVES"}
+            or line.startswith("FIGURE ")
+            or line.startswith("INTRODUCTION")
+            or re.match(r"^\d+(\.\d+)*\s", line)
+            or len(line) > 100
+        ):
+            continue
+        return chapter_number, line
+    return None
+
+
+def extract_chapter_ranges(pages: list[str]) -> list[tuple[str, int, int]]:
+    starts: list[tuple[str, str, int]] = []
+    seen_numbers: set[str] = set()
+    for page_index, page in enumerate(pages):
+        heading = chapter_heading_from_page(page)
+        if not heading:
+            continue
+        chapter_number, chapter_title = heading
+        if chapter_number in seen_numbers:
+            continue
+        seen_numbers.add(chapter_number)
+        starts.append((chapter_number, chapter_title, page_index))
+
+    if len(starts) < 3:
+        return []
+
+    ranges: list[tuple[str, int, int]] = []
+    for index, (chapter_number, chapter_title, start_page) in enumerate(starts):
+        end_page = starts[index + 1][2] - 1 if index + 1 < len(starts) else len(pages) - 1
+        ranges.append((f"Chapter {chapter_number}: {chapter_title}", start_page, end_page))
+    return ranges
+
+
 def make_section(
     doc_id: str,
     doc_title: str,
@@ -1070,6 +1165,8 @@ def make_section(
     pages: list[str],
     ordinal: int,
     spec: SourceSpec | None = None,
+    page_offset: int = 0,
+    force_role: str | None = None,
 ) -> Section | None:
     page_texts = []
     for page in pages[start_page : end_page + 1]:
@@ -1087,7 +1184,7 @@ def make_section(
     if normalize_title(section_title).lower() in {"overview", "part", "part 01"}:
         section_title = f"{doc_title}: Overview"
     normalized_title = normalize_title(section_title) or section_title
-    role = classify_section_role(section_title, body, doc_title)
+    role = force_role or classify_section_role(section_title, body, doc_title)
     quality_score = compute_section_quality(section_title, body, role)
     clusterable = quality_score >= 0.55 and role not in {
         "references",
@@ -1111,8 +1208,8 @@ def make_section(
         title=section_title,
         normalized_title=normalized_title,
         role=role,
-        start_page=start_page + 1,
-        end_page=end_page + 1,
+        start_page=page_offset + start_page + 1,
+        end_page=page_offset + end_page + 1,
         text=body,
         summary=summary,
         token_count=token_count,
@@ -1127,7 +1224,13 @@ def make_section(
     )
 
 
-def segment_sections(doc_id: str, doc_title: str, pages: list[str], spec: SourceSpec | None = None) -> list[Section]:
+def segment_sections(
+    doc_id: str,
+    doc_title: str,
+    pages: list[str],
+    spec: SourceSpec | None = None,
+    page_offset: int = 0,
+) -> list[Section]:
     candidates = [top_heading_candidate(page) for page in pages]
     counts = Counter(candidate for candidate in candidates if candidate)
     cut_points: list[tuple[str, int]] = []
@@ -1151,7 +1254,17 @@ def segment_sections(doc_id: str, doc_title: str, pages: list[str], spec: Source
 
     sections: list[Section] = []
     for idx, (title, start_page, end_page) in enumerate(cut_ranges, start=1):
-        section = make_section(doc_id, doc_title, title, start_page, end_page, pages, idx, spec=spec)
+        section = make_section(
+            doc_id,
+            doc_title,
+            title,
+            start_page,
+            end_page,
+            pages,
+            idx,
+            spec=spec,
+            page_offset=page_offset,
+        )
         if section:
             sections.append(section)
 
@@ -1168,10 +1281,86 @@ def segment_sections(doc_id: str, doc_title: str, pages: list[str], spec: Source
         [whole_text],
         1,
         spec=spec,
+        page_offset=page_offset,
     )
     if fallback:
         return [fallback]
     return []
+
+
+def compile_document_record(
+    spec: SourceSpec,
+    pdf_path: Path,
+    text_path: Path,
+    title: str,
+    doc_seed: str,
+    pages: list[str],
+    page_offset: int,
+    paths: dict[str, Path],
+    whole_section_title: str | None = None,
+) -> tuple[Document | None, list[Section]]:
+    doc_id = stable_slug(title, doc_seed, limit=60)
+    if whole_section_title:
+        section = make_section(
+            doc_id,
+            title,
+            whole_section_title,
+            0,
+            max(len(pages) - 1, 0),
+            pages,
+            1,
+            spec=spec,
+            page_offset=page_offset,
+            force_role="section",
+        )
+        if section:
+            section.quality_score = max(section.quality_score, 0.72)
+            section.clusterable = True
+        document_sections = [section] if section else []
+    else:
+        document_sections = segment_sections(doc_id, title, pages, spec=spec, page_offset=page_offset)
+    if not document_sections:
+        return None, []
+
+    ranked_sections = sorted(
+        document_sections,
+        key=lambda item: (item.clusterable, item.quality_score, item.token_count),
+        reverse=True,
+    )
+    summary_source = "\n\n".join(section.summary or section.text for section in ranked_sections[:4])
+    keywords = extract_keywords(summary_source or "\n\n".join(section.text for section in ranked_sections[:3]), limit=10)
+    summary = summarize_text(
+        title,
+        summary_source or "\n\n".join(section.text for section in ranked_sections[:2]),
+        keywords,
+        sentence_limit=4,
+    )
+    document = Document(
+        doc_id=doc_id,
+        title=title,
+        url=spec.url,
+        pdf_path=str(pdf_path),
+        text_path=str(text_path),
+        section_count=len(document_sections),
+        page_count=len(pages),
+        summary=summary,
+        keywords=keywords,
+        topic_ids=[],
+        section_ids=[section.section_id for section in document_sections],
+        year=spec.year,
+        venue=spec.venue,
+        area=spec.area,
+        families=list(spec.families),
+        tags=list(spec.tags),
+    )
+    write_json(
+        paths["extracted"] / f"{doc_id}.sections.json",
+        {
+            "document": asdict(document),
+            "sections": [asdict(section) for section in document_sections],
+        },
+    )
+    return document, document_sections
 
 
 def compute_tfidf(sections: list[Section]) -> dict[str, dict[str, float]]:
@@ -1439,7 +1628,7 @@ def best_evidence_excerpt(section: Section, topic_title: str, topic_keywords: li
     return max(scored, key=lambda item: item[0])[1]
 
 
-def load_prior_topics(workspace: Path) -> list[PriorTopic]:
+def load_prior_topics(workspace: Path, source_path: Path | None = None) -> list[PriorTopic]:
     manifest_path = workspace / "build.json"
     if not manifest_path.exists():
         return []
@@ -1447,6 +1636,14 @@ def load_prior_topics(workspace: Path) -> list[PriorTopic]:
         payload = json.loads(manifest_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return []
+
+    # Do not reuse prior topic state across unrelated corpora. This keeps a new
+    # source list, such as an OpenStax book cluster, from inheriting stale topic
+    # IDs and titles from a previous domain.
+    if source_path is not None:
+        prior_source = payload.get("source_file")
+        if prior_source and Path(str(prior_source)).resolve() != source_path.resolve():
+            return []
 
     topics: list[PriorTopic] = []
     for topic in payload.get("topics", []):
@@ -2310,8 +2507,6 @@ def write_wiki(
             "## Document Metadata",
             "",
             f"- Source URL: {document.url}",
-            f"- PDF path: `{document.pdf_path}`",
-            f"- Extracted text path: `{document.text_path}`",
             f"- Extracted pages: {document.page_count}",
             f"- Retained sections: {document.section_count}",
             f"- Year: {document.year if document.year is not None else 'n/a'}",
@@ -2405,42 +2600,43 @@ def compile_documents(specs: list[SourceSpec], paths: dict[str, Path], force: bo
         text_path = paths["extracted"] / f"{doc_stub}.txt"
         raw_text = extract_pdf_text(pdf_path, text_path, force=force)
         pages = [page for page in raw_text.split("\f") if page.strip()]
-        title = guess_document_title(spec, pages)
-        doc_id = stable_slug(title, spec.url, limit=60)
-        document_sections = segment_sections(doc_id, title, pages, spec=spec)
-        if not document_sections:
+        book_title = guess_document_title(spec, pages)
+        chapter_ranges = extract_chapter_ranges(pages)
+        if chapter_ranges:
+            for chapter_title, start_page, end_page in chapter_ranges:
+                chapter_pages = pages[start_page : end_page + 1]
+                title = f"{book_title} — {chapter_title}"
+                document, document_sections = compile_document_record(
+                    spec=spec,
+                    pdf_path=pdf_path,
+                    text_path=text_path,
+                    title=title,
+                    doc_seed=f"{spec.url}#{chapter_title}",
+                    pages=chapter_pages,
+                    page_offset=start_page,
+                    paths=paths,
+                    whole_section_title=chapter_title,
+                )
+                if not document:
+                    continue
+                documents.append(document)
+                sections.extend(document_sections)
             continue
-        sections.extend(document_sections)
-        ranked_sections = sorted(document_sections, key=lambda item: (item.clusterable, item.quality_score, item.token_count), reverse=True)
-        summary_source = "\n\n".join(section.summary or section.text for section in ranked_sections[:4])
-        keywords = extract_keywords(summary_source or "\n\n".join(section.text for section in ranked_sections[:3]), limit=10)
-        summary = summarize_text(title, summary_source or "\n\n".join(section.text for section in ranked_sections[:2]), keywords, sentence_limit=4)
-        document = Document(
-            doc_id=doc_id,
-            title=title,
-            url=spec.url,
-            pdf_path=str(pdf_path),
-            text_path=str(text_path),
-            section_count=len(document_sections),
-            page_count=len(pages),
-            summary=summary,
-            keywords=keywords,
-            topic_ids=[],
-            section_ids=[section.section_id for section in document_sections],
-            year=spec.year,
-            venue=spec.venue,
-            area=spec.area,
-            families=list(spec.families),
-            tags=list(spec.tags),
+
+        document, document_sections = compile_document_record(
+            spec=spec,
+            pdf_path=pdf_path,
+            text_path=text_path,
+            title=book_title,
+            doc_seed=spec.url,
+            pages=pages,
+            page_offset=0,
+            paths=paths,
         )
+        if not document:
+            continue
         documents.append(document)
-        write_json(
-            paths["extracted"] / f"{doc_id}.sections.json",
-            {
-                "document": asdict(document),
-                "sections": [asdict(section) for section in document_sections],
-            },
-        )
+        sections.extend(document_sections)
     return documents, sections
 
 
@@ -2500,7 +2696,7 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("No PDF URLs found in the source list.")
 
     paths = ensure_dirs(workspace)
-    prior_topics = load_prior_topics(workspace)
+    prior_topics = load_prior_topics(workspace, source_path=source_path)
     clean_generated_dirs(paths)
     documents, sections = compile_documents(specs, paths, force=args.force)
     topics = build_topics(sections, documents, prior_topics=prior_topics)

@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import html
 import json
+import posixpath
 import re
 import shutil
 from collections import defaultdict
 from datetime import datetime, timezone
 from importlib import resources
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -21,6 +22,29 @@ WIKI_PAGE_SPECS = (
     ("chronology", "Chronology"),
     ("hubs", "Connectivity Hubs"),
 )
+
+AUTOLINK_ALIAS_STOP_PHRASES = {
+    "check understanding",
+    "learning objectives",
+    "see figure",
+    "interactive link",
+    "did you know",
+    "chapter outline",
+    "critical thinking",
+}
+
+
+def _site_identity(build_meta: dict[str, str | int | None]) -> dict[str, str]:
+    source_file_name = str(build_meta.get("source_file_name") or "")
+    if source_file_name.startswith("sources.openstax"):
+        return {
+            "site_title": "OpenStax Life Sciences Wiki",
+            "site_caption": "a source-backed mini encyclopedia compiled from related OpenStax books",
+        }
+    return {
+        "site_title": "Karpathy Wiki",
+        "site_caption": "source-backed markdown wiki compiled from immutable PDFs",
+    }
 
 
 def _env() -> Environment:
@@ -116,6 +140,146 @@ def _rewrite_wiki_target(target: str) -> str:
     return target
 
 
+def _topic_autolink_terms(topic) -> list[str]:
+    terms: list[str] = []
+    seen: set[str] = set()
+
+    def register(term: str) -> None:
+        cleaned = " ".join(term.split()).strip(" ,.;:()[]{}")
+        normalized = cleaned.casefold()
+        if not cleaned or normalized in seen:
+            return
+        seen.add(normalized)
+        terms.append(cleaned)
+
+    register(topic.title)
+
+    for phrase in topic.key_phrases[:6]:
+        cleaned = " ".join(phrase.split()).strip(" ,.;:()[]{}")
+        words = re.findall(r"[a-z0-9]+", cleaned.casefold())
+        if len(cleaned) < 8 or len(words) < 2:
+            continue
+        if cleaned.casefold() in AUTOLINK_ALIAS_STOP_PHRASES:
+            continue
+        if all(len(word) <= 2 for word in words):
+            continue
+        register(cleaned)
+
+    return terms
+
+
+def _portal_links(base_prefix: str, *, areas: list[str], families: list[str], years: list[str]) -> list[dict[str, str]]:
+    links: list[dict[str, str]] = []
+    for area in areas:
+        links.append(
+            {
+                "kind": "Area",
+                "title": area,
+                "url": f"{base_prefix}areas.html#{_slugify_fragment(area)}",
+            }
+        )
+    for family in families:
+        links.append(
+            {
+                "kind": "Family",
+                "title": family,
+                "url": f"{base_prefix}model-families.html#{_slugify_fragment(family)}",
+            }
+        )
+    for year in years:
+        links.append(
+            {
+                "kind": "Year",
+                "title": year,
+                "url": f"{base_prefix}chronology.html#{_slugify_fragment(year)}",
+            }
+        )
+    return links
+
+
+def _relative_page_url(current_url: str, target_url: str) -> str:
+    current_dir = posixpath.dirname(current_url) or "."
+    relative = posixpath.relpath(target_url, start=current_dir)
+    return str(PurePosixPath(relative))
+
+
+def _autolink_priority(kind: str) -> int:
+    order = {
+        "topic page": 0,
+        "wiki page": 1,
+        "source page": 2,
+    }
+    return order.get(kind, 99)
+
+
+def _build_autolink_index(
+    current_url: str,
+    wiki_pages: list[dict[str, object]],
+    topics: list,
+    documents: list,
+    include_kinds: tuple[str, ...] = ("topic page",),
+) -> dict[str, object] | None:
+    entries_by_title: dict[str, dict[str, str]] = {}
+    canonical_topic_titles = {
+        " ".join(topic.title.split()).casefold(): f"topics/{topic.topic_id}.html"
+        for topic in topics
+    }
+
+    def register(title: str, target_url: str, kind: str) -> None:
+        normalized = " ".join(title.split()).casefold()
+        if len(normalized) < 4:
+            return
+        existing = entries_by_title.get(normalized)
+        if existing and _autolink_priority(existing["kind"]) <= _autolink_priority(kind):
+            return
+        relative_url = _relative_page_url(current_url, target_url)
+        if relative_url in {"", "."}:
+            return
+        entries_by_title[normalized] = {
+            "title": title,
+            "url": relative_url,
+            "kind": kind,
+        }
+
+    if "wiki page" in include_kinds:
+        for page in wiki_pages:
+            page_url = str(page["url"])
+            if page_url != current_url:
+                register(str(page["title"]), page_url, "wiki page")
+
+    if "topic page" in include_kinds:
+        for topic in topics:
+            target_url = f"topics/{topic.topic_id}.html"
+            if target_url != current_url:
+                for index, term in enumerate(_topic_autolink_terms(topic)):
+                    normalized = " ".join(term.split()).casefold()
+                    if index > 0 and canonical_topic_titles.get(normalized) not in {None, target_url}:
+                        continue
+                    register(term, target_url, "topic page")
+
+    if "source page" in include_kinds:
+        for document in documents:
+            target_url = f"sources/{document.doc_id}.html"
+            if target_url != current_url:
+                register(document.title, target_url, "source page")
+
+    if not entries_by_title:
+        return None
+
+    ordered_entries = sorted(
+        entries_by_title.values(),
+        key=lambda item: (-len(item["title"]), _autolink_priority(item["kind"]), item["title"].casefold()),
+    )
+    pattern = re.compile(
+        r"(?<![A-Za-z0-9])(" + "|".join(re.escape(item["title"]) for item in ordered_entries) + r")(?![A-Za-z0-9])",
+        flags=re.IGNORECASE,
+    )
+    return {
+        "pattern": pattern,
+        "entries": {item["title"].casefold(): item for item in ordered_entries},
+    }
+
+
 def _tokenize_inline_markdown(text: str) -> list[tuple[str, str, str | None]]:
     tokens: list[tuple[str, str, str | None]] = []
     buffer: list[str] = []
@@ -187,11 +351,42 @@ def _plain_inline_markdown(text: str) -> str:
     return "".join(plain_parts)
 
 
-def _render_inline_markdown(text: str) -> str:
+def _autolink_plain_text(text: str, autolink_index: dict[str, object] | None) -> str:
+    if not text:
+        return ""
+    if not autolink_index:
+        return html.escape(text)
+
+    pattern = autolink_index["pattern"]
+    entries = autolink_index["entries"]
+    rendered: list[str] = []
+    last_index = 0
+    used_targets: set[str] = set()
+
+    for match in pattern.finditer(text):
+        matched_text = match.group(0)
+        entry = entries.get(matched_text.casefold())
+        if entry is None:
+            continue
+        rendered.append(html.escape(text[last_index : match.start()]))
+        if entry["url"] in used_targets:
+            rendered.append(html.escape(matched_text))
+        else:
+            rendered.append(
+                f'<a class="wiki-link" href="{html.escape(entry["url"], quote=True)}">{html.escape(matched_text)}</a>'
+            )
+            used_targets.add(entry["url"])
+        last_index = match.end()
+
+    rendered.append(html.escape(text[last_index:]))
+    return "".join(rendered)
+
+
+def _render_inline_markdown(text: str, autolink_index: dict[str, object] | None = None) -> str:
     rendered: list[str] = []
     for token_type, value, href in _tokenize_inline_markdown(text):
         if token_type == "text":
-            rendered.append(html.escape(value))
+            rendered.append(_autolink_plain_text(value, autolink_index))
         elif token_type == "code":
             rendered.append(f"<code>{html.escape(value)}</code>")
         else:
@@ -243,7 +438,7 @@ def _first_markdown_paragraph(markdown_text: str) -> str:
     return " ".join(paragraph)
 
 
-def _markdown_to_html(markdown_text: str) -> str:
+def _markdown_to_html(markdown_text: str, autolink_index: dict[str, object] | None = None) -> str:
     rendered: list[str] = []
     paragraph: list[str] = []
     list_items: list[str] = []
@@ -254,7 +449,7 @@ def _markdown_to_html(markdown_text: str) -> str:
         nonlocal paragraph
         if not paragraph:
             return
-        rendered.append(f"<p>{_render_inline_markdown(' '.join(paragraph))}</p>")
+        rendered.append(f"<p>{_render_inline_markdown(' '.join(paragraph), autolink_index)}</p>")
         paragraph = []
 
     def flush_list() -> None:
@@ -341,16 +536,23 @@ def _load_wiki_pages(workspace_dir: Path) -> tuple[list[dict[str, object]], dict
             "title": title,
             "url": "index.html" if slug == "index" else f"{slug}.html",
             "markdown_path": markdown_path,
+            "markdown_text": markdown_text,
             "summary": _first_markdown_paragraph(markdown_text),
             "headings": [item for item in headings if int(item["level"]) >= 2],
-            "content_html": _markdown_to_html(markdown_text),
+            "content_html": "",
         }
         pages.append(page)
         page_map[slug] = page
     return pages, page_map
 
 
-def _load_markdown_page(markdown_path: Path, fallback_title: str, url: str, page_kind: str) -> dict[str, object]:
+def _load_markdown_page(
+    markdown_path: Path,
+    fallback_title: str,
+    url: str,
+    page_kind: str,
+    autolink_index: dict[str, object] | None,
+) -> dict[str, object]:
     markdown_text = markdown_path.read_text(encoding="utf-8")
     headings = _extract_markdown_headings(markdown_text)
     title = str(headings[0]["title"]) if headings else fallback_title
@@ -364,9 +566,10 @@ def _load_markdown_page(markdown_path: Path, fallback_title: str, url: str, page
         "url": url,
         "kind": page_kind,
         "markdown_path": markdown_path,
+        "markdown_text": markdown_text,
         "summary": _first_markdown_paragraph(markdown_text),
         "headings": nav_headings,
-        "content_html": _markdown_to_html(markdown_text),
+        "content_html": _markdown_to_html(markdown_text, autolink_index),
     }
 
 
@@ -381,10 +584,12 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
     markdown_template = env.get_template("markdown_page.html.j2")
 
     build_meta = _load_build_meta(site_dir)
+    site_identity = _site_identity(build_meta)
     workspace_dir = site_dir.parent
     nav_pages, nav_page_map = _load_wiki_pages(workspace_dir)
 
     document_map = {document.doc_id: document for document in documents}
+    topic_map = {topic.topic_id: topic for topic in topics}
 
     topics_by_document: defaultdict[str, list] = defaultdict(list)
     for topic in topics:
@@ -393,6 +598,9 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
 
     search_index = []
 
+    for page in nav_pages:
+        page["content_html"] = _markdown_to_html(str(page["markdown_text"]))
+
     topic_pages: dict[str, dict[str, object]] = {}
     for topic in topics:
         page = _load_markdown_page(
@@ -400,6 +608,13 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
             topic.title,
             f"topics/{topic.topic_id}.html",
             "topic",
+            _build_autolink_index(
+                f"topics/{topic.topic_id}.html",
+                nav_pages,
+                topics,
+                documents,
+                include_kinds=("topic page",),
+            ),
         )
         topic_pages[topic.topic_id] = page
         coverage = _topic_coverage(topic, document_map)
@@ -420,6 +635,13 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
             document.title,
             f"sources/{document.doc_id}.html",
             "source",
+            _build_autolink_index(
+                f"sources/{document.doc_id}.html",
+                nav_pages,
+                topics,
+                documents,
+                include_kinds=("topic page",),
+            ),
         )
         source_pages[document.doc_id] = page
         search_index.append(
@@ -457,8 +679,26 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
 
     for topic in topics:
         page = topic_pages[topic.topic_id]
+        coverage = _topic_coverage(topic, document_map)
+        related_topic_links = [
+            {"title": topic_pages[related_id]["title"], "url": f"../topics/{related_id}.html"}
+            for related_id in topic.related_topics
+            if related_id in topic_pages
+        ]
+        contributing_source_links = [
+            {"title": source_pages[doc_id]["title"], "url": f"../sources/{doc_id}.html"}
+            for doc_id in topic.document_ids[:6]
+            if doc_id in source_pages
+        ]
+        evidence_links = [
+            {
+                "title": f"{item.doc_title}: {item.section_title}",
+                "url": f"../sources/{item.doc_id}.html#{item.section_anchor}",
+            }
+            for item in topic.evidence[:6]
+        ]
         rendered = markdown_template.render(
-            page_title=f"Karpathy Wiki | {page['title']}",
+            page_title=f"{site_identity['site_title']} | {page['title']}",
             page=page,
             nav_pages=nav_pages,
             current_slug="topic",
@@ -469,14 +709,39 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
             topic_total=len(topics),
             base_prefix="../",
             page_caption="topic synthesis with source-backed evidence",
+            site_title=site_identity["site_title"],
+            site_caption=site_identity["site_caption"],
+            page_kicker="Topic article",
             explore_items=explore_items,
+            related_links=related_topic_links + contributing_source_links,
+            related_heading="Linked Pages",
+            portal_links=_portal_links(
+                "../",
+                areas=coverage["areas"],
+                families=coverage["families"],
+                years=coverage["years"],
+            ),
+            evidence_links=evidence_links,
+            hatnote_links=related_topic_links[:4],
+            hatnote_heading="See also",
         )
         (site_dir / "topics" / f"{topic.topic_id}.html").write_text(rendered, encoding="utf-8")
 
     for document in documents:
         page = source_pages[document.doc_id]
+        linked_topic_pages = [
+            {"title": topic_map[topic_id].title, "url": f"../topics/{topic_id}.html"}
+            for topic_id in document.topic_ids[:10]
+            if topic_id in topic_map
+        ]
+        portal_links = _portal_links(
+            "../",
+            areas=[document.area] if document.area else [],
+            families=document.families,
+            years=[str(document.year)] if document.year is not None else [],
+        )
         rendered = markdown_template.render(
-            page_title=f"Karpathy Wiki | {page['title']}",
+            page_title=f"{site_identity['site_title']} | {page['title']}",
             page=page,
             nav_pages=nav_pages,
             current_slug="source",
@@ -487,14 +752,23 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
             topic_total=len(topics),
             base_prefix="../",
             page_caption="source record derived from the immutable PDF corpus",
+            site_title=site_identity["site_title"],
+            site_caption=site_identity["site_caption"],
+            page_kicker="Source article",
             explore_items=explore_items,
+            related_links=linked_topic_pages,
+            related_heading="Linked Topics",
+            portal_links=portal_links,
+            evidence_links=[],
+            hatnote_links=linked_topic_pages[:4],
+            hatnote_heading="See also",
         )
         (site_dir / "sources" / f"{document.doc_id}.html").write_text(rendered, encoding="utf-8")
 
     for page in nav_pages:
         template = index_template if page["slug"] == "index" else markdown_template
         rendered = template.render(
-            page_title=f"Karpathy Wiki | {page['title']}",
+            page_title=f"{site_identity['site_title']} | {page['title']}",
             page=page,
             nav_pages=nav_pages,
             current_slug=page["slug"],
@@ -505,11 +779,20 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
             topic_total=len(topics),
             base_prefix="",
             page_caption="wiki maintenance, navigation, and corpus structure",
+            site_title=site_identity["site_title"],
+            site_caption=site_identity["site_caption"],
+            page_kicker="Wiki page",
             explore_items=explore_items,
             crosslink_total=crosslink_total,
             topic_hubs=views.get("topic_hubs", [])[:10],
             source_hubs=views.get("source_hubs", [])[:10],
             index_page=nav_page_map.get("index"),
+            related_links=[],
+            related_heading="Linked Articles",
+            portal_links=[],
+            evidence_links=[],
+            hatnote_links=[],
+            hatnote_heading="See also",
         )
         output_path = site_dir / ("index.html" if page["slug"] == "index" else f"{page['slug']}.html")
         output_path.write_text(rendered, encoding="utf-8")

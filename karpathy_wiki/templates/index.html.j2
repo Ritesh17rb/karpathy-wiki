@@ -10,8 +10,8 @@
     <header class="chrome">
       <div class="chrome-inner">
         <div class="brand-block">
-          <a class="app-home" href="index.html">Karpathy Wiki</a>
-          <p class="app-caption">source-backed markdown wiki compiled from immutable PDFs</p>
+          <a class="app-home" href="index.html">{{ site_title }}</a>
+          <p class="app-caption">{{ site_caption }}</p>
         </div>
         <nav class="top-nav" aria-label="Wiki navigation">
           {% for item in nav_pages %}
@@ -40,7 +40,7 @@
         </section>
 
         <section class="panel">
-          <h2>Data Explore</h2>
+          <h2>Article Index</h2>
           <p class="muted">Browse the loaded corpus immediately, or type to filter wiki, topic, and source pages.</p>
           <input id="searchBox" type="search" placeholder="Search the corpus" />
           <div id="searchResults" class="search-results">
@@ -55,7 +55,7 @@
         </section>
 
         <section class="panel">
-          <h2>Read First</h2>
+          <h2>Portal Pages</h2>
           <ul class="plain-list">
             {% for item in nav_pages if item.slug != "index" %}
             <li><a href="{{ item.url }}">{{ item.title }}</a></li>
@@ -63,8 +63,30 @@
           </ul>
         </section>
 
+        {% if topic_hubs %}
         <section class="panel">
-          <h2>Operating Model</h2>
+          <h2>Topic Hubs</h2>
+          <ul class="plain-list compact-list">
+            {% for item in topic_hubs %}
+            <li><a href="topics/{{ item.topic.topic_id }}.html">{{ item.topic.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        {% if source_hubs %}
+        <section class="panel">
+          <h2>Source Hubs</h2>
+          <ul class="plain-list compact-list">
+            {% for document in source_hubs %}
+            <li><a href="sources/{{ document.doc_id }}.html">{{ document.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        <section class="panel">
+          <h2>Editorial Notes</h2>
           <ul class="plain-list">
             <li>Raw sources remain immutable and act as ground truth.</li>
             <li>The wiki is a maintained artifact rather than per-query rediscovery.</li>
