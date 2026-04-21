@@ -24,14 +24,14 @@
     <main class="page-grid home-grid">
       <aside class="sidebar stack">
         <section class="panel">
-          <h2>Snapshot</h2>
+          <h2>Quick Facts</h2>
           <dl class="stats-list">
-            <div><dt>Documents</dt><dd>{{ document_total }}</dd></div>
-            <div><dt>Retained sections</dt><dd>{{ section_total }}</dd></div>
+            <div><dt>Books</dt><dd>{{ book_total }}</dd></div>
+            <div><dt>Chapters</dt><dd>{{ document_total }}</dd></div>
             <div><dt>Topic pages</dt><dd>{{ topic_total }}</dd></div>
-            <div><dt>Evidence links</dt><dd>{{ crosslink_total }}</dd></div>
+            <div><dt>Source links</dt><dd>{{ crosslink_total }}</dd></div>
             {% if build_meta.generated_at_display %}
-            <div><dt>Latest compile</dt><dd>{{ build_meta.generated_at_display }}</dd></div>
+            <div><dt>Updated</dt><dd>{{ build_meta.generated_at_display }}</dd></div>
             {% endif %}
             {% if build_meta.source_file_name %}
             <div><dt>Source list</dt><dd>{{ build_meta.source_file_name }}</dd></div>
@@ -40,9 +40,9 @@
         </section>
 
         <section class="panel">
-          <h2>Article Index</h2>
-          <p class="muted">Browse the loaded corpus immediately, or type to filter wiki, topic, and source pages.</p>
-          <input id="searchBox" type="search" placeholder="Search the corpus" />
+          <h2>Search The Library</h2>
+          <p class="muted">Search books, chapters, topics, and wiki pages.</p>
+          <input id="searchBox" type="search" placeholder="Search books, chapters, topics" />
           <div id="searchResults" class="search-results">
             {% for item in explore_items %}
             <article class="search-hit">
@@ -55,7 +55,7 @@
         </section>
 
         <section class="panel">
-          <h2>Portal Pages</h2>
+          <h2>Browse Areas</h2>
           <ul class="plain-list">
             {% for item in nav_pages if item.slug != "index" %}
             <li><a href="{{ item.url }}">{{ item.title }}</a></li>
@@ -65,7 +65,7 @@
 
         {% if topic_hubs %}
         <section class="panel">
-          <h2>Topic Hubs</h2>
+          <h2>Popular Topics</h2>
           <ul class="plain-list compact-list">
             {% for item in topic_hubs %}
             <li><a href="topics/{{ item.topic.topic_id }}.html">{{ item.topic.title }}</a></li>
@@ -76,7 +76,7 @@
 
         {% if source_hubs %}
         <section class="panel">
-          <h2>Source Hubs</h2>
+          <h2>Popular Chapters</h2>
           <ul class="plain-list compact-list">
             {% for document in source_hubs %}
             <li><a href="sources/{{ document.doc_id }}.html">{{ document.title }}</a></li>
@@ -86,12 +86,12 @@
         {% endif %}
 
         <section class="panel">
-          <h2>Editorial Notes</h2>
+          <h2>How To Use This</h2>
           <ul class="plain-list">
-            <li>Raw sources remain immutable and act as ground truth.</li>
-            <li>The wiki is a maintained artifact rather than per-query rediscovery.</li>
-            <li>Topic pages link back to source sections that support them.</li>
-            <li>`log` is append-only and `lint` is part of the normal maintenance loop.</li>
+            <li>Start with a book summary if you want the big picture.</li>
+            <li>Open a topic page when you want a cross-chapter review.</li>
+            <li>Use chapter pages when you want the original source context.</li>
+            <li>Every topic page links back to the chapters that support it.</li>
           </ul>
         </section>
       </aside>

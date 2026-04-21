@@ -23,6 +23,8 @@ WIKI_PAGE_SPECS = (
     ("hubs", "Connectivity Hubs"),
 )
 
+STUDENT_NAV_SLUGS = {"index", "areas"}
+
 AUTOLINK_ALIAS_STOP_PHRASES = {
     "check understanding",
     "learning objectives",
@@ -710,6 +712,7 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
     site_identity = _site_identity(build_meta)
     workspace_dir = site_dir.parent
     nav_pages, nav_page_map = _load_wiki_pages(workspace_dir)
+    student_nav_pages = [page for page in nav_pages if str(page["slug"]) in STUDENT_NAV_SLUGS]
 
     document_map = {document.doc_id: document for document in documents}
     topic_map = {topic.topic_id: topic for topic in topics}
@@ -813,6 +816,7 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
         key=_search_type_priority,
     )[:8]
     crosslink_total = sum(len(topic.section_ids) for topic in topics)
+    book_total = len({" — ".join(document.title.split(" — ", 1)[:1]) for document in documents})
 
     for topic in topics:
         page = topic_pages[topic.topic_id]
@@ -837,7 +841,7 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
         rendered = markdown_template.render(
             page_title=f"{site_identity['site_title']} | {page['title']}",
             page=page,
-            nav_pages=nav_pages,
+            nav_pages=student_nav_pages,
             current_slug="topic",
             build_meta=build_meta,
             search_blob=search_blob,
@@ -880,7 +884,7 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
         rendered = markdown_template.render(
             page_title=f"{site_identity['site_title']} | {page['title']}",
             page=page,
-            nav_pages=nav_pages,
+            nav_pages=student_nav_pages,
             current_slug="source",
             build_meta=build_meta,
             search_blob=search_blob,
@@ -907,7 +911,7 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
         rendered = template.render(
             page_title=f"{site_identity['site_title']} | {page['title']}",
             page=page,
-            nav_pages=nav_pages,
+            nav_pages=student_nav_pages,
             current_slug=page["slug"],
             build_meta=build_meta,
             search_blob=search_blob,
@@ -921,6 +925,7 @@ def render_site(site_dir: Path, documents: list, sections: list, topics: list, v
             page_kicker="Wiki page",
             explore_items=explore_items,
             crosslink_total=crosslink_total,
+            book_total=book_total,
             topic_hubs=views.get("topic_hubs", [])[:10],
             source_hubs=views.get("source_hubs", [])[:10],
             index_page=nav_page_map.get("index"),

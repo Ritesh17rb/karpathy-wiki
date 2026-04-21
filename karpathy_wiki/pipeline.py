@@ -1988,6 +1988,60 @@ def topic_metadata_profile(topic: Topic, document_map: dict[str, Document]) -> d
     }
 
 
+def root_book_title(document: Document) -> str:
+    return document.title.split(" — ", 1)[0].strip()
+
+
+def chapter_sort_key(document: Document) -> tuple[int, str]:
+    suffix = document.title.split(" — ", 1)[1] if " — " in document.title else document.title
+    match = re.search(r"chapter\s+(\d+)", suffix, flags=re.IGNORECASE)
+    if match:
+        return (int(match.group(1)), suffix.casefold())
+    return (9999, suffix.casefold())
+
+
+def chapter_label(document: Document) -> str:
+    return document.title.split(" — ", 1)[1].strip() if " — " in document.title else document.title
+
+
+def student_book_blurb(book_title: str) -> str:
+    normalized = book_title.casefold()
+    if normalized == "concepts of biology":
+        return "A gentler starting point for students who want the core ideas first: cells, heredity, evolution, ecology, and how biologists think."
+    if normalized == "biology 2e":
+        return "A fuller majors-level biology text that goes deeper into energy, genetics, plants, animals, and ecological systems."
+    if normalized == "microbiology":
+        return "Best for studying microbes, infection, immunity, disease spread, and the lab methods used to identify microorganisms."
+    if normalized == "anatomy and physiology 2e":
+        return "Best for studying the human body, from tissues and bones to muscles, nerves, organs, and major body systems."
+    return "A source-backed textbook in this library that you can browse by chapter or connect through shared topic pages."
+
+
+def student_book_focus(book_title: str) -> str:
+    normalized = book_title.casefold()
+    if normalized == "concepts of biology":
+        return "intro biology and first-pass review"
+    if normalized == "biology 2e":
+        return "deeper biology survey and majors-level review"
+    if normalized == "microbiology":
+        return "microbes, infection, immunity, and disease"
+    if normalized == "anatomy and physiology 2e":
+        return "human body structure and organ systems"
+    return "chapter-based study and source review"
+
+
+def ordered_book_titles(book_groups: dict[str, list[Document]]) -> list[str]:
+    preferred = [
+        "Concepts of Biology",
+        "Biology 2e",
+        "Microbiology",
+        "Anatomy and Physiology 2e",
+    ]
+    ordered = [title for title in preferred if title in book_groups]
+    ordered.extend(sorted(title for title in book_groups if title not in ordered))
+    return ordered
+
+
 def build_navigation_views(documents: list[Document], topics: list[Topic]) -> dict[str, object]:
     document_map = {document.doc_id: document for document in documents}
     topic_map = {topic.topic_id: topic for topic in topics}
@@ -2420,44 +2474,68 @@ def write_wiki(
     for document in documents:
         document.topic_ids = sorted(topics_by_document.get(document.doc_id, []), key=lambda item: topic_map[item].title.lower())
 
+    book_groups: defaultdict[str, list[Document]] = defaultdict(list)
+    for document in documents:
+        book_groups[root_book_title(document)].append(document)
+    for title in list(book_groups):
+        book_groups[title] = sorted(book_groups[title], key=chapter_sort_key)
+    book_titles = ordered_book_titles(book_groups)
+
     index_lines = [
-        "# Corpus Index",
+        "# Study Guide Home",
         "",
-        "This directory is the human-readable map of the compiled PDF corpus.",
+        "This homepage is a student-friendly map of the books loaded into the wiki. Start with a book summary, jump into a chapter, or use the topic pages to review ideas that show up across multiple chapters.",
         "",
-        "## Corpus Snapshot",
-        "",
-        f"- Source list: `{source_path.name}`",
-        f"- Documents: {len(documents)}",
-        f"- Retained sections: {len(sections)}",
-        f"- Topics: {len(topics)}",
-        "- Maintenance report: [Maintenance Lint](lint.md)",
-        "- Research areas: [Research Areas](areas.md)",
-        "- Model families: [Model Families](model-families.md)",
-        "- Chronology: [Chronology](chronology.md)",
-        "- Connectivity hubs: [Connectivity Hubs](hubs.md)",
-        "",
-        "## Corpus Facets",
+        "## Start Here",
         "",
     ]
-    for area in views["areas"]:
+    if "Concepts of Biology" in book_groups:
+        index_lines.append("- New to biology? Start with [Concepts of Biology](#concepts-of-biology).")
+    if "Biology 2e" in book_groups:
+        index_lines.append("- Want the fuller majors-level version? Move to [Biology 2e](#biology-2e).")
+    if "Microbiology" in book_groups:
+        index_lines.append("- Studying microbes, infection, or immunity? Jump to [Microbiology](#microbiology).")
+    if "Anatomy and Physiology 2e" in book_groups:
+        index_lines.append("- Studying the human body and organ systems? Start with [Anatomy and Physiology 2e](#anatomy-and-physiology-2e).")
+    index_lines.extend(
+        [
+        "",
+        "## Library At A Glance",
+        "",
+        f"- Source list: `{source_path.name}`",
+        f"- Books: {len(book_titles)}",
+        f"- Chapters in the library: {len(documents)}",
+        f"- Topic pages: {len(topics)}",
+        "- Study tools: [Research Areas](areas.md), [Model Families](model-families.md), [Chronology](chronology.md), [Connectivity Hubs](hubs.md)",
+        "- Maintenance pages: [Maintenance Lint](lint.md), [Build Log](log.md)",
+        "",
+        "## Books In This Library",
+        "",
+    ])
+    for book_title in book_titles:
+        group = book_groups[book_title]
+        group_topic_ids = unique_strings(topic_id for document in group for topic_id in document.topic_ids)
+        featured_topics = [f"[{topic_map[topic_id].title}](topics/{topic_id}.md)" for topic_id in group_topic_ids[:4] if topic_id in topic_map]
+        sample_chapters = [f"[{chapter_label(document)}](sources/{document.doc_id}.md)" for document in group[:4]]
         index_lines.extend(
             [
-                f"### {area['label']}",
+                f"### {book_title}",
                 "",
-                f"- Documents: {area['document_count']}",
-                f"- Topic pages: {area['topic_count']}",
-                f"- Model families: {', '.join(area['families']) if area['families'] else 'n/a'}",
+                student_book_blurb(book_title),
+                "",
+                f"- Good for: {student_book_focus(book_title)}",
+                f"- Chapters in this guide: {len(group)}",
+                f"- Featured topics: {', '.join(featured_topics) if featured_topics else 'Topic pages are still being compiled for this book.'}",
+                f"- Start browsing: {', '.join(sample_chapters)}",
                 "",
             ]
         )
     index_lines.extend(
         [
-        "## Topic Directory",
+        "## Topic Highlights",
         "",
     ])
     for topic in topics:
-        profile = topic_metadata_profile(topic, document_map)
         evidence_links = []
         for item in topic.evidence[:3]:
             evidence_links.append(
@@ -2469,31 +2547,53 @@ def write_wiki(
                 "",
                 topic.summary,
                 "",
-                f"- Key terms: {', '.join(topic.keywords) if topic.keywords else 'n/a'}",
-                f"- Coverage: {len(topic.document_ids)} sources, {len(topic.section_ids)} sections",
-                f"- Areas: {', '.join(profile['areas']) if profile['areas'] else 'n/a'}",
-                f"- Model families: {', '.join(profile['families']) if profile['families'] else 'n/a'}",
-                f"- Evidence trail: {', '.join(evidence_links) if evidence_links else 'n/a'}",
+                f"- Comes from: {len(topic.document_ids)} chapters and {len(topic.section_ids)} retained source sections",
+                f"- Read the supporting chapters: {', '.join(evidence_links) if evidence_links else 'n/a'}",
                 "",
             ]
         )
-    index_lines.extend(["## Source Archive", ""])
-    for document in sorted(documents, key=lambda item: item.title.lower()):
-        topic_links = [f"[{topic_map[topic_id].title}](topics/{topic_id}.md)" for topic_id in document.topic_ids[:6]]
+    index_lines.extend(["## Browse By Book", ""])
+    for book_title in book_titles:
+        index_lines.extend([f"### {book_title}", ""])
+        for document in book_groups[book_title]:
+            topic_links = [f"[{topic_map[topic_id].title}](topics/{topic_id}.md)" for topic_id in document.topic_ids[:4]]
+            index_lines.extend(
+                [
+                    f"#### [{chapter_label(document)}](sources/{document.doc_id}.md)",
+                    "",
+                    document.summary,
+                    "",
+                    f"- Pages: {document.page_count}",
+                    f"- Best linked topics: {', '.join(topic_links) if topic_links else 'No stable cross-book topic page yet.'}",
+                    "",
+                ]
+            )
+
+    index_lines.extend(["## Study Tools", ""])
+    for area in views["areas"]:
         index_lines.extend(
             [
-                f"### [{document.title}](sources/{document.doc_id}.md)",
+                f"### {area['label']}",
                 "",
-                document.summary,
-                "",
-                f"- Metadata: {(str(document.year) + ' · ') if document.year is not None else ''}{document.venue + ' · ' if document.venue else ''}{document.area or 'Unclassified'}",
-                f"- Model families: {', '.join(document.families) if document.families else 'n/a'}",
-                f"- Key terms: {', '.join(document.keywords[:8]) if document.keywords else 'n/a'}",
-                f"- Coverage: {document.page_count} pages, {document.section_count} retained sections",
-                f"- Contributed topics: {', '.join(topic_links) if topic_links else 'No cross-document topics yet.'}",
+                f"- Chapters: {area['document_count']}",
+                f"- Topic pages: {area['topic_count']}",
+                f"- Families in this area: {', '.join(area['families']) if area['families'] else 'n/a'}",
                 "",
             ]
         )
+    index_lines.extend(
+        [
+            "## For Maintainers",
+            "",
+            "- [Maintenance Lint](lint.md)",
+            "- [Build Log](log.md)",
+            "- [Research Areas](areas.md)",
+            "- [Model Families](model-families.md)",
+            "- [Chronology](chronology.md)",
+            "- [Connectivity Hubs](hubs.md)",
+            "",
+        ]
+    )
     (paths["wiki"] / "index.md").write_text("\n".join(index_lines).strip() + "\n", encoding="utf-8")
 
     append_build_log(paths["wiki"] / "log.md", source_path, documents, sections, topics)
